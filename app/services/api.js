@@ -2,7 +2,7 @@ import http from './http'
 
 export default {
   performPurchase(purchase) {
-    return http.get('/payments/charge', purchase)
+    return http.post('/payments/charge', purchase)
       .then(resp => resp.data)
   }
 }
