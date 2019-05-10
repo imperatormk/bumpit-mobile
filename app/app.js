@@ -4,6 +4,7 @@ import config from '@/shared/firebase-config'
 
 import ViewContainer from '@/components/containers/ViewContainer'
 Vue.component('ViewContainer', ViewContainer)
+Vue.registerElement('CreditCardView', () => require('nativescript-stripe').CreditCardView)
 
 Vue.config.silent = true
 

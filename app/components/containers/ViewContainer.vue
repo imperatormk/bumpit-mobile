@@ -1,5 +1,5 @@
 <template>
-  <Page :verticalAlignment="loading ? 'center' : 'top'" actionBarHidden="true" xmlns:ui="nativescript-youtubeplayer" ref="pageRef" :style="getStyle">
+  <Page :verticalAlignment="loading ? 'center' : 'top'" actionBarHidden="true" ref="pageRef" :style="getStyle">
     <StackLayout v-if="loading" verticalAlignment="center">
       <LoadingIndicator :full="true">
         <Label v-if="loadingText" :text="loadingText" textAlignment="center" fontSize="22" color="#8c8c8c" padding="10"/>
@@ -7,7 +7,6 @@
     </StackLayout>
     <GridLayout rows="*" cols="*" v-else verticalAlignment="top" height="100%">
       <StackLayout verticalAlignment="top">
-        <Label margin="0" padding="15" style="padding-bottom:10px;color:#8c8c8c;horizontal-align:right;" class="fas" fontSize="22" :text="'\uf0c9'"/>
         <slot/>
       </StackLayout>
     </GridLayout>
@@ -16,6 +15,7 @@
 
 <script>
 import LoadingIndicator from '@/components/common/LoadingIndicator'
+import EventBus from '@/services/event-bus'
 
 export default {
   props: {
@@ -28,6 +28,14 @@ export default {
       type: String,
       default: ''
     }
+  },
+  created() {
+    EventBus.$on('getPageRef', (cb) => {
+      cb(this.$refs.pageRef.nativeView)
+    })
+  },
+  destroyed() {
+    EventBus.$off('getPageRef')
   },
   computed: {
     getStyle() {
