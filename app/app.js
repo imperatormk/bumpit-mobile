@@ -12,6 +12,8 @@ Vue.registerElement('CreditCardView', () => require('nativescript-stripe').Credi
 Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel)
 Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem)
 
+Vue.registerElement('StarRating', () => require('nativescript-star-ratings').StarRating)
+
 Vue.config.silent = true
 
 import ItemFeed from '@/components/views/ItemFeed'
