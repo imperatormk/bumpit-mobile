@@ -1,18 +1,20 @@
 <template>
-  <ViewContainer>
-    <GridLayout columns="*" rows="*" height="280">
+  <ViewContainer :loading="!loaded">
+    <GridLayout columns="*" rows="*" height="55%">
       <StackLayout col="0" row="0">
         <Carousel indicatorColor="#0076ff">
           <CarouselItem v-for="image in item.images" :key="image.id" backgroundColor="#fefefe" verticalAlignment="middle">
             <StackLayout>
-              <Image :src="image.url"/>
+              <Image stretch="aspectFill" :src="image.url"/>
             </StackLayout>
           </CarouselItem>
         </Carousel>
       </StackLayout>
       <StackLayout col="0" row="0" paddingRight="20" paddingBottom="10">
         <FlexboxLayout justifyContent="flex-end" alignItems="flex-end" height="100%">
-          <StackLayout width="50" height="50" backgroundColor="#0076ff" borderRadius="50%"/>
+          <FlexboxLayout width="50" height="50" backgroundColor="#0076ff" borderRadius="50%" alignItems="center" justifyContent="center">
+            <Label fontSize="24" class="far" color="white" :text="'\uf004'"/>
+          </FlexboxLayout>
         </FlexboxLayout>
       </StackLayout>
     </GridLayout>
@@ -42,6 +44,8 @@
 </template>
 
 <script>
+import Api from '@/services/api'
+
 export default {
   props: {
     itemId: {
@@ -50,10 +54,17 @@ export default {
     }
   },
   created() {
-    this.item = {"id":1,"title":"An underwear","details":"Very well kept","condition":2,"price":1.19,"currency":1,"size":"Test size A","location":"U Home","status":0,"createdAt":"2019-05-10T18:09:29.304Z","updatedAt":"2019-05-10T18:09:29.304Z","catId":1,"selId":1,"images":[{"id":1,"url":"https://via.placeholder.com/300x500","featured":true,"itmId":1}, {"id":1,"url":"https://via.placeholder.com/330x550","featured":false,"itmId":1}]}
+    Api.getItem(this.itemId)
+      .then((item) => {
+        console.log(1)
+        this.item = item
+        this.loaded = true
+        console.log(2)
+      })
   },
   data: () => ({
-    item: {}
+    item: {},
+    loaded: false
   })
 }
 </script>

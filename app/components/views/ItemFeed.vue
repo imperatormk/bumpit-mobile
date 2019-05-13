@@ -1,5 +1,5 @@
 <template>
-  <ViewContainer>
+  <ViewContainer :loading="!loaded">
     <StackLayout paddingLeft="10" paddingRight="10">
       <SearchBar hint="Search hint" :text="searchTerm" @loaded="$event.object.android.clearFocus()"/>
 
@@ -23,17 +23,27 @@
 <script>
 import ItemSummary from '@/components/blocks/item/ItemSummary'
 import ItemDetails from '@/components/views/ItemDetails'
+import Api from '@/services/api'
 
 export default {
   created() {
-    this.items = [{"id":1,"title":"An underwear","details":"Very well kept","condition":2,"price":1.19,"currency":1,"size":"Test size A","location":"U Home","status":0,"createdAt":"2019-05-10T18:09:29.304Z","updatedAt":"2019-05-10T18:09:29.304Z","catId":1,"selId":1},{"id":2,"title":"A shoe","details":"Just one though","condition":1,"price":4.49,"currency":2,"size":"Test size B","location":"S Home","status":0,"createdAt":"2019-05-10T18:09:29.304Z","updatedAt":"2019-05-10T18:09:29.304Z","catId":2,"selId":2}]
+    this.loadItems()
   },
   data: () => ({
     items: [],
     searchTerm: '',
-    itemsGroup: 0
+    itemsGroup: 0,
+    loaded: false
   }),
   methods: {
+    loadItems() {
+      this.loaded = false
+      Api.getItems()
+        .then((items) => {
+          this.items = items
+          this.loaded = true
+        })
+    },
     openItemDetails(item) {
       this.$navigateTo(ItemDetails, {
         props: { itemId: item.id },
