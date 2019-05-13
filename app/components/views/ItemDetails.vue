@@ -24,19 +24,20 @@
         <Label :text="item.title" fontSize="24" flexGrow="3"/>
         <Label :text="item.price" fontSize="24" flexGrow="1"/>
       </FlexboxLayout>
-      <StackLayout class="hr-light" margin="10 0"></StackLayout>
+      <StackLayout class="hr-light" margin="10 0"/>
       <FlexboxLayout justifyContent="space-between">
         <Label :text="'Size: ' + item.size" fontSize="16"/>
         <Label :text="'Condition: ' + item.condition" fontSize="16"/>
       </FlexboxLayout>
-      <StackLayout padding="5"></StackLayout>
+      <StackLayout padding="5"/>
       <FlexboxLayout justifyContent="space-between">
         <Label :text="'Location: ' + item.location" fontSize="16"/>
+        <Label :text="'Seller: @' + item.seller.username" fontSize="16"/>
       </FlexboxLayout>
-      <StackLayout padding="5"></StackLayout>
+      <StackLayout padding="5"/>
       <Label :text="item.details" fontSize="16"/>
     </FlexboxLayout>
-    <StackLayout class="hr-light" margin="0 0 15"></StackLayout>
+    <StackLayout class="hr-light" margin="0 0 15"/>
     <FlexboxLayout justifyContent="space-between" paddingLeft="20" paddingRight="20">
       <StateButton text="Buy"/>
     </FlexboxLayout>
@@ -56,14 +57,12 @@ export default {
   created() {
     Api.getItem(this.itemId)
       .then((item) => {
-        console.log(1)
         this.item = item
         this.loaded = true
-        console.log(2)
       })
   },
   data: () => ({
-    item: {},
+    item: { seller: {} }, // this is bs
     loaded: false
   })
 }
