@@ -18,34 +18,48 @@
         </FlexboxLayout>
       </StackLayout>
     </GridLayout>
-
-    <FlexboxLayout padding="20" flexDirection="column">
-      <FlexboxLayout>
-        <Label :text="item.title" fontSize="24" flexGrow="3"/>
-        <Label :text="item.price" fontSize="24" flexGrow="1"/>
+    <ScrollView orientation="vertical">
+      <FlexboxLayout flexDirection="column">
+        <FlexboxLayout padding="20" flexDirection="column">
+          <FlexboxLayout>
+            <FlexboxLayout flexGrow="3">
+              <Label :text="item.title" fontSize="24"/>
+            </FlexboxLayout>
+            <FlexboxLayout flexGrow="1" justifyContent="flex-end">
+              <Label :text="getPrice" fontSize="24"/>
+            </FlexboxLayout>
+          </FlexboxLayout>
+          <StackLayout class="hr-light" margin="10 0"/>
+          <FlexboxLayout justifyContent="space-between">
+            <Label :text="'Size: ' + item.size" fontSize="16"/>
+            <Label :text="'Condition: ' + item.condition" fontSize="16"/>
+          </FlexboxLayout>
+          <StackLayout padding="5"/>
+          <FlexboxLayout justifyContent="space-between">
+            <Label :text="'Location: ' + item.location" fontSize="16"/>
+            <Label :text="'Seller: @' + item.seller.username" fontSize="16"/>
+          </FlexboxLayout>
+          <StackLayout padding="5"/>
+          <Label :textWrap="true" :text="item.details" fontSize="16"/>
+        </FlexboxLayout>
+        <StackLayout class="hr-light" margin="0 0 15"/>
+        <FlexboxLayout justifyContent="space-between" alignItems="center" paddingLeft="20" paddingRight="20">
+          <FlexboxLayout flexDirection="column">
+            <Label :text="item.seller.username" fontSize="18"/>
+            <StarRating scaleX=".5" scaleY=".5" filledColor="#0076ff" :value="item.seller.rating" max="5"/>
+          </FlexboxLayout>
+          <StackLayout>
+            <StateButton text="Buy"/>
+          </StackLayout>
+        </FlexboxLayout>
       </FlexboxLayout>
-      <StackLayout class="hr-light" margin="10 0"/>
-      <FlexboxLayout justifyContent="space-between">
-        <Label :text="'Size: ' + item.size" fontSize="16"/>
-        <Label :text="'Condition: ' + item.condition" fontSize="16"/>
-      </FlexboxLayout>
-      <StackLayout padding="5"/>
-      <FlexboxLayout justifyContent="space-between">
-        <Label :text="'Location: ' + item.location" fontSize="16"/>
-        <Label :text="'Seller: @' + item.seller.username" fontSize="16"/>
-      </FlexboxLayout>
-      <StackLayout padding="5"/>
-      <Label :text="item.details" fontSize="16"/>
-    </FlexboxLayout>
-    <StackLayout class="hr-light" margin="0 0 15"/>
-    <FlexboxLayout justifyContent="space-between" paddingLeft="20" paddingRight="20">
-      <StateButton text="Buy"/>
-    </FlexboxLayout>
+    </ScrollView>
   </ViewContainer>
 </template>
 
 <script>
 import Api from '@/services/api'
+import { currencyFilter } from '@/filters'
 
 export default {
   props: {
@@ -64,6 +78,11 @@ export default {
   data: () => ({
     item: { seller: {} }, // this is bs
     loaded: false
-  })
+  }),
+  computed: {
+    getPrice() {
+      return `${this.item.price} ${currencyFilter(this.item.currency)}`
+    }
+  }
 }
 </script>
