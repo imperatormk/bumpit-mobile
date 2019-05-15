@@ -1,4 +1,18 @@
 import http from './http'
+import auth from './auth'
+
+const getAuthHeaders = (opts) => {
+  const options = opts || {}
+
+  return auth.getJwt()
+    .then((token) => {
+      const optionsRes = options
+      optionsRes.headers = {
+        Authorization: `JWT ${token}`
+      }
+      return optionsRes
+    })
+}
 
 export default {
   getItems() {

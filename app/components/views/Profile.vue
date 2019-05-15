@@ -1,8 +1,8 @@
 <template>
-  <ViewContainer>
+  <ViewContainer :loading="!loaded">
     <ScrollView orientation="vertical">
       <FlexboxLayout flexDirection="column" padding="20">
-        <Label text="@usernamehere" textAlignment="center"/>
+        <Label :text="'@' + user.username" textAlignment="center"/>
         <StackLayout height="10"/>
 
         <FlexboxLayout justifyContent="center" alignItems="center" width="100%">
@@ -18,7 +18,7 @@
 
           <FlexboxLayout justifyContent="space-between">
             <Label class="label" text="Username"/>
-            <Label text="@usernamehere"/>
+            <Label :text="'@' + user.username"/>
           </FlexboxLayout>
           <StackLayout height="20"/>
 
@@ -36,7 +36,7 @@
 
           <FlexboxLayout justifyContent="space-between">
             <Label class="label" text="Location"/>
-            <Label text="Bitola"/>
+            <Label :text="user.location"/>
           </FlexboxLayout>
           <StackLayout height="20"/>
 
@@ -48,7 +48,7 @@
 
           <FlexboxLayout justifyContent="space-between">
             <Label class="label" text="Bio"/>
-            <Label text="War"/>
+            <Label :text="user.bio"/>
           </FlexboxLayout>
         </FlexboxLayout>
         <StackLayout height="30"/>
@@ -59,7 +59,7 @@
 
           <FlexboxLayout justifyContent="space-between">
             <Label class="label" text="Contact email"/>
-            <Label text="darko.simonovski@hotmail.com"/>
+            <Label :text="user.email"/>
           </FlexboxLayout>
           <StackLayout height="20"/>
 
@@ -124,22 +124,46 @@
         <StackLayout height="30"/>
 
         <StateButton text="Save changes"/>
+        <StackLayout height="10"/>
+        <StateButton @onTap="logoutTest" v-if="user" text="Logout"/>
       </FlexboxLayout>
     </ScrollView>
   </ViewContainer>
 </template>
 
 <script>
+import Auth from '@/services/auth'
+import EventBus from '@/services/event-bus'
+
 export default {
+  mounted() {
+    this.getAuthUser()
+  },
   data: () => ({
     currencies: ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY'],
     profile: {
       selectedCurrency: 0
-    }
+    },
+    user: {},
+    loaded: false
   }),
   methods: {
     selectCurrency(idx) {
       this.profile.selectedCurrency = idx
+    },
+    getAuthUser() {
+      this.loaded = false
+      return Auth.getAuthUser()
+        .then((user) => {
+          this.user = user
+          this.loaded = true
+        })
+    },
+    logoutTest() {
+      Auth.logout()
+        .then((resp) => {
+          this.getAuthUser()
+        })
     }
   }
 }

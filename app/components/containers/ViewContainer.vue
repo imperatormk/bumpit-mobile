@@ -1,15 +1,13 @@
 <template>
-  <Page :verticalAlignment="loading ? 'center' : 'top'" actionBarHidden="true" ref="pageRef" :style="getStyle">
+  <Page :verticalAlignment="loading ? 'center' : 'top'" actionBarHidden="true" ref="pageRef" :style="getStyle" height="100%">
     <StackLayout v-if="loading" verticalAlignment="center">
       <LoadingIndicator :full="true">
         <Label v-if="loadingText" :text="loadingText" textAlignment="center" fontSize="22" color="#8c8c8c" padding="10"/>
       </LoadingIndicator>
     </StackLayout>
-    <GridLayout rows="*" cols="*" v-else verticalAlignment="top" height="100%">
-      <StackLayout verticalAlignment="top">
-        <slot/>
-      </StackLayout>
-    </GridLayout>
+    <StackLayout v-else verticalAlignment="top" height="100%">
+      <slot/>
+    </StackLayout>
   </Page>
 </template>
 
