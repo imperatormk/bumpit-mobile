@@ -11,7 +11,8 @@
 
 <script>
 import ItemFeed from '@/components/views/ItemFeed'
-import HomeScreen from '@/components/views/HomeScreen'
+import Checkout from '@/components/views/Checkout'
+import ItemDetails from '@/components/views/ItemDetails'
 import Profile from '@/components/views/Profile'
 import Login from '@/components/views/Login'
 import Register from '@/components/views/Register'
@@ -47,11 +48,17 @@ export default {
     EventBus.$off('navigateTo')
   },
   methods: {
-    navigateTo(viewName) {
+    navigateTo(viewName, props) {
       let comp = null
       switch (viewName) {
         case 'ItemFeed':
           comp = ItemFeed
+          break
+        case 'ItemDetails':
+          comp = ItemDetails
+          break
+        case 'Checkout':
+          comp = Checkout
           break
         case 'Profile':
           comp = Profile
@@ -63,11 +70,13 @@ export default {
           comp = Register
           break
       }
-      comp && this.$navigateTo(comp, {
+      if (!comp) return
+      this.$navigateTo(comp, {
         animated: true,
         transition: {
           name: 'fade'
-        }
+        },
+        props
       })
     }
   },

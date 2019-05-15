@@ -1,7 +1,7 @@
 <template>
   <ViewContainer>
     <FlexboxLayout flexDirection="column" alignItems="center" justifyContent="space-around" height="80%">
-      <Label text="Bump It!" fontSize="30" color="#8c8c8c"/>
+      <Label :text="'Purchasing item ID: ' + itemId" fontSize="30" color="#8c8c8c"/>
       <GridLayout columns="*" rows="*" width="300" height="300">
         <FlexboxLayout col="0" row="0" flexWrap="wrap" alignItems="space-around" justifyContent="center">
           <CreditCardView id="card"/>
@@ -14,13 +14,19 @@
 
 <script>
 import { Stripe, Card } from 'nativescript-stripe'
-import EventBus from '@/services/event-bus'
 import Api from '@/services/api'
+import EventBus from '@/services/event-bus'
 
 const stripe = new Stripe('pk_test_GMNKDApw27UoQosG2hsXV1xT')
 const cc = new Card('4242424242424242', 12, 21, '069') // temp
 
 export default {
+  props: {
+    itemId: {
+      type: Number,
+      required: true
+    }
+  },
   mounted() {
     EventBus.$emit('getPageRef', (ref) => {
       this.pageRef = ref
@@ -35,10 +41,10 @@ export default {
 
       stripe.createToken(cc, (error, tokenObj) => {
         if (error) return
-        const purchase = {
+        const order = {
           token: tokenObj.id
         }
-        Api.performPurchase(purchase)
+        Api.performOrder(order)
           .then((res) => {
             console.log(res)
           })

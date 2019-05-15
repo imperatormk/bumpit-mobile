@@ -23,8 +23,8 @@ export default {
     return http.get(`/items/${itemId}`)
       .then(resp => resp.data)
   },
-  performPurchase(purchase) {
-    return http.post('/payments/charge', purchase)
+  performOrder(order) {
+    return http.post('/payments/charge', order)
       .then(resp => resp.data)
   }
 }

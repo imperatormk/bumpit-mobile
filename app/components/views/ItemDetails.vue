@@ -49,7 +49,7 @@
             <StarRating scaleX=".5" scaleY=".5" filledColor="#0076ff" :value="item.seller.rating" max="5"/>
           </FlexboxLayout>
           <StackLayout>
-            <StateButton text="Buy"/>
+            <StateButton @onTap="gotoCheckout" text="Buy"/>
           </StackLayout>
         </FlexboxLayout>
       </FlexboxLayout>
@@ -59,6 +59,8 @@
 
 <script>
 import Api from '@/services/api'
+import EventBus from '@/services/event-bus'
+
 import { currencyFilter } from '@/filters'
 
 export default {
@@ -82,6 +84,11 @@ export default {
   computed: {
     getPrice() {
       return `${this.item.price} ${currencyFilter(this.item.currency)}`
+    }
+  },
+  methods: {
+    gotoCheckout() {
+      EventBus.$emit('navigateTo', 'Checkout', { itemId: this.itemId })
     }
   }
 }

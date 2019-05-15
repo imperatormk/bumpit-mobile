@@ -22,8 +22,9 @@
 
 <script>
 import ItemSummary from '@/components/blocks/item/ItemSummary'
-import ItemDetails from '@/components/views/ItemDetails'
+
 import Api from '@/services/api'
+import EventBus from '@/services/event-bus'
 
 export default {
   created() {
@@ -45,13 +46,7 @@ export default {
         })
     },
     openItemDetails(item) {
-      this.$navigateTo(ItemDetails, {
-        props: { itemId: item.id },
-        animated: true,
-        transition: {
-          name: 'fade'
-        }
-      })
+      EventBus.$emit('navigateTo', 'ItemDetails', { itemId: item.id })
     },
     changeItemsGroup(itemsGroup) {
       this.itemsGroup = itemsGroup
