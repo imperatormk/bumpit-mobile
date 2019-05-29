@@ -3,14 +3,14 @@
     <StackLayout paddingLeft="10" paddingRight="10">
       <SearchBar hint="Search hint" :text="searchTerm" @loaded="$event.object.android.clearFocus()"/>
 
-      <Split size="15">
+      <Split size="15"/>
       <FlexRow justifyContent="center">
         <StateButton text="Recent" :inactive="itemsGroup !== 0" @onTap="changeItemsGroup(0)"/>
         <StackLayout padding="5"></StackLayout>
         <StateButton text="Following" :inactive="itemsGroup !== 1" @onTap="changeItemsGroup(1)"/>
       </FlexRow>
 
-      <Split size="15">
+      <Split size="15"/>
       <ScrollView orientation="vertical">
         <GridLayout columns="* *" rows="*">
           <ItemSummary v-for="(item, idx) in items" @selected="openItemDetails(item)" :col="idx/2?1:0" :key="item.id" :item="item"/>
