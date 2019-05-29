@@ -3,7 +3,7 @@
     <FlexCol alignItems="center" height="100%">
       <FlexCol alignItems="center" justifyContent="space-around" width="70%">
         <Label :text="'Your payment is being processed, ' + order.buyer.name" fontSize="22" color="black" textWrap="true" textAlignment="center"/>
-        <StackLayout height="10"/>
+        <Split size="10">
         <Label text="We'll let you know once your payment is successful. You can check the status of your orders in the profile tab." fontSize="18" color="#8c8c8c" textWrap="true" textAlignment="center"/>
       </FlexCol>
       <Split size="50"/>

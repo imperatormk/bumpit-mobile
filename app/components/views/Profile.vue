@@ -3,92 +3,92 @@
     <ScrollView orientation="vertical">
       <FlexCol padding="20">
         <Label :text="'@' + user.username" textAlignment="center"/>
-        <StackLayout height="10"/>
+        <Split size="10"/>
 
         <FlexRow justifyContent="center" alignItems="center" width="100%">
           <FlexRow width="100" height="100" backgroundColor="#eaeef0" borderRadius="50%" alignItems="center" justifyContent="center">
             <Label fontSize="24" class="fas" color="#a1a1a2" :text="'\uf030'"/>
           </FlexRow>
         </FlexRow>
-        <StackLayout height="20"/>
+        <Split size="20"/>
 
         <FlexCol>
           <Label class="category" text="Profile"/>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Username"/>
             <Label :text="'@' + user.username"/>
           </FlexRow>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="First name"/>
             <Label text="Darko"/>
           </FlexRow>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Last name"/>
             <Label text="Simonovski"/>
           </FlexRow>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Location"/>
             <Label :text="user.location"/>
           </FlexRow>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Shipping address"/>
             <Label text="Apostol Zdravevski 34 7000"/>
           </FlexRow>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Bio"/>
             <Label :text="user.bio"/>
           </FlexRow>
         </FlexCol>
-        <StackLayout height="30"/>
+        <Split size="30"/>
 
         <FlexCol>
           <Label class="category" text="Account"/>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Contact email"/>
             <Label :text="user.email"/>
           </FlexRow>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Payout settings"/>
             <Label text="arrowhere"/>
           </FlexRow>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Disable trades"/>
             <Switch/>
           </FlexRow>
         </FlexCol>
-        <StackLayout height="30"/>
+        <Split size="30"/>
 
         <FlexCol>
           <Label class="category" text="Localization"/>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Language"/>
             <Label text="English"/>
           </FlexRow>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexCol>
             <Label class="label" text="Currency"/>
-            <StackLayout height="10"/>
+            <Split size="10"/>
             <ScrollView orientation="horizontal" :scrollBarIndicatorVisible="false">
               <FlexRow>
                 <StackLayout v-for="(currency, idx) in currencies" :key="idx" @tap="selectCurrency(idx)" :backgroundColor="profile.selectedCurrency === idx ? 'black' : 'white'" padding="5 10">
@@ -98,33 +98,33 @@
             </ScrollView>
           </FlexCol>
         </FlexCol>
-        <StackLayout height="30"/>
+        <Split size="30"/>
 
         <FlexCol>
           <Label class="category" text="Notifications"/>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Someone like your listing"/>
             <Switch/>
           </FlexRow>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Someone followed you"/>
             <Switch/>
           </FlexRow>
-          <StackLayout height="20"/>
+          <Split size="20"/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Facebook friend listed an item"/>
             <Switch/>
           </FlexRow>
         </FlexCol>
-        <StackLayout height="30"/>
+        <Split size="30"/>
 
         <StateButton text="Save changes"/>
-        <StackLayout height="10"/>
+        <Split size="10"/>
         <StateButton @onTap="logoutTest" v-if="user" text="Logout"/>
       </FlexCol>
     </ScrollView>
