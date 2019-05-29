@@ -1,5 +1,5 @@
 <template>
-  <Button v-bind="$props" @tap="$emit('onTap')" :class="getClass"></Button>
+  <Button v-bind="$props" @tap="$emit('onTap')" :class="getClass" :width="block ? '100%' : 'auto'"></Button>
 </template>
 
 <script>
@@ -10,7 +10,8 @@ export default {
     rounded: {
       type: Boolean,
       default: true
-    }
+    },
+    block: Boolean
   },
   computed: {
     getClass() {
