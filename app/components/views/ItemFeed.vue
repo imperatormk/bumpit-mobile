@@ -4,11 +4,11 @@
       <SearchBar hint="Search hint" :text="searchTerm" @loaded="$event.object.android.clearFocus()"/>
 
       <StackLayout height="15"></StackLayout>
-      <FlexboxLayout justifyContent="center">
+      <FlexRow justifyContent="center">
         <StateButton text="Recent" :inactive="itemsGroup !== 0" @onTap="changeItemsGroup(0)"/>
         <StackLayout padding="5"></StackLayout>
         <StateButton text="Following" :inactive="itemsGroup !== 1" @onTap="changeItemsGroup(1)"/>
-      </FlexboxLayout>
+      </FlexRow>
 
       <StackLayout height="15"></StackLayout>
       <ScrollView orientation="vertical">

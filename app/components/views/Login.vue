@@ -2,10 +2,10 @@
   <ViewContainer>
     <FlexCol justifyContent="space-between" padding="20" height="100%">
       <FlexCol>
-        <FlexboxLayout justifyContent="space-between" alignItems="center">
+        <FlexRow justifyContent="space-between" alignItems="center">
           <Label text="Login" fontSize="26" color="black" class="bold"/>
           <Label @tap="gotoRegister" text="Sign Up" fontSize="18" class="bold"/>
-        </FlexboxLayout>
+        </FlexRow>
         <StackLayout height="10"/>
         <Label text="Enter your information to get started" color="#9599a4" fontSize="16"/>
         <StackLayout height="20"/>

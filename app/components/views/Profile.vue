@@ -5,51 +5,51 @@
         <Label :text="'@' + user.username" textAlignment="center"/>
         <StackLayout height="10"/>
 
-        <FlexboxLayout justifyContent="center" alignItems="center" width="100%">
-          <FlexboxLayout width="100" height="100" backgroundColor="#eaeef0" borderRadius="50%" alignItems="center" justifyContent="center">
+        <FlexRow justifyContent="center" alignItems="center" width="100%">
+          <FlexRow width="100" height="100" backgroundColor="#eaeef0" borderRadius="50%" alignItems="center" justifyContent="center">
             <Label fontSize="24" class="fas" color="#a1a1a2" :text="'\uf030'"/>
-          </FlexboxLayout>
-        </FlexboxLayout>
+          </FlexRow>
+        </FlexRow>
         <StackLayout height="20"/>
 
         <FlexCol>
           <Label class="category" text="Profile"/>
           <StackLayout height="20"/>
 
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label class="label" text="Username"/>
             <Label :text="'@' + user.username"/>
-          </FlexboxLayout>
+          </FlexRow>
           <StackLayout height="20"/>
 
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label class="label" text="First name"/>
             <Label text="Darko"/>
-          </FlexboxLayout>
+          </FlexRow>
           <StackLayout height="20"/>
 
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label class="label" text="Last name"/>
             <Label text="Simonovski"/>
-          </FlexboxLayout>
+          </FlexRow>
           <StackLayout height="20"/>
 
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label class="label" text="Location"/>
             <Label :text="user.location"/>
-          </FlexboxLayout>
+          </FlexRow>
           <StackLayout height="20"/>
 
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label class="label" text="Shipping address"/>
             <Label text="Apostol Zdravevski 34 7000"/>
-          </FlexboxLayout>
+          </FlexRow>
           <StackLayout height="20"/>
 
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label class="label" text="Bio"/>
             <Label :text="user.bio"/>
-          </FlexboxLayout>
+          </FlexRow>
         </FlexCol>
         <StackLayout height="30"/>
 
@@ -57,22 +57,22 @@
           <Label class="category" text="Account"/>
           <StackLayout height="20"/>
 
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label class="label" text="Contact email"/>
             <Label :text="user.email"/>
-          </FlexboxLayout>
+          </FlexRow>
           <StackLayout height="20"/>
 
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label class="label" text="Payout settings"/>
             <Label text="arrowhere"/>
-          </FlexboxLayout>
+          </FlexRow>
           <StackLayout height="20"/>
 
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label class="label" text="Disable trades"/>
             <Switch/>
-          </FlexboxLayout>
+          </FlexRow>
         </FlexCol>
         <StackLayout height="30"/>
 
@@ -80,21 +80,21 @@
           <Label class="category" text="Localization"/>
           <StackLayout height="20"/>
 
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label class="label" text="Language"/>
             <Label text="English"/>
-          </FlexboxLayout>
+          </FlexRow>
           <StackLayout height="20"/>
 
           <FlexCol>
             <Label class="label" text="Currency"/>
             <StackLayout height="10"/>
             <ScrollView orientation="horizontal" :scrollBarIndicatorVisible="false">
-              <FlexboxLayout>
+              <FlexRow>
                 <StackLayout v-for="(currency, idx) in currencies" :key="idx" @tap="selectCurrency(idx)" :backgroundColor="profile.selectedCurrency === idx ? 'black' : 'white'" padding="5 10">
                   <Label :text="currency" :color="profile.selectedCurrency === idx ? 'white' : 'black'"/>
                 </StackLayout>
-              </FlexboxLayout>
+              </FlexRow>
             </ScrollView>
           </FlexCol>
         </FlexCol>
@@ -104,22 +104,22 @@
           <Label class="category" text="Notifications"/>
           <StackLayout height="20"/>
 
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label class="label" text="Someone like your listing"/>
             <Switch/>
-          </FlexboxLayout>
+          </FlexRow>
           <StackLayout height="20"/>
 
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label class="label" text="Someone followed you"/>
             <Switch/>
-          </FlexboxLayout>
+          </FlexRow>
           <StackLayout height="20"/>
 
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label class="label" text="Facebook friend listed an item"/>
             <Switch/>
-          </FlexboxLayout>
+          </FlexRow>
         </FlexCol>
         <StackLayout height="30"/>
 

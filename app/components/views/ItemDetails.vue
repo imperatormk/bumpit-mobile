@@ -11,39 +11,39 @@
         </Carousel>
       </StackLayout>
       <StackLayout col="0" row="0" paddingRight="20" paddingBottom="10">
-        <FlexboxLayout justifyContent="flex-end" alignItems="flex-end" height="100%">
-          <FlexboxLayout width="50" height="50" backgroundColor="#0076ff" borderRadius="50%" alignItems="center" justifyContent="center">
+        <FlexRow justifyContent="flex-end" alignItems="flex-end" height="100%">
+          <FlexRow width="50" height="50" backgroundColor="#0076ff" borderRadius="50%" alignItems="center" justifyContent="center">
             <Label fontSize="24" class="far" color="white" :text="'\uf004'"/>
-          </FlexboxLayout>
-        </FlexboxLayout>
+          </FlexRow>
+        </FlexRow>
       </StackLayout>
     </GridLayout>
     <ScrollView orientation="vertical">
       <FlexCol>
         <FlexCol padding="20">
-          <FlexboxLayout>
-            <FlexboxLayout flexGrow="3">
+          <FlexRow>
+            <FlexRow flexGrow="3">
               <Label :text="item.title" fontSize="24"/>
-            </FlexboxLayout>
-            <FlexboxLayout flexGrow="1" justifyContent="flex-end">
+            </FlexRow>
+            <FlexRow flexGrow="1" justifyContent="flex-end">
               <Label :text="getPrice" fontSize="24"/>
-            </FlexboxLayout>
-          </FlexboxLayout>
+            </FlexRow>
+          </FlexRow>
           <StackLayout class="hr-light" margin="10 0"/>
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label :text="'Size: ' + item.size" fontSize="16"/>
             <Label :text="'Condition: ' + item.condition" fontSize="16"/>
-          </FlexboxLayout>
+          </FlexRow>
           <StackLayout padding="5"/>
-          <FlexboxLayout justifyContent="space-between">
+          <FlexRow justifyContent="space-between">
             <Label :text="'Location: ' + item.location" fontSize="16"/>
             <Label :text="'Seller: @' + item.seller.username" fontSize="16"/>
-          </FlexboxLayout>
+          </FlexRow>
           <StackLayout padding="5"/>
           <Label :textWrap="true" :text="item.details" fontSize="16"/>
         </FlexCol>
         <StackLayout class="hr-light" margin="0 0 15"/>
-        <FlexboxLayout justifyContent="space-between" alignItems="center" paddingLeft="20" paddingRight="20">
+        <FlexRow justifyContent="space-between" alignItems="center" paddingLeft="20" paddingRight="20">
           <FlexCol>
             <Label :text="item.seller.username" fontSize="18"/>
             <StarRating scaleX=".5" scaleY=".5" filledColor="#0076ff" :value="item.seller.rating" max="5"/>
@@ -51,7 +51,7 @@
           <StackLayout>
             <StateButton @onTap="gotoCheckout" text="Buy"/>
           </StackLayout>
-        </FlexboxLayout>
+        </FlexRow>
       </FlexCol>
     </ScrollView>
   </ViewContainer>
