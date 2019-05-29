@@ -20,6 +20,7 @@ const order = {
   shippingAddress: '<Address>',
   item,
   buyer: {
+    name: '<Name>',
     username: '<Username>'
   },
   createdAt: '<Time>'

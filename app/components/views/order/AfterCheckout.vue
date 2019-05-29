@@ -18,6 +18,7 @@
 
 <script>
 import ItemBasics from '@/components/blocks/item/ItemBasics'
+import mocks from '@/services/mocks'
 
 export default {
   props: {
@@ -26,23 +27,11 @@ export default {
       required: false
     }
   },
+  created() {
+    this.order = mocks.order
+  },
   data: () => ({
-    order: {
-      buyer: {
-        name: 'Darko'
-      },
-      item: {
-        title: 'Yezzy hand bag 750',
-        category: {
-          name: 'Accessory'
-        },
-        price: 1421,
-        currency: 'USD',
-        images: [{
-          url: 'https://via.placeholder.com/300x300'
-        }]
-      }
-    }
+    order: {}
   }),
   computed: {
     getPrice() { // TODO: move this to helpers
