@@ -1,6 +1,6 @@
 <template>
   <FlexboxLayout flexDirection="column" padding="5" @tap="$emit('selected', item)">
-    <Image class="rounded-top" :src="item.images[0].url" stretch="aspectFill" />
+    <Image class="rounded-top" :src="item.images[0].url" stretch="aspectFill"/>
     <GridLayout verticalAlignment="bottom">
       <StackLayout padding="4" backgroundColor="#dee1e7" class="rounded-bot" width="100%">
         <Label :text="item.title" fontSize="12"/>
@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import { currencyFilter } from '@/filters'
 
 export default {
   props: {
@@ -22,7 +21,7 @@ export default {
   },
   computed: {
     getPrice() {
-      return `${this.item.price} ${currencyFilter(this.item.currency)}`
+      return `${this.item.price} ${this.item.currency}`
     }
   }
 }

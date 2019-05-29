@@ -61,8 +61,6 @@
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 
-import { currencyFilter } from '@/filters'
-
 export default {
   props: {
     itemId: {
@@ -83,7 +81,7 @@ export default {
   }),
   computed: {
     getPrice() {
-      return `${this.item.price} ${currencyFilter(this.item.currency)}`
+      return `${this.item.price} ${this.item.currency}`
     }
   },
   methods: {
