@@ -5,7 +5,11 @@ const p = (obj) => {
 const item = {
   id: 100,
   title: 'Mock item',
-  category: 'Mock category',
+  category: {
+    name: 'Mock category'
+  },
+  price: 1421,
+  currency: 'USD',
   images: [{ url: 'https://via.placeholder.com/300x300' }],
   seller: {
     username: '<Username>'

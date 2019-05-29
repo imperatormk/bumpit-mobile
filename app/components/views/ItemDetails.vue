@@ -19,8 +19,8 @@
       </StackLayout>
     </GridLayout>
     <ScrollView orientation="vertical">
-      <FlexboxLayout flexDirection="column">
-        <FlexboxLayout padding="20" flexDirection="column">
+      <FlexCol>
+        <FlexCol padding="20">
           <FlexboxLayout>
             <FlexboxLayout flexGrow="3">
               <Label :text="item.title" fontSize="24"/>
@@ -41,18 +41,18 @@
           </FlexboxLayout>
           <StackLayout padding="5"/>
           <Label :textWrap="true" :text="item.details" fontSize="16"/>
-        </FlexboxLayout>
+        </FlexCol>
         <StackLayout class="hr-light" margin="0 0 15"/>
         <FlexboxLayout justifyContent="space-between" alignItems="center" paddingLeft="20" paddingRight="20">
-          <FlexboxLayout flexDirection="column">
+          <FlexCol>
             <Label :text="item.seller.username" fontSize="18"/>
             <StarRating scaleX=".5" scaleY=".5" filledColor="#0076ff" :value="item.seller.rating" max="5"/>
-          </FlexboxLayout>
+          </FlexCol>
           <StackLayout>
             <StateButton @onTap="gotoCheckout" text="Buy"/>
           </StackLayout>
         </FlexboxLayout>
-      </FlexboxLayout>
+      </FlexCol>
     </ScrollView>
   </ViewContainer>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <ViewContainer :loading="!loaded">
     <ScrollView orientation="vertical">
-      <FlexboxLayout flexDirection="column" padding="20">
+      <FlexCol padding="20">
         <Label :text="'@' + user.username" textAlignment="center"/>
         <StackLayout height="10"/>
 
@@ -12,7 +12,7 @@
         </FlexboxLayout>
         <StackLayout height="20"/>
 
-        <FlexboxLayout flexDirection="column">
+        <FlexCol>
           <Label class="category" text="Profile"/>
           <StackLayout height="20"/>
 
@@ -50,10 +50,10 @@
             <Label class="label" text="Bio"/>
             <Label :text="user.bio"/>
           </FlexboxLayout>
-        </FlexboxLayout>
+        </FlexCol>
         <StackLayout height="30"/>
 
-        <FlexboxLayout flexDirection="column">
+        <FlexCol>
           <Label class="category" text="Account"/>
           <StackLayout height="20"/>
 
@@ -73,10 +73,10 @@
             <Label class="label" text="Disable trades"/>
             <Switch/>
           </FlexboxLayout>
-        </FlexboxLayout>
+        </FlexCol>
         <StackLayout height="30"/>
 
-        <FlexboxLayout flexDirection="column">
+        <FlexCol>
           <Label class="category" text="Localization"/>
           <StackLayout height="20"/>
 
@@ -86,7 +86,7 @@
           </FlexboxLayout>
           <StackLayout height="20"/>
 
-          <FlexboxLayout flexDirection="column">
+          <FlexCol>
             <Label class="label" text="Currency"/>
             <StackLayout height="10"/>
             <ScrollView orientation="horizontal" :scrollBarIndicatorVisible="false">
@@ -96,11 +96,11 @@
                 </StackLayout>
               </FlexboxLayout>
             </ScrollView>
-          </FlexboxLayout>
-        </FlexboxLayout>
+          </FlexCol>
+        </FlexCol>
         <StackLayout height="30"/>
 
-        <FlexboxLayout flexDirection="column">
+        <FlexCol>
           <Label class="category" text="Notifications"/>
           <StackLayout height="20"/>
 
@@ -120,13 +120,13 @@
             <Label class="label" text="Facebook friend listed an item"/>
             <Switch/>
           </FlexboxLayout>
-        </FlexboxLayout>
+        </FlexCol>
         <StackLayout height="30"/>
 
         <StateButton text="Save changes"/>
         <StackLayout height="10"/>
         <StateButton @onTap="logoutTest" v-if="user" text="Logout"/>
-      </FlexboxLayout>
+      </FlexCol>
     </ScrollView>
   </ViewContainer>
 </template>

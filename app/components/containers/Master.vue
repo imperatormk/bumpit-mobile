@@ -1,12 +1,12 @@
 <template>
-  <FlexboxLayout flexDirection="column" justifyContent="space-around" height="100%">
+  <FlexCol justifyContent="space-around" height="100%">
     <Frame height="92%">
       <slot/>
     </Frame>
     <StackLayout>
       <Navigation/>
     </StackLayout>
-  </FlexboxLayout>
+  </FlexCol>
 </template>
 
 <script>

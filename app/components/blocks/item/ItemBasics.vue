@@ -10,8 +10,6 @@
     <Image :src="item.images[0].url" width="30%"/>
     <Split size="2"/>
     <Label :text="item.title" fontWeight="bold" color="black" fontSize="20" padding="3"/>
-    <Split v-if="item.category" size="2"/>
-    <Label v-if="item.category" :text="item.category.name" fontSize="18" padding="3"/>
   </FlexCol>
 </template>
 

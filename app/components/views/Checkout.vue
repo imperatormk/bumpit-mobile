@@ -1,14 +1,13 @@
 <template>
   <ViewContainer>
-    <FlexboxLayout flexDirection="column" alignItems="center" justifyContent="space-around" height="80%">
+    <FlexCol alignItems="center" justifyContent="space-around" height="80%">
       <Label :text="'Purchasing item ID: ' + itemId" fontSize="30" color="#8c8c8c"/>
       <GridLayout columns="*" rows="*" width="300" height="300">
         <FlexboxLayout col="0" row="0" flexWrap="wrap" alignItems="space-around" justifyContent="center">
-          <CreditCardView id="card"/>
           <Button text="Try me" @tap="stripeTest" id="testt"></Button>
         </FlexboxLayout>
       </GridLayout>
-    </FlexboxLayout>
+    </FlexCol>
   </ViewContainer>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <FlexboxLayout flexDirection="column" padding="5" @tap="$emit('selected', item)">
+  <FlexCol padding="5" @tap="$emit('selected', item)">
     <Image class="rounded-top" :src="item.images[0].url" stretch="aspectFill"/>
     <GridLayout verticalAlignment="bottom">
       <StackLayout padding="4" backgroundColor="#dee1e7" class="rounded-bot" width="100%">
@@ -7,7 +7,7 @@
         <Label :text="getPrice" fontSize="12"/>
       </StackLayout>
     </GridLayout>
-  </FlexboxLayout>
+  </FlexCol>
 </template>
 
 <script>

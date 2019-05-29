@@ -1,7 +1,7 @@
 <template>
   <ViewContainer>
-    <FlexboxLayout flexDirection="column" justifyContent="space-between" padding="20" height="100%">
-      <FlexboxLayout flexDirection="column">
+    <FlexCol justifyContent="space-between" padding="20" height="100%">
+      <FlexCol>
         <FlexboxLayout justifyContent="space-between" alignItems="center">
           <Label text="Login" fontSize="26" color="black" class="bold"/>
           <Label @tap="gotoRegister" text="Sign Up" fontSize="18" class="bold"/>
@@ -10,7 +10,7 @@
         <Label text="Enter your information to get started" color="#9599a4" fontSize="16"/>
         <StackLayout height="20"/>
 
-        <FlexboxLayout flexDirection="column">
+        <FlexCol>
           <Label text="Username" color="black" fontSize="19"/>
           <TextField hint="e.g. acid" 
             v-model="username"
@@ -20,10 +20,10 @@
             autocorrect="false"
             style="placeholder-color:#9da0aa;padding:0px;margin:0px;border-width:1px;border-color:white"
             class="input input-border"></TextField>
-        </FlexboxLayout>
+        </FlexCol>
         <StackLayout height="20"/>
 
-        <FlexboxLayout flexDirection="column">
+        <FlexCol>
           <Label text="Enter your password" color="black" fontSize="19"/>
           <TextField hint="Password"
             v-model="password"
@@ -33,10 +33,10 @@
             autocorrect="false"
             style="placeholder-color:#9da0aa;padding:0px;margin:0px;border-width:1px;border-color:white"
             class="input input-border"></TextField>
-        </FlexboxLayout>
-      </FlexboxLayout>
+        </FlexCol>
+      </FlexCol>
       <StateButton @onTap="login" text="Login"/>
-    </FlexboxLayout>
+    </FlexCol>
   </ViewContainer>
 </template>
 

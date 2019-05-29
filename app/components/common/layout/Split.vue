@@ -14,16 +14,16 @@ export default {
     visible: Boolean,
     big: Boolean,
     small: Boolean,
-    full: Boolean
+    fill: Boolean
   },
   computed: {
     getSize() {
       if (this.small) return 3
       if (this.big) return 20
-      return !this.full ? Number(this.size) : 'auto'
+      return !this.fill ? Number(this.size) : 'auto'
     },
     getStretchAlignment() {
-      return this.full ? 'stretch' : 'auto'
+      return this.fill ? 'stretch' : 'auto'
     },
     getColor() {
       return this.visible ? '#adb5bd' : 'white'

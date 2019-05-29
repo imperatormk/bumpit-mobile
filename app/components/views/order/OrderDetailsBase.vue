@@ -38,7 +38,7 @@
           <Split small/>
           <Label :text="'Purchase on ' + order.createdAt + ' from ' + order.buyer.username"/>
         </FlexCol>
-        <Split full/>
+        <Split fill/>
         <StateButton block text="Mark received"/>
       </FlexCol>
     </ScrollView>
