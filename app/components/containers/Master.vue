@@ -17,7 +17,7 @@ import Checkout from '@/components/views/order/Checkout'
 import AfterCheckout from '@/components/views/order/AfterCheckout'
 import OrderDetailsBase from '@/components/views/order/OrderDetailsBase'
 
-import Profile from '@/components/views/account/Profile'
+import EditProfile from '@/components/views/account/EditProfile'
 import Login from '@/components/views/account/Login'
 import Register from '@/components/views/account/Register'
 
@@ -69,6 +69,9 @@ export default {
           break
         case 'OrderDetailsBase':
           comp = OrderDetailsBase
+          break
+        case 'EditProfile':
+          comp = EditProfile
           break
         case 'Profile':
           comp = Profile

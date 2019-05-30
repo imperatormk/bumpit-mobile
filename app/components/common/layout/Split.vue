@@ -20,7 +20,7 @@ export default {
     getSize() {
       if (this.small) return 3
       if (this.big) return 20
-      return !this.fill ? Number(this.size) : 'auto'
+      return Number(this.size)
     },
     getFlexGrow() {
       return this.fill ? 1 : null
