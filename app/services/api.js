@@ -35,5 +35,9 @@ export default {
     const data = config || {}
     return http.post(`/accounts/${userId}/connections`, data)
       .then(resp => resp.data)
+  },
+  getUser(userId) {
+    return http.get(`/accounts/${userId}`)
+      .then(resp => resp.data)
   }
 }

@@ -69,8 +69,16 @@ import EventBus from '@/services/event-bus'
 import mocks from '@/services/mocks'
 
 export default {
+  props: {
+    userId: {
+      type: Number,
+      default: null
+    }
+  },
   mounted() {
-    this.getAuthUser()
+    const userId = this.userId
+    const userAction = userId == null ? this.getAuthUser() : this.getUser(userId)
+    return userAction
       .then((user) => {
         return this.getConnections(user.id)
           .then((connections) => ({ ...user, connections }))
@@ -94,10 +102,9 @@ export default {
   methods: {
     getAuthUser() {
       return Auth.getAuthUser()
-        .then((user) => {
-          this.user = user
-          return user
-        })
+    },
+    getUser(userId) {
+      return Api.getUser(userId)
     },
     getConnections(userId) {
       return Api.getConnections(userId, { count: true })
