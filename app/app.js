@@ -10,6 +10,7 @@ import FlexRow from '@/components/common/layout/FlexRow'
 import FlexCol from '@/components/common/layout/FlexCol'
 import DataGrid from '@/components/common/DataGrid'
 import LabelButton from '@/components/common/LabelButton'
+import Textbox from '@/components/common/Textbox'
 import StarRating from '@/components/plugins/star-rating/StarRating'
 
 Vue.component('ViewContainer', ViewContainer)
@@ -20,6 +21,7 @@ Vue.component('FlexRow', FlexRow)
 Vue.component('FlexCol', FlexCol)
 Vue.component('DataGrid', DataGrid)
 Vue.component('LabelButton', LabelButton)
+Vue.component('Textbox', Textbox)
 
 Vue.component('StarRating', StarRating)
 
@@ -38,9 +40,9 @@ import store from '@/store'
 new Vue({
   render: h => h(Master, [h(ItemFeed)]),
   created() {
-  firebase.init(config)
-    .then(() => {})
-    .catch(err => console.error(err))
+    firebase.init(config)
+      .then(() => {})
+      .catch(err => console.error(err))
   },
   store
 }).$start()
