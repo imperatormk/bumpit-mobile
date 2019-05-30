@@ -1,7 +1,7 @@
 <template>
   <ViewContainer :loading="!loaded">
     <ScrollView orientation="vertical">
-      <FlexCol padding="20">
+      <FlexCol>
         <Label :text="'@' + user.username" textAlignment="center"/>
         <Split size="10"/>
 

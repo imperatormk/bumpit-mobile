@@ -5,7 +5,7 @@
         <Label v-if="loadingText" :text="loadingText" textAlignment="center" fontSize="22" color="#8c8c8c" padding="10"/>
       </LoadingIndicator>
     </StackLayout>
-    <StackLayout v-else verticalAlignment="top" height="100%" padding="10">
+    <StackLayout v-else verticalAlignment="top" height="100%" padding="20">
       <slot/>
     </StackLayout>
   </Page>

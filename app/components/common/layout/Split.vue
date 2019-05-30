@@ -1,6 +1,6 @@
 <template>
-  <StackLayout v-if="!vertical" :height="getSize" width="1" :backgroundColor="getColor" :verticalAlignment="getStretchAlignment"/>
-  <StackLayout v-else :width="getSize" height="1" :backgroundColor="getColor" :horizontalAlignment="getStretchAlignment"/>
+  <StackLayout v-if="!vertical" :height="getSize" width="1" :backgroundColor="getColor" :flexGrow="getFlexGrow"/>
+  <StackLayout v-else :width="getSize" height="1" :backgroundColor="getColor" :flexGrow="getFlexGrow"/>
 </template>
 
 <script>
@@ -22,8 +22,8 @@ export default {
       if (this.big) return 20
       return !this.fill ? Number(this.size) : 'auto'
     },
-    getStretchAlignment() {
-      return this.fill ? 'stretch' : 'auto'
+    getFlexGrow() {
+      return this.fill ? 1 : null
     },
     getColor() {
       return this.visible ? '#adb5bd' : 'white'

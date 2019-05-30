@@ -1,14 +1,13 @@
 <template>
   <ViewContainer>
-    <FlexCol justifyContent="space-between" padding="20" height="100%">
-      <FlexCol>
-        <FlexRow justifyContent="space-between" alignItems="center">
-          <Label text="Sign Up" fontSize="26" color="black" class="bold"/>
-          <Label @tap="gotoLogin" text="Login" fontSize="18" class="bold"/>
-        </FlexRow>
-        <Split size="10"/>
-        <Label text="Enter your information to become a member" color="#9599a4" fontSize="16"/>
-      </FlexCol>
+    <FlexCol height="100%">
+      <FlexRow justifyContent="space-between" alignItems="center">
+        <Label text="Sign Up" fontSize="26" color="black" class="bold"/>
+        <Label @tap="gotoLogin" text="Login" fontSize="18" class="bold"/>
+      </FlexRow>
+      <Split size="10"/>
+      <Label text="Enter your information to become a member" color="#9599a4" fontSize="16"/>
+      <Split fill/>
       <StateButton @onTap="register" text="Sign Up"/>
     </FlexCol>
   </ViewContainer>

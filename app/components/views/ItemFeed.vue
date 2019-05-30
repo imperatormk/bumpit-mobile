@@ -1,6 +1,6 @@
 <template>
   <ViewContainer :loading="!loaded">
-    <StackLayout paddingLeft="10" paddingRight="10">
+    <FlexCol>
       <SearchBar hint="Search hint" :text="searchTerm" @loaded="$event.object.android.clearFocus()"/>
 
       <Split size="15"/>
@@ -16,7 +16,7 @@
           <ItemSummary v-for="(item, idx) in items" @selected="openItemDetails(item)" :col="idx/2?1:0" :key="item.id" :item="item"/>
         </GridLayout>
       </ScrollView>
-    </StackLayout>
+    </FlexCol>
   </ViewContainer>
 </template>
 
