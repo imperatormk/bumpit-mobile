@@ -1,6 +1,6 @@
 <template>
   <ViewContainer :loading="!loaded">
-    <FlexCol>
+    <FlexCol alignItems="center" height="100%">
       <SearchBar hint="Search hint" :text="searchTerm" @loaded="$event.object.android.clearFocus()"/>
 
       <Split size="15"/>
@@ -11,13 +11,11 @@
       </FlexRow>
 
       <Split size="15"/>
-      <ScrollView orientation="vertical">
-        <FlexRow flexWrap="wrap">
-          <StackLayout v-for="(product) in products" :key="product.id" width="50%">
-            <ProductSummary @selected="openProductDetails(product)" :product="product"/>
-          </StackLayout>
-        </FlexRow>
-      </ScrollView>
+      <ListView flexGrow="1" for="product in products">
+        <v-template>
+          <ProductSummary @selected="openProductDetails(product)" :product="product" width="50%"/>
+        </v-template>
+      </ListView>
     </FlexCol>
   </ViewContainer>
 </template>
