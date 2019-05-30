@@ -10,6 +10,7 @@ import FlexRow from '@/components/common/layout/FlexRow'
 import FlexCol from '@/components/common/layout/FlexCol'
 import DataGrid from '@/components/common/DataGrid'
 import LabelButton from '@/components/common/LabelButton'
+import StarRating from '@/components/plugins/star-rating/StarRating'
 
 Vue.component('ViewContainer', ViewContainer)
 Vue.component('StateButton', StateButton)
@@ -20,12 +21,12 @@ Vue.component('FlexCol', FlexCol)
 Vue.component('DataGrid', DataGrid)
 Vue.component('LabelButton', LabelButton)
 
+Vue.component('StarRating', StarRating)
+
 Vue.registerElement('CreditCardView', () => require('nativescript-stripe').CreditCardView)
 
 Vue.registerElement('Carousel', () => require('nativescript-carousel').Carousel)
 Vue.registerElement('CarouselItem', () => require('nativescript-carousel').CarouselItem)
-
-Vue.registerElement('StarRating', () => require('nativescript-star-ratings').StarRating)
 
 Vue.config.silent = true
 
@@ -37,9 +38,9 @@ import store from '@/store'
 new Vue({
   render: h => h(Master, [h(ItemFeed)]),
   created() {
-    firebase.init(config)
-      .then(() => {})
-      .catch(err => console.error(err))
+  firebase.init(config)
+    .then(() => {})
+    .catch(err => console.error(err))
   },
   store
 }).$start()
