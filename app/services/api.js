@@ -15,12 +15,12 @@ const getAuthHeaders = (opts) => {
 }
 
 export default {
-  getItems() {
-    return http.get('/items')
+  getProducts() {
+    return http.get('/products')
       .then(resp => resp.data)
   },
-  getItem(itemId) {
-    return http.get(`/items/${itemId}`)
+  getProduct(productId) {
+    return http.get(`/products/${productId}`)
       .then(resp => resp.data)
   },
   performOrder(order) {

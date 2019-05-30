@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import ItemFeed from '@/components/views/ItemFeed'
-import ItemDetails from '@/components/views/ItemDetails'
+import ProductFeed from '@/components/views/product/ProductFeed'
+import ProductDetails from '@/components/views/product/ProductDetails'
 
 import Checkout from '@/components/views/order/Checkout'
 import AfterCheckout from '@/components/views/order/AfterCheckout'
@@ -29,7 +29,7 @@ export default {
       let comp = null
       switch (index) {
         case 0:
-          comp = 'ItemFeed'
+          comp = 'ProductFeed'
           break
         case 4:
           comp = 'Profile'
@@ -41,7 +41,7 @@ export default {
       this.navigateTo('Login')
     })
     EventBus.$on('auth:loggedIn', () => {
-      this.navigateTo('ItemFeed')
+      this.navigateTo('ProductFeed')
     })
     EventBus.$on('navigateTo', this.navigateTo)
   },
@@ -55,11 +55,11 @@ export default {
     navigateTo(viewName, props) {
       let comp = null
       switch (viewName) {
-        case 'ItemFeed':
-          comp = ItemFeed
+        case 'ProductFeed':
+          comp = ProductFeed
           break
-        case 'ItemDetails':
-          comp = ItemDetails
+        case 'ProductDetails':
+          comp = ProductDetails
           break
         case 'Checkout':
           comp = Checkout

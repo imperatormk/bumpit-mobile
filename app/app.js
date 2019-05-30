@@ -31,7 +31,7 @@ Vue.registerElement('CarouselItem', () => require('nativescript-carousel').Carou
 Vue.config.silent = true
 
 import Master from '@/components/containers/Master'
-import InitialItem from '@/components/views/order/AfterCheckout'
+import InitialItem from '@/components/views/product/ProductFeed'
 
 import store from '@/store'
 

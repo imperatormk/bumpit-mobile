@@ -1,15 +1,15 @@
 <template>
   <FlexRow alignItems="center" width="100%" v-if="!vertical">
-    <Image :src="item.images[0].url" width="20%"/>
+    <Image :src="product.images[0].url" width="20%"/>
     <FlexCol justifyContent="center" marginLeft="15">
-      <Label :text="item.title" fontWeight="bold" color="black" fontSize="14" padding="3"/>
-      <Label v-if="item.category" :text="item.category.name" fontSize="14" padding="3"/>
+      <Label :text="product.title" fontWeight="bold" color="black" fontSize="14" padding="3"/>
+      <Label v-if="product.category" :text="product.category.name" fontSize="14" padding="3"/>
     </FlexCol>
   </FlexRow>
   <FlexCol alignItems="center" width="100%" v-else>
-    <Image :src="item.images[0].url" width="30%"/>
+    <Image :src="product.images[0].url" width="30%"/>
     <Split size="2"/>
-    <Label :text="item.title" fontWeight="bold" color="black" fontSize="20" padding="3"/>
+    <Label :text="product.title" fontWeight="bold" color="black" fontSize="20" padding="3"/>
   </FlexCol>
 </template>
 
@@ -19,7 +19,7 @@
 
 export default {
   props: {
-    item: {
+    product: {
       type: Object,
       required: true
     },

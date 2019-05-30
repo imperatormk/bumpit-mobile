@@ -2,8 +2,8 @@
   <ViewContainer>
     <FlexCol height="100%">
       <FlexRow justifyContent="space-between" alignItems="center">
-        <Label text="Sign Up" fontSize="26" color="black" class="bold"/>
-        <Label @tap="gotoLogin" text="Login" fontSize="18" class="bold"/>
+        <Label text="Sign Up" fontSize="26" color="black" fontWeight="bold"/>
+        <Label @tap="gotoLogin" text="Login" fontSize="18" fontWeight="bold"/>
       </FlexRow>
       <Split size="10"/>
       <Label text="Enter your information to become a member" color="#9599a4" fontSize="16"/>

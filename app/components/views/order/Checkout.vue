@@ -1,7 +1,7 @@
 <template>
   <ViewContainer>
     <FlexCol alignItems="center" justifyContent="space-around" height="80%">
-      <Label :text="'Purchasing item ID: ' + itemId" fontSize="30" color="#8c8c8c"/>
+      <Label :text="'Purchasing product ID: ' + productId" fontSize="30" color="#8c8c8c"/>
       <GridLayout columns="*" rows="*" width="300" height="300">
         <FlexRow col="0" row="0" flexWrap="wrap" alignItems="space-around" justifyContent="center">
           <Button text="Try me" @tap="stripeTest" id="testt"></Button>
@@ -21,7 +21,7 @@ const cc = new Card('4242424242424242', 12, 21, '069') // temp
 
 export default {
   props: {
-    itemId: {
+    productId: {
       type: Number,
       required: true
     }

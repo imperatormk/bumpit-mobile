@@ -2,9 +2,9 @@ const p = (obj) => {
   return Promise.resolve(obj)
 }
 
-const item = {
+const product = {
   id: 100,
-  title: 'Mock item',
+  title: 'Mock product',
   category: {
     name: 'Mock category'
   },
@@ -18,7 +18,7 @@ const item = {
 
 const order = {
   shippingAddress: '<Address>',
-  item,
+  product,
   buyer: {
     name: '<Name>',
     username: '<Username>'
@@ -27,6 +27,6 @@ const order = {
 }
 
 export default {
-  item,
+  product,
   order
 }

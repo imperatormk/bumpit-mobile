@@ -9,7 +9,7 @@
       <Split big/>
       <Split big/>
       <Split big/>
-      <ItemBasics :item="order.item"/>
+      <ProductBasics :product="order.product"/>
       <Split big/>
       <DataGrid :data="chargeItems"/>
       <Split fill/>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import ItemBasics from '@/components/blocks/item/ItemBasics'
+import ProductBasics from '@/components/blocks/product/ProductBasics'
 import EventBus from '@/services/event-bus'
 import mocks from '@/services/mocks'
 
@@ -38,7 +38,7 @@ export default {
   }),
   computed: {
     getPrice() { // TODO: move this to helpers
-      return `${this.order.item.price / 100} ${this.order.item.currency}`
+      return `${this.order.product.price / 100} ${this.order.product.currency}`
     },
     chargeItems() { // rename later
       return [
@@ -54,7 +54,7 @@ export default {
     }
   },
   components: {
-    ItemBasics
+    ProductBasics
   }
 }
 </script>

@@ -2,7 +2,7 @@
   <ViewContainer :loading="!loaded">
     <ScrollView orientation="vertical">
       <FlexCol alignItems="center" height="100%">
-        <ItemBasics :item="order.item" vertical/>
+        <ProductBasics :product="order.product" vertical/>
         <Split big/>
         <FlexCol class="feedback" width="100%">
           <FlexRow justifyContent="space-between" alignItems="center">
@@ -52,7 +52,7 @@
 
 <script>
 import Api from '@/services/api'
-import ItemBasics from '@/components/blocks/item/ItemBasics'
+import ProductBasics from '@/components/blocks/product/ProductBasics'
 import mocks from '@/services/mocks'
 
 export default {
@@ -86,7 +86,7 @@ export default {
     }
   },
   components: {
-    ItemBasics
+    ProductBasics
   }
 }
 
