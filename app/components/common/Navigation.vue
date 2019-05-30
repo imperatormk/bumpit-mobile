@@ -12,14 +12,26 @@
 import EventBus from '@/services/event-bus'
 
 export default {
+  mounted() {
+    EventBus.$on('navigateTo', this.navigated)
+  },
+  destroyed() {
+    EventBus.$off('navigateTo', this.navigated)
+  },
   data: () => ({
-    selectedIndex: 0
+    selectedIndex: 0,
+    hasSelection: true,
+    views: ['ProductFeed', 'Likes', 'OrderList', 'Messaging', 'Profile']
   }),
   methods: {
     menuPageChanged(e) {
       const selectedIndex = e.value
       this.selectedIndex = selectedIndex
       EventBus.$emit('menuPageChanged', selectedIndex)
+    },
+    navigated(viewName) {
+      const index = this.views.indexOf(viewName)
+      this.hasSelection = index >= 0
     }
   }
 }
