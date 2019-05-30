@@ -10,41 +10,41 @@
             <Label fontSize="24" class="fas" color="#a1a1a2" :text="'\uf030'"/>
           </FlexRow>
         </FlexRow>
-        <Split size="20"/>
+        <Split big/>
 
         <FlexCol>
           <Label class="category" text="Profile"/>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Username"/>
             <Label :text="'@' + user.username"/>
           </FlexRow>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="First name"/>
-            <Label text="Darko"/>
+            <Label :text="user.name"/>
           </FlexRow>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Last name"/>
-            <Label text="Simonovski"/>
+            <Label :text="user.surname"/>
           </FlexRow>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Location"/>
             <Label :text="user.location"/>
           </FlexRow>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Shipping address"/>
             <Label text="Apostol Zdravevski 34 7000"/>
           </FlexRow>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Bio"/>
@@ -55,19 +55,19 @@
 
         <FlexCol>
           <Label class="category" text="Account"/>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Contact email"/>
             <Label :text="user.email"/>
           </FlexRow>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Payout settings"/>
             <Label text="arrowhere"/>
           </FlexRow>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Disable trades"/>
@@ -78,13 +78,13 @@
 
         <FlexCol>
           <Label class="category" text="Localization"/>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Language"/>
             <Label text="English"/>
           </FlexRow>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexCol>
             <Label class="label" text="Currency"/>
@@ -102,19 +102,19 @@
 
         <FlexCol>
           <Label class="category" text="Notifications"/>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Someone like your listing"/>
             <Switch/>
           </FlexRow>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Someone followed you"/>
             <Switch/>
           </FlexRow>
-          <Split size="20"/>
+          <Split big/>
 
           <FlexRow justifyContent="space-between">
             <Label class="label" text="Facebook friend listed an item"/>

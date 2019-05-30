@@ -13,13 +13,13 @@
           <Label text="Let us how your transaction went"/>
         </FlexCol>
         <Split big/>
-        <FlexCol class="shipping" width="100%">
+        <FlexCol v-if="order.shipping" class="shipping" width="100%">
           <FlexRow justifyContent="space-between" alignItems="center">
             <Label fontWeight="bold" fontSize="18" text="Shipping address"/>
             <LabelButton text="Resolve shipping issue"/>
           </FlexRow>
           <Split small/>
-          <Label :text="order.shippingAddress"/>
+          <Label :text="order.shipping.address"/>
         </FlexCol>
         <Split big/>
         <FlexCol class="payment" width="100%">
@@ -68,17 +68,15 @@ export default {
     }
   },
   created() {
-    this.order = mocks.order
-    this.loaded = true
-    return false
-    Api.getOrder(this.orderId)
+    const orderId = 1 // temp
+    Api.getOrder(orderId)
       .then((order) => {
         this.order = order
         this.loaded = true
       })
   },
   data: () => ({
-    order: {},
+    order: { buyer: {}, product: { seller: {} } }, // ffs
     loaded: false
   }),
   computed: {

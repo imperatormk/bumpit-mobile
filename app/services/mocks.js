@@ -23,7 +23,9 @@ const product = {
 }
 
 const order = {
-  shippingAddress: '<Address>',
+  shipping: {
+    address: '<Address>'
+  },
   product,
   buyer: {
     ...user

@@ -22,12 +22,15 @@ export default {
       required: true
     }
   },
-  computed: { // are these tho temp?
+  computed: {
     avatar() {
       return this.user.avatar || DEFAULT_AVATAR
     },
     name() {
-      return this.user.name || null
+      const name = this.user.name || ''
+      const surname = this.user.surname || ''
+      const fullname = `${name} ${surname}`
+      return fullname || null
     }
   }
 }
