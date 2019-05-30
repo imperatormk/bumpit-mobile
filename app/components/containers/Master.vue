@@ -17,9 +17,9 @@ import Checkout from '@/components/views/order/Checkout'
 import AfterCheckout from '@/components/views/order/AfterCheckout'
 import OrderDetailsBase from '@/components/views/order/OrderDetailsBase'
 
-import Profile from '@/components/views/Profile'
-import Login from '@/components/views/Login'
-import Register from '@/components/views/Register'
+import Profile from '@/components/views/account/Profile'
+import Login from '@/components/views/account/Login'
+import Register from '@/components/views/account/Register'
 
 import EventBus from '@/services/event-bus'
 

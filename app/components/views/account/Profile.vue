@@ -1,9 +1,6 @@
 <template>
   <ViewContainer :loading="!loaded">
     <FlexCol slot="scrollable">
-      <Label :text="'@' + user.username" textAlignment="center"/>
-      <Split/>
-
       <FlexRow justifyContent="center" alignItems="center" width="100%">
         <FlexRow width="100" height="100" backgroundColor="#eaeef0" borderRadius="50%" alignItems="center" justifyContent="center">
           <Label fontSize="24" class="fas" color="#a1a1a2" :text="'\uf030'"/>
