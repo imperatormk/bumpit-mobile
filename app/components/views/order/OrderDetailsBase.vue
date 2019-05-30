@@ -1,56 +1,61 @@
 <template>
   <ViewContainer :loading="!loaded">
-    <ScrollView orientation="vertical">
-      <FlexCol>
-        <ProductBasics :product="order.product" vertical/>
+    <FlexCol slot="scrollable">
+      <ProductBasics :product="order.product" vertical/>
+
+      <FlexCol class="feedback" width="100%">
         <Split big/>
-        <FlexCol class="feedback" width="100%">
-          <FlexRow justifyContent="space-between" alignItems="center">
-            <Label fontWeight="bold" fontSize="18" text="Feedback"/>
-            <LabelButton text="Leave feedback"/>
-          </FlexRow>
-          <Split small/>
-          <Label text="Let us how your transaction went"/>
-        </FlexCol>
-        <Split big/>
-        <FlexCol v-if="order.shipping" class="shipping" width="100%">
-          <FlexRow justifyContent="space-between" alignItems="center">
-            <Label fontWeight="bold" fontSize="18" text="Shipping address"/>
-            <LabelButton text="Resolve shipping issue"/>
-          </FlexRow>
-          <Split small/>
-          <Label :text="order.shipping.address"/>
-        </FlexCol>
-        <Split big/>
-        <FlexCol class="payment" width="100%">
-          <FlexRow justifyContent="space-between" alignItems="center">
-            <Label fontWeight="bold" fontSize="18" text="Payment"/>
-            <LabelButton text="Ask for refund"/>
-          </FlexRow>
-          <Split small/>
-          <Label text="Payment sent over Stripe"/>
-        </FlexCol>
-        <Split big/>
-        <FlexCol class="charges" width="100%">
-          <DataGrid :data="chargeItems"/>
-        </FlexCol>
-        <Split big/>
-        <FlexCol class="seller" width="100%">
-          <FlexRow justifyContent="space-between" alignItems="center">
-            <Label fontWeight="bold" fontSize="18" text="Seller"/>
-            <LabelButton text="Message seller"/>
-          </FlexRow>
-          <Split small/>
-          <Label :text="'Purchase on ' + order.createdAt + ' from ' + order.buyer.username"/>
-        </FlexCol>
-        <Split/>
-        <UserBasics :user="order.product.seller" fontSize="18">
-          <LabelButton :text="`@${order.product.seller.username}`"/>
-        </UserBasics>
-        <Split big/>
-        <StateButton block text="Mark received"/>
+        <FlexRow justifyContent="space-between" alignItems="center">
+          <Label fontWeight="bold" fontSize="18" text="Feedback"/>
+          <LabelButton text="Leave feedback"/>
+        </FlexRow>
+        <Split small/>
+        <Label text="Let us how your transaction went"/>
       </FlexCol>
-    </ScrollView>
+
+      <FlexCol v-if="order.shipping" class="shipping" width="100%">
+        <Split big/>
+        <FlexRow justifyContent="space-between" alignItems="center">
+          <Label fontWeight="bold" fontSize="18" text="Shipping address"/>
+          <LabelButton text="Resolve shipping issue"/>
+        </FlexRow>
+        <Split small/>
+        <Label :text="order.shipping.address"/>
+      </FlexCol>
+
+      <FlexCol class="payment" width="100%">
+        <Split big/>
+        <FlexRow justifyContent="space-between" alignItems="center">
+          <Label fontWeight="bold" fontSize="18" text="Payment"/>
+          <LabelButton text="Ask for refund"/>
+        </FlexRow>
+        <Split small/>
+        <Label text="Payment sent over Stripe"/>
+      </FlexCol>
+
+      <FlexCol class="charges" width="100%">
+        <Split big/>
+        <DataGrid :data="chargeItems"/>
+      </FlexCol>
+
+      <FlexCol class="seller" width="100%">
+        <Split big/>
+        <FlexRow justifyContent="space-between" alignItems="center">
+          <Label fontWeight="bold" fontSize="18" text="Seller"/>
+          <LabelButton text="Message seller"/>
+        </FlexRow>
+        <Split small/>
+        <Label :text="'Purchase on ' + order.createdAt + ' from ' + order.buyer.username"/>
+      </FlexCol>
+
+      <Split big/>
+      <UserBasics :user="order.product.seller" fontSize="18">
+        <LabelButton :text="`@${order.product.seller.username}`"/>
+      </UserBasics>
+
+      <Split big/>
+      <StateButton block text="Mark received"/>
+    </FlexCol>
   </ViewContainer>
 </template>
 

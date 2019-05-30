@@ -1,133 +1,131 @@
 <template>
   <ViewContainer :loading="!loaded">
-    <ScrollView orientation="vertical">
-      <FlexCol>
-        <Label :text="'@' + user.username" textAlignment="center"/>
-        <Split/>
+    <FlexCol slot="scrollable">
+      <Label :text="'@' + user.username" textAlignment="center"/>
+      <Split/>
 
-        <FlexRow justifyContent="center" alignItems="center" width="100%">
-          <FlexRow width="100" height="100" backgroundColor="#eaeef0" borderRadius="50%" alignItems="center" justifyContent="center">
-            <Label fontSize="24" class="fas" color="#a1a1a2" :text="'\uf030'"/>
-          </FlexRow>
+      <FlexRow justifyContent="center" alignItems="center" width="100%">
+        <FlexRow width="100" height="100" backgroundColor="#eaeef0" borderRadius="50%" alignItems="center" justifyContent="center">
+          <Label fontSize="24" class="fas" color="#a1a1a2" :text="'\uf030'"/>
+        </FlexRow>
+      </FlexRow>
+      <Split big/>
+
+      <FlexCol>
+        <Label class="category" text="Profile"/>
+        <Split big/>
+
+        <FlexRow justifyContent="space-between">
+          <Label class="label" text="Username"/>
+          <Label :text="'@' + user.username"/>
+        </FlexRow>
+        <Split big/>
+
+        <FlexRow justifyContent="space-between">
+          <Label class="label" text="First name"/>
+          <Label :text="user.name"/>
+        </FlexRow>
+        <Split big/>
+
+        <FlexRow justifyContent="space-between">
+          <Label class="label" text="Last name"/>
+          <Label :text="user.surname"/>
+        </FlexRow>
+        <Split big/>
+
+        <FlexRow justifyContent="space-between">
+          <Label class="label" text="Location"/>
+          <Label :text="user.location"/>
+        </FlexRow>
+        <Split big/>
+
+        <FlexRow justifyContent="space-between">
+          <Label class="label" text="Shipping address"/>
+          <Label text="Apostol Zdravevski 34 7000"/>
+        </FlexRow>
+        <Split big/>
+
+        <FlexRow justifyContent="space-between">
+          <Label class="label" text="Bio"/>
+          <Label :text="user.bio"/>
+        </FlexRow>
+      </FlexCol>
+      <Split size="30"/>
+
+      <FlexCol>
+        <Label class="category" text="Account"/>
+        <Split big/>
+
+        <FlexRow justifyContent="space-between">
+          <Label class="label" text="Contact email"/>
+          <Label :text="user.email"/>
+        </FlexRow>
+        <Split big/>
+
+        <FlexRow justifyContent="space-between">
+          <Label class="label" text="Payout settings"/>
+          <Label text="arrowhere"/>
+        </FlexRow>
+        <Split big/>
+
+        <FlexRow justifyContent="space-between">
+          <Label class="label" text="Disable trades"/>
+          <Switch/>
+        </FlexRow>
+      </FlexCol>
+      <Split size="30"/>
+
+      <FlexCol>
+        <Label class="category" text="Localization"/>
+        <Split big/>
+
+        <FlexRow justifyContent="space-between">
+          <Label class="label" text="Language"/>
+          <Label text="English"/>
         </FlexRow>
         <Split big/>
 
         <FlexCol>
-          <Label class="category" text="Profile"/>
-          <Split big/>
-
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="Username"/>
-            <Label :text="'@' + user.username"/>
-          </FlexRow>
-          <Split big/>
-
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="First name"/>
-            <Label :text="user.name"/>
-          </FlexRow>
-          <Split big/>
-
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="Last name"/>
-            <Label :text="user.surname"/>
-          </FlexRow>
-          <Split big/>
-
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="Location"/>
-            <Label :text="user.location"/>
-          </FlexRow>
-          <Split big/>
-
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="Shipping address"/>
-            <Label text="Apostol Zdravevski 34 7000"/>
-          </FlexRow>
-          <Split big/>
-
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="Bio"/>
-            <Label :text="user.bio"/>
-          </FlexRow>
+          <Label class="label" text="Currency"/>
+          <Split/>
+          <ScrollView orientation="horizontal" :scrollBarIndicatorVisible="false">
+            <FlexRow>
+              <StackLayout v-for="(currency, idx) in currencies" :key="idx" @tap="selectCurrency(idx)" :backgroundColor="profile.selectedCurrency === idx ? 'black' : 'white'" padding="5 10">
+                <Label :text="currency" :color="profile.selectedCurrency === idx ? 'white' : 'black'"/>
+              </StackLayout>
+            </FlexRow>
+          </ScrollView>
         </FlexCol>
-        <Split size="30"/>
-
-        <FlexCol>
-          <Label class="category" text="Account"/>
-          <Split big/>
-
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="Contact email"/>
-            <Label :text="user.email"/>
-          </FlexRow>
-          <Split big/>
-
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="Payout settings"/>
-            <Label text="arrowhere"/>
-          </FlexRow>
-          <Split big/>
-
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="Disable trades"/>
-            <Switch/>
-          </FlexRow>
-        </FlexCol>
-        <Split size="30"/>
-
-        <FlexCol>
-          <Label class="category" text="Localization"/>
-          <Split big/>
-
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="Language"/>
-            <Label text="English"/>
-          </FlexRow>
-          <Split big/>
-
-          <FlexCol>
-            <Label class="label" text="Currency"/>
-            <Split/>
-            <ScrollView orientation="horizontal" :scrollBarIndicatorVisible="false">
-              <FlexRow>
-                <StackLayout v-for="(currency, idx) in currencies" :key="idx" @tap="selectCurrency(idx)" :backgroundColor="profile.selectedCurrency === idx ? 'black' : 'white'" padding="5 10">
-                  <Label :text="currency" :color="profile.selectedCurrency === idx ? 'white' : 'black'"/>
-                </StackLayout>
-              </FlexRow>
-            </ScrollView>
-          </FlexCol>
-        </FlexCol>
-        <Split size="30"/>
-
-        <FlexCol>
-          <Label class="category" text="Notifications"/>
-          <Split big/>
-
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="Someone like your listing"/>
-            <Switch/>
-          </FlexRow>
-          <Split big/>
-
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="Someone followed you"/>
-            <Switch/>
-          </FlexRow>
-          <Split big/>
-
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="Facebook friend listed an item"/>
-            <Switch/>
-          </FlexRow>
-        </FlexCol>
-        <Split size="30"/>
-
-        <StateButton text="Save changes"/>
-        <Split/>
-        <StateButton @onTap="logoutTest" v-if="user" text="Logout"/>
       </FlexCol>
-    </ScrollView>
+      <Split size="30"/>
+
+      <FlexCol>
+        <Label class="category" text="Notifications"/>
+        <Split big/>
+
+        <FlexRow justifyContent="space-between">
+          <Label class="label" text="Someone like your listing"/>
+          <Switch/>
+        </FlexRow>
+        <Split big/>
+
+        <FlexRow justifyContent="space-between">
+          <Label class="label" text="Someone followed you"/>
+          <Switch/>
+        </FlexRow>
+        <Split big/>
+
+        <FlexRow justifyContent="space-between">
+          <Label class="label" text="Facebook friend listed an item"/>
+          <Switch/>
+        </FlexRow>
+      </FlexCol>
+      <Split size="30"/>
+
+      <StateButton text="Save changes"/>
+      <Split/>
+      <StateButton @onTap="logoutTest" v-if="user" text="Logout"/>
+    </FlexCol>
   </ViewContainer>
 </template>
 

@@ -20,45 +20,43 @@
       </StackLayout>
     </GridLayout>
 
-    <ScrollView orientation="vertical">
-      <FlexCol>
-        <FlexRow>
-          <FlexRow flexGrow="3">
-            <Label :text="product.title" fontSize="24"/>
-          </FlexRow>
-          <FlexRow flexGrow="1" justifyContent="flex-end">
-            <Label :text="getPrice" fontSize="24"/>
-          </FlexRow>
+    <FlexCol slot="scrollable">
+      <FlexRow>
+        <FlexRow flexGrow="3">
+          <Label :text="product.title" fontSize="24"/>
         </FlexRow>
-
-        <Split/>
-        <FlexRow justifyContent="space-between" alignItems="center">
-          <Label :text="'Size: ' + product.size" fontSize="16"/>
-          <Label :text="'Condition: ' + product.condition" fontSize="16"/>
+        <FlexRow flexGrow="1" justifyContent="flex-end">
+          <Label :text="getPrice" fontSize="24"/>
         </FlexRow>
+      </FlexRow>
 
-        <Split/>
-        <FlexRow justifyContent="space-between" alignItems="center">
-          <Label :text="'Location: ' + product.location" fontSize="16"/>
-          <Label :text="'Seller: @' + product.seller.username" fontSize="16"/>
-        </FlexRow>
+      <Split/>
+      <FlexRow justifyContent="space-between" alignItems="center">
+        <Label :text="'Size: ' + product.size" fontSize="16"/>
+        <Label :text="'Condition: ' + product.condition" fontSize="16"/>
+      </FlexRow>
 
-        <Split big/>
-        <Label class="description" :textWrap="true" :text="product.details" fontSize="16"/>
+      <Split/>
+      <FlexRow justifyContent="space-between" alignItems="center">
+        <Label :text="'Location: ' + product.location" fontSize="16"/>
+        <Label :text="'Seller: @' + product.seller.username" fontSize="16"/>
+      </FlexRow>
 
-        <Split big/>
-        <FlexRow justifyContent="space-between" alignItems="center">
-          <FlexCol>
-            <UserBasics :user="product.seller" fontSize="18">
-              <StarRating :rating="product.seller.rating" max="5" dense/>
-            </UserBasics>
-          </FlexCol>
-          <StackLayout>
-            <StateButton @onTap="gotoCheckout" text="Buy"/>
-          </StackLayout>
-        </FlexRow>
-      </FlexCol>
-    </ScrollView>
+      <Split big/>
+      <Label class="description" :textWrap="true" :text="product.details" fontSize="16"/>
+
+      <Split big/>
+      <FlexRow justifyContent="space-between" alignItems="center">
+        <FlexCol>
+          <UserBasics :user="product.seller" fontSize="18">
+            <StarRating :rating="product.seller.rating" max="5" dense/>
+          </UserBasics>
+        </FlexCol>
+        <StackLayout>
+          <StateButton @onTap="gotoCheckout" text="Buy"/>
+        </StackLayout>
+      </FlexRow>
+    </FlexCol>
   </ViewContainer>
 </template>
 
