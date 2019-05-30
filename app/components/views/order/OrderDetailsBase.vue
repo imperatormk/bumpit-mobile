@@ -1,8 +1,9 @@
 <template>
   <ViewContainer :loading="!loaded">
     <ScrollView orientation="vertical">
-      <FlexCol alignItems="center" justifyContent="space-around" height="100%">
+      <FlexCol alignItems="center" height="100%">
         <ItemBasics :item="order.item" vertical/>
+        <Split big/>
         <FlexCol class="feedback" width="100%">
           <FlexRow justifyContent="space-between" alignItems="center">
             <Label fontWeight="bold" fontSize="18" text="Feedback"/>
@@ -11,6 +12,7 @@
           <Split small/>
           <Label text="Let us how your transaction went"/>
         </FlexCol>
+        <Split big/>
         <FlexCol class="shipping" width="100%">
           <FlexRow justifyContent="space-between" alignItems="center">
             <Label fontWeight="bold" fontSize="18" text="Shipping address"/>
@@ -19,6 +21,7 @@
           <Split small/>
           <Label :text="order.shippingAddress"/>
         </FlexCol>
+        <Split big/>
         <FlexCol class="payment" width="100%">
           <FlexRow justifyContent="space-between" alignItems="center">
             <Label fontWeight="bold" fontSize="18" text="Payment"/>
@@ -27,9 +30,11 @@
           <Split small/>
           <Label text="Payment sent over Stripe"/>
         </FlexCol>
+        <Split big/>
         <FlexCol class="charges" width="100%">
           <DataGrid :data="chargeItems"/>
         </FlexCol>
+        <Split big/>
         <FlexCol class="seller" width="100%">
           <FlexRow justifyContent="space-between" alignItems="center">
             <Label fontWeight="bold" fontSize="18" text="Seller"/>

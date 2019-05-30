@@ -11,8 +11,12 @@
 
 <script>
 import ItemFeed from '@/components/views/ItemFeed'
-import Checkout from '@/components/views/Checkout'
 import ItemDetails from '@/components/views/ItemDetails'
+
+import Checkout from '@/components/views/order/Checkout'
+import AfterCheckout from '@/components/views/order/AfterCheckout'
+import OrderDetailsBase from '@/components/views/order/OrderDetailsBase'
+
 import Profile from '@/components/views/Profile'
 import Login from '@/components/views/Login'
 import Register from '@/components/views/Register'
@@ -59,6 +63,12 @@ export default {
           break
         case 'Checkout':
           comp = Checkout
+          break
+        case 'AfterCheckout':
+          comp = AfterCheckout
+          break
+        case 'OrderDetailsBase':
+          comp = OrderDetailsBase
           break
         case 'Profile':
           comp = Profile
