@@ -10,7 +10,7 @@ const product = {
   },
   price: 1421,
   currency: 'USD',
-  images: [{ url: 'https://via.placeholder.com/300x300' }],
+  images: [{ id: 1, url: 'https://via.placeholder.com/300x300' }],
   seller: {
     username: '<Username>'
   }

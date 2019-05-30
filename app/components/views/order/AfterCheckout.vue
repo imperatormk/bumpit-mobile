@@ -13,7 +13,7 @@
       <Split big/>
       <DataGrid :data="chargeItems"/>
       <Split fill/>
-      <StateButton @onTap="goToOrder" block text="See details"/>
+      <StateButton @onTap="gotoOrder" block text="See details"/>
     </FlexCol>
   </ViewContainer>
 </template>
@@ -49,7 +49,7 @@ export default {
     }
   },
   methods: {
-    goToOrder() {
+    gotoOrder() {
       EventBus.$emit('navigateTo', 'OrderDetailsBase', { orderId: this.order.id }) // should be orderProp?
     }
   },

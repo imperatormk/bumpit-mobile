@@ -3,7 +3,7 @@
     <ScrollView orientation="vertical">
       <FlexCol>
         <Label :text="'@' + user.username" textAlignment="center"/>
-        <Split size="10"/>
+        <Split/>
 
         <FlexRow justifyContent="center" alignItems="center" width="100%">
           <FlexRow width="100" height="100" backgroundColor="#eaeef0" borderRadius="50%" alignItems="center" justifyContent="center">
@@ -88,7 +88,7 @@
 
           <FlexCol>
             <Label class="label" text="Currency"/>
-            <Split size="10"/>
+            <Split/>
             <ScrollView orientation="horizontal" :scrollBarIndicatorVisible="false">
               <FlexRow>
                 <StackLayout v-for="(currency, idx) in currencies" :key="idx" @tap="selectCurrency(idx)" :backgroundColor="profile.selectedCurrency === idx ? 'black' : 'white'" padding="5 10">
@@ -124,7 +124,7 @@
         <Split size="30"/>
 
         <StateButton text="Save changes"/>
-        <Split size="10"/>
+        <Split/>
         <StateButton @onTap="logoutTest" v-if="user" text="Logout"/>
       </FlexCol>
     </ScrollView>
