@@ -1,7 +1,7 @@
 <template>
   <ViewContainer :loading="!loaded">
     <ScrollView orientation="vertical">
-      <FlexCol alignItems="center" height="100%">
+      <FlexCol>
         <ProductBasics :product="order.product" vertical/>
         <Split big/>
         <FlexCol class="feedback" width="100%">
@@ -43,7 +43,11 @@
           <Split small/>
           <Label :text="'Purchase on ' + order.createdAt + ' from ' + order.buyer.username"/>
         </FlexCol>
-        <Split fill/>
+        <Split/>
+        <UserBasics :user="order.product.seller" fontSize="18">
+          <LabelButton :text="`@${order.product.seller.username}`"/>
+        </UserBasics>
+        <Split big/>
         <StateButton block text="Mark received"/>
       </FlexCol>
     </ScrollView>
@@ -51,8 +55,9 @@
 </template>
 
 <script>
-import Api from '@/services/api'
 import ProductBasics from '@/components/blocks/product/ProductBasics'
+import UserBasics from '@/components/blocks/user/UserBasics'
+import Api from '@/services/api'
 import mocks from '@/services/mocks'
 
 export default {
@@ -86,7 +91,8 @@ export default {
     }
   },
   components: {
-    ProductBasics
+    ProductBasics,
+    UserBasics
   }
 }
 
