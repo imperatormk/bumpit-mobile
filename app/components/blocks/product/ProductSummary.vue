@@ -2,12 +2,10 @@
   <StackLayout @tap="$emit('selected', product)">
     <FlexCol padding="5">
       <Image class="rounded-top" :src="product.images[0].url"/>
-      <GridLayout verticalAlignment="bottom">
-        <StackLayout padding="4" backgroundColor="#dee1e7" class="rounded-bot" width="100%">
-          <Label :text="product.title" fontSize="12"/>
-          <Label :text="getPrice" fontSize="12"/>
-        </StackLayout>
-      </GridLayout>
+      <StackLayout padding="4" backgroundColor="#dee1e7" class="rounded-bot" width="100%">
+        <Label :text="product.title" fontSize="12"/>
+        <Label :text="getPrice" fontSize="12"/>
+      </StackLayout>
     </FlexCol>
   </StackLayout>
 </template>

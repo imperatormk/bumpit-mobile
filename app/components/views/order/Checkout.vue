@@ -2,11 +2,9 @@
   <ViewContainer>
     <FlexCol alignItems="center" justifyContent="space-around" height="80%">
       <Label :text="'Purchasing product ID: ' + productId" fontSize="30" color="#8c8c8c"/>
-      <GridLayout columns="*" rows="*" width="300" height="300">
-        <FlexRow col="0" row="0" flexWrap="wrap" alignItems="space-around" justifyContent="center">
-          <Button text="Try me" @tap="stripeTest" id="testt"></Button>
-        </FlexRow>
-      </GridLayout>
+      <FlexRow col="0" row="0" flexWrap="wrap" alignItems="space-around" justifyContent="center">
+        <Button text="Try me" @tap="stripeTest" id="testt"></Button>
+      </FlexRow>
     </FlexCol>
   </ViewContainer>
 </template>
