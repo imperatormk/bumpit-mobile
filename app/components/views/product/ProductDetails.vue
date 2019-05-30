@@ -1,0 +1,103 @@
+<template>
+  <ViewContainer :loading="!loaded">
+    <GridLayout v-if="!!product.images.length" columns="*" rows="*" height="55%">
+      <StackLayout col="0" row="0" v-if="false">
+        <Carousel indicatorColor="#0076ff">
+          <CarouselItem v-for="image in product.images" :key="image.id" backgroundColor="#fefefe" verticalAlignment="middle">
+            <StackLayout>
+              <Image stretch="aspectFill" :src="image.url"/>
+            </StackLayout>
+          </CarouselItem>
+        </Carousel>
+      </StackLayout>
+
+      <StackLayout col="0" row="0" paddingRight="20" paddingBottom="10">
+        <FlexRow justifyContent="flex-end" alignItems="flex-end" height="100%">
+          <FlexRow width="50" height="50" backgroundColor="#0076ff" borderRadius="50%" alignItems="center" justifyContent="center">
+            <Label fontSize="24" class="far" color="white" :text="'\uf004'"/>
+          </FlexRow>
+        </FlexRow>
+      </StackLayout>
+    </GridLayout>
+
+    <ScrollView orientation="vertical">
+      <FlexCol>
+        <FlexRow>
+          <FlexRow flexGrow="3">
+            <Label :text="product.title" fontSize="24"/>
+          </FlexRow>
+          <FlexRow flexGrow="1" justifyContent="flex-end">
+            <Label :text="getPrice" fontSize="24"/>
+          </FlexRow>
+        </FlexRow>
+
+        <Split/>
+        <FlexRow justifyContent="space-between" alignItems="center">
+          <Label :text="'Size: ' + product.size" fontSize="16"/>
+          <Label :text="'Condition: ' + product.condition" fontSize="16"/>
+        </FlexRow>
+
+        <Split/>
+        <FlexRow justifyContent="space-between" alignItems="center">
+          <Label :text="'Location: ' + product.location" fontSize="16"/>
+          <Label :text="'Seller: @' + product.seller.username" fontSize="16"/>
+        </FlexRow>
+
+        <Split big/>
+        <Label class="description" :textWrap="true" :text="product.details" fontSize="16"/>
+
+        <Split big/>
+        <FlexRow justifyContent="space-between" alignItems="center">
+          <FlexCol>
+            <UserBasics :user="product.seller" fontSize="18">
+              <StarRating :rating="product.seller.rating" max="5" dense/>
+            </UserBasics>
+          </FlexCol>
+          <StackLayout>
+            <StateButton @onTap="gotoCheckout" text="Buy"/>
+          </StackLayout>
+        </FlexRow>
+      </FlexCol>
+    </ScrollView>
+  </ViewContainer>
+</template>
+
+<script>
+import UserBasics from '@/components/blocks/user/UserBasics'
+import Api from '@/services/api'
+import EventBus from '@/services/event-bus'
+import mocks from '@/services/mocks'
+
+export default {
+  props: {
+    productId: {
+      type: Number,
+      required: true
+    }
+  },
+  created() {
+    Api.getProduct(this.productId)
+      .then((product) => {
+        this.product = product
+        this.loaded = true
+      })
+  },
+  data: () => ({
+    product: { seller: {}, images: [] }, // this is bs
+    loaded: false
+  }),
+  computed: {
+    getPrice() { // move to helpers
+      return `${this.product.price} ${this.product.currency}`
+    },
+  },
+  methods: {
+    gotoCheckout() {
+      EventBus.$emit('navigateTo', 'Checkout', { productId: this.productId })
+    }
+  },
+  components: {
+    UserBasics
+  }
+}
+</script>
