@@ -6,16 +6,16 @@
       <Split size="15"/>
       <FlexRow justifyContent="center">
         <StateButton text="Recent" :inactive="productsGroup !== 0" @onTap="changeProductsGroup(0)"/>
-        <StackLayout padding="5"></StackLayout>
+        <Split vertical/>
         <StateButton text="Following" :inactive="productsGroup !== 1" @onTap="changeProductsGroup(1)"/>
       </FlexRow>
 
       <Split size="15"/>
-      <ListView flexGrow="1" for="product in products">
-        <v-template>
-          <ProductSummary @selected="openProductDetails(product)" :product="product" width="50%"/>
-        </v-template>
-      </ListView>
+      <FlexRow flexWrap="wrap">
+        <StackLayout v-for="product in products" :key="product.id" width="50%">
+          <ProductSummary @selected="openProductDetails(product)" :product="product"/>
+        </StackLayout>
+      </FlexRow>
     </FlexCol>
   </ViewContainer>
 </template>

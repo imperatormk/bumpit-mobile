@@ -128,7 +128,6 @@
 
 <script>
 import Auth from '@/services/auth'
-import EventBus from '@/services/event-bus'
 
 export default {
   mounted() {

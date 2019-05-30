@@ -4,10 +4,14 @@
       <Image width="50" :src="avatar"/>
       <Split vertical/>
       <FlexCol>
-        <Label v-if="name" :text="name" fontSize="19"/>
+        <Label v-if="fullname" :text="fullname" fontSize="19"/>
         <Split small/>
         <slot/>
       </FlexCol>
+      <Split vertical/>
+      <FlexRow justifyContent="flex-end">
+        <slot name="actions"/>
+      </FlexRow>
     </FlexRow>
   </StackLayout>
 </template>
@@ -26,7 +30,7 @@ export default {
     avatar() {
       return this.user.avatar || DEFAULT_AVATAR
     },
-    name() {
+    fullname() {
       const name = this.user.name || ''
       const surname = this.user.surname || ''
       const fullname = `${name} ${surname}`

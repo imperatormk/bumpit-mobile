@@ -6,11 +6,11 @@
       </LoadingIndicator>
     </StackLayout>
     <StackLayout v-else verticalAlignment="top" height="100%">
-      <StackLayout padding="20">
+      <StackLayout v-if="hasDefaultSlot" :padding="paddings.def">
         <slot/>
       </StackLayout>
-      <ScrollView orientation="vertical">
-        <StackLayout padding="20">
+      <ScrollView v-if="hasScrollableSlot" orientation="vertical">
+        <StackLayout :padding="paddings.scr">
           <slot name="scrollable"/>
         </StackLayout>
       </ScrollView>
@@ -48,6 +48,17 @@ export default {
         'background-image': this.backgroundImage,
         'background-size': 'cover'
       }
+    },
+    hasDefaultSlot() {
+      return !!this.$slots.default
+    },
+    hasScrollableSlot() {
+      return !!this.$slots['scrollable']
+    },
+    paddings() {
+      const def = this.hasScrollableSlot ? '20 20 0 20' : '20'
+      const scr = this.hasDefaultSlot ? '0 20 20 20': '20'
+      return { def, scr }
     }
   },
   components: {
