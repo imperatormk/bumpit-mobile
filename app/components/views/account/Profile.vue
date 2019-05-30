@@ -25,11 +25,11 @@
           <Label text="Reviews"/>
         </FlexCol>
         <FlexCol alignItems="center">
-          <Label text="420" color="black" fontSize="25" fontWeight="bold"/>
+          <Label :text="connections.followers" color="black" fontSize="25" fontWeight="bold"/>
           <Label text="Followers"/>
         </FlexCol>
         <FlexCol alignItems="center">
-          <Label text="420" color="black" fontSize="25" fontWeight="bold"/>
+          <Label :text="connections.followees" color="black" fontSize="25" fontWeight="bold"/>
           <Label text="Following"/>
         </FlexCol>
       </FlexRow>
@@ -64,12 +64,21 @@
 import UserBasics from '@/components/blocks/user/UserBasics'
 import ProductSummary from '@/components/blocks/product/ProductSummary'
 import Auth from '@/services/auth'
+import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 import mocks from '@/services/mocks'
 
 export default {
   mounted() {
     this.getAuthUser()
+      .then((user) => {
+        return this.getConnections(user.id)
+          .then((connections) => ({ ...user, connections }))
+      })
+      .then((user) => {
+        this.user = user
+        this.loaded = true
+      })
   },
   data: () => ({
     user: {},
@@ -84,11 +93,16 @@ export default {
   }),
   methods: {
     getAuthUser() {
-      this.loaded = false
       return Auth.getAuthUser()
         .then((user) => {
           this.user = user
-          this.loaded = true
+          return user
+        })
+    },
+    getConnections(userId) {
+      return Api.getConnections(userId, { count: true })
+        .then((connections) => {
+          return connections
         })
     },
     changeProductsGroup(productsGroup) {
@@ -107,6 +121,14 @@ export default {
     reviewsCount() {
       const reviews = this.user.reviews
       return reviews ? reviews.length : 0
+    },
+    connections() {
+      const defaultValues = {
+        followers: '/',
+        followees: '/'
+      }
+      const connections = this.user.connections
+      return Object.assign({}, defaultValues, connections)
     }
   },
   components: {

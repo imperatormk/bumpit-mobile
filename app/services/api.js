@@ -30,5 +30,10 @@ export default {
   performOrder(order) {
     return http.post('/payments/charge', order)
       .then(resp => resp.data)
+  },
+  getConnections(userId, config) {
+    const data = config || {}
+    return http.post(`/accounts/${userId}/connections`, data)
+      .then(resp => resp.data)
   }
 }
