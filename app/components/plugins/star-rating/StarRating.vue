@@ -2,9 +2,10 @@
   <FlexRow v-if="!dense" alignItems="center">
     <Star @selected="value = star" v-for="star in stars" :key="star" :filled="star <= value" fontSize="20"/>
   </FlexRow>
-  <FlexRow v-else fontSize="20" alignItems="center">
+  <FlexRow :fontSize="!hasCustomSlot ? 20 : 'auto'" v-else alignItems="center">
     <Star filled/>
-    <Label :text="decimalRating"/>
+    <Label v-if="!hasCustomSlot" :text="decimalRating"/>
+    <slot/>
   </FlexRow>
 </template>
 
@@ -43,6 +44,9 @@ export default {
     },
     decimalRating() {
       return this.rating.toFixed(1)
+    },
+    hasCustomSlot() {
+      return !!this.$slots.default
     }
   },
   components: {

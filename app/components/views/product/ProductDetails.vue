@@ -49,7 +49,7 @@
       <FlexRow justifyContent="space-between" alignItems="center">
         <FlexCol>
           <UserBasics :user="product.seller" fontSize="18">
-            <StarRating :rating="product.seller.rating" max="5" dense/>
+            <StarRating :rating="product.seller.rating" dense/>
           </UserBasics>
         </FlexCol>
         <StackLayout>

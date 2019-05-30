@@ -15,7 +15,9 @@
       <Split big/>
       <FlexRow justifyContent="space-around">
         <FlexCol alignItems="center">
-          <Label :text="decimalRating" color="black" fontSize="25" fontWeight="bold"/>
+          <StarRating fontWeight="bold" color="#0076ff" dense>
+            <Label :text="decimalRating" color="black" fontSize="25" fontWeight="bold"/>
+          </StarRating>
           <Label text="Rating"/>
         </FlexCol>
         <FlexCol alignItems="center">
