@@ -1,6 +1,4 @@
 import Vue from 'nativescript-vue'
-import firebase from 'nativescript-plugin-firebase'
-import config from '@/shared/firebase-config'
 
 import ViewContainer from '@/components/containers/ViewContainer'
 import StateButton from '@/components/common/StateButton'
@@ -33,16 +31,11 @@ Vue.registerElement('CarouselItem', () => require('nativescript-carousel').Carou
 Vue.config.silent = true
 
 import Master from '@/components/containers/Master'
-import ItemFeed from '@/components/views/ItemFeed'
+import InitialItem from '@/components/views/order/AfterCheckout'
 
 import store from '@/store'
 
 new Vue({
-  render: h => h(Master, [h(ItemFeed)]),
-  created() {
-    firebase.init(config)
-      .then(() => {})
-      .catch(err => console.error(err))
-  },
+  render: h => h(Master, [h(InitialItem)]),
   store
 }).$start()
