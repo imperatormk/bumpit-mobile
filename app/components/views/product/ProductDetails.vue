@@ -20,6 +20,7 @@
       </StackLayout>
     </GridLayout>
 
+    <Split big/>
     <FlexCol slot="scrollable">
       <FlexRow>
         <FlexRow flexGrow="3">

@@ -1,52 +1,83 @@
 <template>
-  <ViewContainer>
-    <FlexCol alignItems="center" justifyContent="space-around" height="80%">
-      <Label :text="'Purchasing product ID: ' + productId" fontSize="30" color="#8c8c8c"/>
-      <FlexRow col="0" row="0" flexWrap="wrap" alignItems="space-around" justifyContent="center">
-        <Button text="Try me" @tap="stripeTest" id="testt"></Button>
-      </FlexRow>
+  <ViewContainer :loading="!loaded">
+    <FlexCol height="100%">
+      <ProductBasics :product="product"/>
+      <Split/>
+      <DataGrid :data="chargeItems"/>
+      <Split fill/>
+      <StateButton @onTap="placeOrder" block text="Place order"/>
     </FlexCol>
   </ViewContainer>
 </template>
 
 <script>
-import { Stripe, Card } from 'nativescript-stripe'
+import ProductBasics from '@/components/blocks/product/ProductBasics'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
-
-const stripe = new Stripe('pk_test_GMNKDApw27UoQosG2hsXV1xT')
-const cc = new Card('4242424242424242', 12, 21, '069') // temp
+import mocks from '@/services/mocks'
 
 export default {
   props: {
     productId: {
-      type: Number,
+      type: Object,
       required: true
     }
   },
-  mounted() {
-    EventBus.$emit('getPageRef', (ref) => {
-      this.pageRef = ref
-    })
+  created() {
+    this.getProduct()
+      .then(this.prepareOrder())
+      .then(() => {
+        this.loaded = true
+      })
   },
   data: () => ({
-    pageRef: null
+    product: {},
+    order: {},
+    extras: ['authenticationService'],
+    loaded: false
   }),
-  methods: {
-    stripeTest() {
-      const card = this.pageRef.getViewById('card').card
-
-      stripe.createToken(cc, (error, tokenObj) => {
-        if (error) return
-        const order = {
-          token: tokenObj.id
-        }
-        Api.performOrder(order)
-          .then((res) => {
-            console.log(res)
-          })
+  computed: {
+    chargeItems() { // rename later
+      const chargesList = this.order.chargesList
+      if (!chargesList) return []
+      const charges = chargesList.map((charge) => {
+        const label = charge.name
+        const flat = charge.flat
+        const percentage = charge.percentage
+        const chargeObj = { label }
+        chargeObj.value = ''
+        if (percentage) chargeObj.value += `${percentage}%`
+        if (chargeObj.value) chargeObj.value += ' + '
+        if (flat) chargeObj.value += `${flat.currency}${flat.amount/100}`
+        return chargeObj
       })
+      charges.push({ label: 'Total', value: this.order.total/100 })
+      return charges
     }
+  },
+  methods: {
+    getProduct() {
+      return Api.getProduct(this.productId)
+        .then((product) => {
+          this.product = product
+        })
+    },
+    prepareOrder() {
+      const orderConfig = {
+        productId: this.productId,
+        extras: this.extras
+      }
+      return Api.prepareOrder(orderConfig)
+        .then((order) => {
+          this.order = order
+        })
+    },
+    placeOrder() {
+      console.log('placeOrder')
+    }
+  },
+  components: {
+    ProductBasics
   }
 }
 </script>

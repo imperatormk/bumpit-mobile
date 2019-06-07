@@ -27,11 +27,11 @@ export default {
   props: {
     orderProp: {
       type: Object,
-      required: false
+      default: null
     }
   },
   created() {
-    this.order = mocks.order
+    this.order = this.orderProp || mocks.order
   },
   data: () => ({
     order: {}

@@ -23,18 +23,15 @@ const product = {
 }
 
 const order = {
-  shipping: {
-    address: '<Address>'
-  },
+  id: 1,
   product,
   buyer: {
     ...user
-  },
-  createdAt: '<Time>'
+  }
 }
 
 export default {
   user,
   product,
-  order
+  order,
 }
