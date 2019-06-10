@@ -2,10 +2,11 @@
   <FlexCol>
     <Textbox v-model="details.name" hint="Full Name"/>
     <Textbox v-model="details.address" hint="Address"/>
-    <Textbox v-model="details.suite" hint="Apt, suite, unit"/>
+    <Textbox v-model="details.unit" hint="Apt, suite, unit"/>
     <Textbox v-model="details.state" hint="State"/>
     <Textbox v-model="details.city" hint="City"/>
-    <Textbox v-model="details.zip" hint="Zip Code"/>
+    <Textbox v-model="details.zip" hint="Zipcode"/>
+    <Textbox v-model="details.contactPhone" hint="Contact phone"/>
   </FlexCol>
 </template>
 
@@ -17,11 +18,19 @@ export default {
       required: true
     }
   },
-  created() {
+  mounted() {
     this.details = { ...this.value }
   },
   data: () => ({
-    details: {}
+    details: {
+      name: '',
+      address: '',
+      unit: '',
+      state: '',
+      city: '',
+      zip: '',
+      contactPhone: ''
+    }
   }),
   watch: {
     details(val) {

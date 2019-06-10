@@ -1,6 +1,6 @@
 <template>
-  <TextView hint="e.g Fast shipping, item as described, good Communication?" 
-    :value="value"
+  <TextView 
+    :text="value"
     @textChange="update"
     returnKeyType="done"
     fontSize="15"

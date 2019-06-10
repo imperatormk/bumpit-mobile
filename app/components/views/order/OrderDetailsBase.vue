@@ -73,7 +73,7 @@ export default {
     }
   },
   created() {
-    const orderId = 1 // temp
+    const orderId = this.orderId
     Api.getOrder(orderId)
       .then((order) => {
         this.order = order

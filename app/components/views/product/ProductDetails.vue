@@ -53,7 +53,7 @@
             <StarRating :rating="product.seller.rating" dense/>
           </UserBasics>
         </FlexCol>
-        <StackLayout>
+        <StackLayout v-if="isAvailable">
           <StateButton @onTap="gotoCheckout" text="Buy"/>
         </StackLayout>
       </FlexRow>
@@ -88,6 +88,9 @@ export default {
   computed: {
     getPrice() { // move to helpers
       return `${this.product.price} ${this.product.currency}`
+    },
+    isAvailable() {
+      return this.product.status === 'AVAILABLE'
     },
   },
   methods: {

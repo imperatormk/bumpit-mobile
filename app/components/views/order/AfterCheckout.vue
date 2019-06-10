@@ -50,7 +50,7 @@ export default {
         if (flat) chargeObj.value += `${flat.currency}${flat.amount/100}`
         return chargeObj
       })
-      charges.push({ label: 'Total', value: this.order.total/100 })
+      charges.push({ label: 'total', value: this.order.total/100 })
       return charges
     }
   },

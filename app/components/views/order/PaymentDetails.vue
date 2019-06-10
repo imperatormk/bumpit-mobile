@@ -1,5 +1,5 @@
 <template>
-  <ViewContainer>
+  <ViewContainer :loading="!loaded">
     <FlexCol height="100%">
       <CreditCardView id="card"/>
       <MyDetails v-model="details"/>
@@ -27,26 +27,36 @@ export default {
     }
   },
   mounted() {
-    if (this.detailsProp) this.details = { ...this.detailsProp }
+    if (this.detailsProp && this.detailsProp.payerDetails)
+      this.details = { ...this.detailsProp.payerDetails }
+
     EventBus.$emit('getPageRef', (ref) => {
       this.pageRef = ref
     })
+
+    this.loaded = true
   },
   data: () => ({
     pageRef: null,
     details: {
       name: '',
       address: '',
-      suite: '',
+      unit: '',
       state: '',
       city: '',
       zip: '',
-    }
+      contactPhone: ''
+    },
+    loaded: false
   }),
   methods: {
     updateDetails() {
-      const card = this.pageRef.getViewById('card').card
+      const details = Object.keys(this.details).map(key => this.details[key])
+      const valid = details.filter(detail => !detail).length === 0
+      if (!valid) return // TODO: all are required atm
 
+      const card = this.pageRef.getViewById('card').card
+      console.log(cc)
       stripe.createToken(cc, (error, tokenObj) => {
         if (error) return
         const paymentDetails = {

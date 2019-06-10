@@ -3,9 +3,20 @@
     <FlexCol height="100%">
       <ProductBasics :product="product"/>
       <Split big/>
-      <FlexCol justifyContent="space-between"  @tap="gotoPaymentDetails">
+      <FlexCol justifyContent="space-between" @tap="gotoPaymentDetails">
         <Label @tap="gotoPaymentDetails" text="Payment details" fontSize="18" fontWeight="bold" color="black"/>
-        <Label @tap="gotoPaymentDetails" :text="paymentDetails.token || ''" fontSize="16"/>
+        <Label @tap="gotoPaymentDetails" :text="paymentDetails.token || 'None'" fontSize="16"/>
+      </FlexCol>
+      <Split big/>
+      <FlexCol justifyContent="space-between" @tap="gotoShippingDetails">
+        <Label @tap="gotoShippingDetails" text="Shipping details" fontSize="18" fontWeight="bold" color="black"/>
+        <FlexCol v-if="shippingDetails">
+          <Label @tap="gotoShippingDetails" :text="shippingDetails.name" fontSize="16"/>
+          <Label @tap="gotoShippingDetails" :text="shippingDetails.address" fontSize="16"/>
+          <Label @tap="gotoShippingDetails" :text="shippingDetails.city + ' ' + shippingDetails.zip" fontSize="16"/>
+          <Label @tap="gotoShippingDetails" :text="shippingDetails.state" fontSize="16"/>
+        </FlexCol>
+        <Label v-else text="None" fontSize="16"/>
       </FlexCol>
       <Split big/>
       <DataGrid :data="chargeItems"/>
@@ -18,6 +29,7 @@
 <script>
 import ProductBasics from '@/components/blocks/product/ProductBasics'
 import PaymentDetails from '@/components/views/order/PaymentDetails'
+import ShippingDetails from '@/components/views/account/ShippingDetails'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 import mocks from '@/services/mocks'
@@ -44,6 +56,7 @@ export default {
       cardNo: '',
       payerDetails: {}
     },
+    shippingDetails: null,
     extras: ['authenticationService'],
     loaded: false
   }),
@@ -62,7 +75,7 @@ export default {
         if (flat) chargeObj.value += `${flat.currency}${flat.amount/100}`
         return chargeObj
       })
-      charges.push({ label: 'Total', value: this.order.total/100 })
+      charges.push({ label: 'total', value: this.order.total/100 })
       return charges
     }
   },
@@ -82,13 +95,16 @@ export default {
         .then((order) => {
           this.order = order
         })
+        .catch((err) => {
+          if (err.response.status === 400) {
+            this.$navigateBack()
+          }
+        })
     },
     gotoPaymentDetails() {
-      EventBus.$emit('navigateTo', 'PaymentDetails', { value: this.paymentDetails })
-
       this.$showModal(PaymentDetails, {
         animated: true,
-        fullscreen: false,
+        fullscreen: true,
         transition: {
           name: 'fade'
         },
@@ -96,7 +112,21 @@ export default {
           detailsProp: { ...this.paymentDetails }
         }
       }).then((data) => {
-        this.paymentDetails = data
+        if (data) this.paymentDetails = data
+      })
+    },
+    gotoShippingDetails() {
+      this.$showModal(ShippingDetails, {
+        animated: true,
+        fullscreen: true,
+        transition: {
+          name: 'fade'
+        },
+        props: {
+          detailsProp: !!this.shippingDetails ? { ...this.shippingDetails } : null
+        }
+      }).then((data) => {
+        if (data) this.shippingDetails = data
       })
     },
     placeOrder() {
@@ -106,8 +136,14 @@ export default {
         ...this.paymentDetails.payerDetails
       }
       Api.performOrder(orderObj)
-        .then((orderRes) => {
-          EventBus.$emit('navigateTo', 'AfterCheckout', { orderProp: orderRes })
+        .then((resp) => {
+          EventBus.$emit('navigateTo', 'AfterCheckout', {
+            orderProp: {
+              ...resp.order,
+              chargesList: resp.chargesList,
+              total: resp.total
+            }
+          })
         })
     }
   },
