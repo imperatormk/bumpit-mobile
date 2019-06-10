@@ -25,12 +25,12 @@ export default {
   },
   data: () => ({
     shippingDetails: {
-      name: '',
+      fullname: '',
       address: '',
       unit: '',
       state: '',
       city: '',
-      zip: '',
+      zipcode: '',
       contactPhone: ''
     },
     loaded: false

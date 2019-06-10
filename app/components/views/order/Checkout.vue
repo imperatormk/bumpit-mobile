@@ -5,16 +5,18 @@
       <Split big/>
       <FlexCol justifyContent="space-between" @tap="gotoPaymentDetails">
         <Label @tap="gotoPaymentDetails" text="Payment details" fontSize="18" fontWeight="bold" color="black"/>
+        <Split/>
         <Label @tap="gotoPaymentDetails" :text="paymentDetails.token || 'None'" fontSize="16"/>
       </FlexCol>
       <Split big/>
       <FlexCol justifyContent="space-between" @tap="gotoShippingDetails">
         <Label @tap="gotoShippingDetails" text="Shipping details" fontSize="18" fontWeight="bold" color="black"/>
-        <FlexCol v-if="shippingDetails">
-          <Label @tap="gotoShippingDetails" :text="shippingDetails.name" fontSize="16"/>
-          <Label @tap="gotoShippingDetails" :text="shippingDetails.address" fontSize="16"/>
-          <Label @tap="gotoShippingDetails" :text="shippingDetails.city + ' ' + shippingDetails.zip" fontSize="16"/>
-          <Label @tap="gotoShippingDetails" :text="shippingDetails.state" fontSize="16"/>
+        <FlexCol v-if="shippingInfo">
+          <Split/>
+          <Label @tap="gotoShippingDetails" :text="shippingInfo.fullname" fontSize="16"/>
+          <Label @tap="gotoShippingDetails" :text="shippingInfo.address" fontSize="16"/>
+          <Label @tap="gotoShippingDetails" :text="shippingInfo.city + ' ' + shippingInfo.zipcode" fontSize="16"/>
+          <Label @tap="gotoShippingDetails" :text="shippingInfo.state" fontSize="16"/>
         </FlexCol>
         <Label v-else text="None" fontSize="16"/>
       </FlexCol>
@@ -43,6 +45,7 @@ export default {
   },
   created() {
     this.getProduct()
+      .then(this.getShippingInfo())
       .then(this.prepareOrder())
       .then(() => {
         this.loaded = true
@@ -54,9 +57,9 @@ export default {
     paymentDetails: {
       token: null,
       cardNo: '',
-      payerDetails: {}
+      payerDetails: null
     },
-    shippingDetails: null,
+    shippingInfo: null,
     extras: ['authenticationService'],
     loaded: false
   }),
@@ -86,6 +89,12 @@ export default {
           this.product = product
         })
     },
+    getShippingInfo() {
+      return Api.getShippingInfo()
+        .then((shippingInfo) => {
+          this.shippingInfo = shippingInfo
+        })
+    },
     prepareOrder() {
       const orderConfig = {
         productId: this.productId,
@@ -109,7 +118,10 @@ export default {
           name: 'fade'
         },
         props: {
-          detailsProp: { ...this.paymentDetails }
+          detailsProp: {
+            ...this.paymentDetails,
+            payerDetails: this.paymentDetails.payerDetails || this.shippingInfo
+          }
         }
       }).then((data) => {
         if (data) this.paymentDetails = data
@@ -123,10 +135,10 @@ export default {
           name: 'fade'
         },
         props: {
-          detailsProp: !!this.shippingDetails ? { ...this.shippingDetails } : null
+          detailsProp: !!this.shippingInfo ? { ...this.shippingInfo } : null
         }
       }).then((data) => {
-        if (data) this.shippingDetails = data
+        if (data) this.shippingInfo = data
       })
     },
     placeOrder() {

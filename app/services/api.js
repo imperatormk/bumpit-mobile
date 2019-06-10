@@ -61,5 +61,10 @@ export default {
   getUser(userId) {
     return http.get(`/accounts/${userId}`)
       .then(resp => resp.data)
-  }
+  },
+  getShippingInfo() {
+    return getAuthHeaders()
+      .then((options) => http.get('/auth/user/shippingInfo', options))
+      .then(resp => resp.data)
+  },
 }

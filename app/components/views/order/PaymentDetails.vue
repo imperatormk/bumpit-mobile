@@ -39,12 +39,12 @@ export default {
   data: () => ({
     pageRef: null,
     details: {
-      name: '',
+      fullname: '',
       address: '',
       unit: '',
       state: '',
       city: '',
-      zip: '',
+      zipcode: '',
       contactPhone: ''
     },
     loaded: false
