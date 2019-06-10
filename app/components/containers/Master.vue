@@ -21,6 +21,7 @@ import Login from '@/components/views/account/Login'
 import Register from '@/components/views/account/Register'
 import Profile from '@/components/views/account/Profile'
 import EditProfile from '@/components/views/account/EditProfile'
+import PaymentDetails from '@/components/views/order/PaymentDetails'
 
 import EventBus from '@/services/event-bus'
 
@@ -70,6 +71,9 @@ export default {
           break
         case 'OrderDetailsBase':
           comp = OrderDetailsBase
+          break
+        case 'PaymentDetails':
+          comp = PaymentDetails
           break
         case 'EditProfile':
           comp = EditProfile

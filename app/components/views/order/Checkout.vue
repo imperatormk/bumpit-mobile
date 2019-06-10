@@ -2,7 +2,12 @@
   <ViewContainer :loading="!loaded">
     <FlexCol height="100%">
       <ProductBasics :product="product"/>
-      <Split/>
+      <Split big/>
+      <FlexCol justifyContent="space-between"  @tap="gotoPaymentDetails">
+        <Label @tap="gotoPaymentDetails" text="Payment details" fontSize="18" fontWeight="bold" color="black"/>
+        <Label @tap="gotoPaymentDetails" :text="paymentDetails.token || ''" fontSize="16"/>
+      </FlexCol>
+      <Split big/>
       <DataGrid :data="chargeItems"/>
       <Split fill/>
       <StateButton @onTap="placeOrder" block text="Place order"/>
@@ -12,6 +17,7 @@
 
 <script>
 import ProductBasics from '@/components/blocks/product/ProductBasics'
+import PaymentDetails from '@/components/views/order/PaymentDetails'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 import mocks from '@/services/mocks'
@@ -33,6 +39,11 @@ export default {
   data: () => ({
     product: {},
     order: {},
+    paymentDetails: {
+      token: null,
+      cardNo: '',
+      payerDetails: {}
+    },
     extras: ['authenticationService'],
     loaded: false
   }),
@@ -72,8 +83,32 @@ export default {
           this.order = order
         })
     },
+    gotoPaymentDetails() {
+      EventBus.$emit('navigateTo', 'PaymentDetails', { value: this.paymentDetails })
+
+      this.$showModal(PaymentDetails, {
+        animated: true,
+        fullscreen: false,
+        transition: {
+          name: 'fade'
+        },
+        props: {
+          detailsProp: { ...this.paymentDetails }
+        }
+      }).then((data) => {
+        this.paymentDetails = data
+      })
+    },
     placeOrder() {
-      console.log('placeOrder')
+      const orderObj = {
+        paymentToken: this.paymentDetails.token,
+        productId: this.productId,
+        ...this.paymentDetails.payerDetails
+      }
+      Api.performOrder(orderObj)
+        .then((orderRes) => {
+          EventBus.$emit('navigateTo', 'AfterCheckout', { orderProp: orderRes })
+        })
     }
   },
   components: {

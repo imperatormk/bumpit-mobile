@@ -21,7 +21,6 @@
 <script>
 import ProductBasics from '@/components/blocks/product/ProductBasics'
 import EventBus from '@/services/event-bus'
-import mocks from '@/services/mocks'
 
 export default {
   props: {
@@ -31,21 +30,28 @@ export default {
     }
   },
   created() {
-    this.order = this.orderProp || mocks.order
+    this.order = { ...this.orderProp }
   },
   data: () => ({
     order: {}
   }),
   computed: {
-    getPrice() { // TODO: move this to helpers
-      return `${this.order.product.price / 100} ${this.order.product.currency}`
-    },
     chargeItems() { // rename later
-      return [
-        { label: 'Item price', value: '$2.00' },
-        { label: 'Shipping price', value: 'Free' },
-        { label: 'Total', value: '$2.00' }
-      ]
+      const chargesList = this.order.chargesList
+      if (!chargesList) return []
+      const charges = chargesList.map((charge) => {
+        const label = charge.name
+        const flat = charge.flat
+        const percentage = charge.percentage
+        const chargeObj = { label }
+        chargeObj.value = ''
+        if (percentage) chargeObj.value += `${percentage}%`
+        if (chargeObj.value) chargeObj.value += ' + '
+        if (flat) chargeObj.value += `${flat.currency}${flat.amount/100}`
+        return chargeObj
+      })
+      charges.push({ label: 'Total', value: this.order.total/100 })
+      return charges
     }
   },
   methods: {
