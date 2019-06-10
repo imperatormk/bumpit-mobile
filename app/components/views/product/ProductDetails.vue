@@ -1,7 +1,7 @@
 <template>
-  <ViewContainer :loading="!loaded">
+  <ViewContainer :loading="!loaded" :paddingConfig="{def: '0'}">
     <GridLayout v-if="!!product.images.length" columns="*" rows="*" height="55%">
-      <StackLayout col="0" row="0" v-if="false">
+      <StackLayout col="0" row="0">
         <Carousel indicatorColor="#0076ff">
           <CarouselItem v-for="image in product.images" :key="image.id" backgroundColor="#fefefe" verticalAlignment="middle">
             <StackLayout>

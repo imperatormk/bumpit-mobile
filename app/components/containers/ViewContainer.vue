@@ -32,7 +32,8 @@ export default {
     backgroundImage: {
       type: String,
       default: ''
-    }
+    },
+    paddingConfig: Object
   },
   created() {
     EventBus.$on('getPageRef', (cb) => {
@@ -56,8 +57,12 @@ export default {
       return !!this.$slots['scrollable']
     },
     paddings() {
-      const def = this.hasScrollableSlot ? '20 20 0 20' : '20'
-      const scr = this.hasDefaultSlot ? '0 20 20 20': '20'
+      let def = this.hasScrollableSlot ? '20 20 0 20' : '20'
+      let scr = this.hasDefaultSlot ? '0 20 20 20': '20'
+      if (this.paddingConfig) {
+        if (this.paddingConfig.def) def = this.paddingConfig.def
+        if (this.paddingConfig.scr) scr = this.paddingConfig.scr
+      }
       return { def, scr }
     }
   },

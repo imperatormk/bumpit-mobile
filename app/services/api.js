@@ -2,6 +2,7 @@ import http from './http'
 import auth from './auth'
 
 const getAuthHeaders = (opts) => {
+  return getAuthHeadersMock(opts)
   const options = opts || {}
   return auth.getJwt()
     .then((token) => {
@@ -39,14 +40,17 @@ export default {
       .then(resp => resp.data)
   },
   prepareOrder(order) {
-    return getAuthHeadersMock()
+    return getAuthHeaders()
       .then((options) => {
         return http.post('/orders/prepare', order, options)
       })
       .then(resp => resp.data)
   },
   performOrder(order) {
-    return http.post('/payments/charge', order)
+    return getAuthHeaders()
+      .then((options) => {
+        return http.post('/orders/create', order, options)
+      })
       .then(resp => resp.data)
   },
   getConnections(userId, config) {
