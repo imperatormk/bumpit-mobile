@@ -67,4 +67,11 @@ export default {
       .then((options) => http.get('/auth/user/shippingInfo', options))
       .then(resp => resp.data)
   },
+  updateShippingInfo(data) {
+    return getAuthHeaders()
+      .then((options) => {
+        return http.post('/auth/user/shippingInfo', data, options)
+      })
+      .then(resp => resp.data)
+  }
 }

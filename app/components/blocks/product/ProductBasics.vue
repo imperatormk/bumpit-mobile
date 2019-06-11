@@ -2,8 +2,8 @@
   <FlexRow alignItems="center" width="100%" v-if="!vertical">
     <Image :src="product.images[0].url" width="20%"/>
     <FlexCol justifyContent="center" marginLeft="15">
-      <Label :text="product.title" fontWeight="bold" color="black" fontSize="14" padding="3"/>
-      <Label v-if="product.category" :text="product.category.name" fontSize="14" padding="3"/>
+      <Label :text="product.title" fontWeight="bold" color="black" fontSize="18" padding="3"/>
+      <Label v-if="product.category" :text="product.category.name" fontSize="16" padding="3"/>
     </FlexCol>
   </FlexRow>
   <FlexCol alignItems="center" width="100%" v-else>

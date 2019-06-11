@@ -56,7 +56,6 @@ export default {
       if (!valid) return // TODO: all are required atm
 
       const card = this.pageRef.getViewById('card').card
-      console.log(cc)
       stripe.createToken(cc, (error, tokenObj) => {
         if (error) return
         const paymentDetails = {

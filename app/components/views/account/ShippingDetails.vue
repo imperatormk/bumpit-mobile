@@ -10,6 +10,7 @@
 
 <script>
 import MyDetails from '@/components/blocks/user/MyDetails'
+import Api from '@/services/api'
 
 export default {
   props: {
@@ -41,7 +42,10 @@ export default {
       const valid = shippingDetails.filter(detail => !detail).length === 0
       if (!valid) return // TODO: all are required atm
 
-      this.$modal.close(this.shippingDetails)
+      Api.updateShippingInfo(this.shippingDetails)
+        .then(() => {
+          this.$modal.close(this.shippingDetails)
+        })
     }
   },
   components: {
