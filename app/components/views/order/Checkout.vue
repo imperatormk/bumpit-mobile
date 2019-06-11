@@ -21,6 +21,7 @@
         <Label v-else text="None" fontSize="16"/>
       </FlexCol>
       <Split big/>
+      <Split big/>
       <DataGrid :data="chargeItems"/>
       <Split fill/>
       <StateButton @onTap="placeOrder" block text="Place order"/>
@@ -95,21 +96,6 @@ export default {
           this.shippingInfo = shippingInfo
         })
     },
-    prepareOrder() {
-      const orderConfig = {
-        productId: this.productId,
-        extras: this.extras
-      }
-      return Api.prepareOrder(orderConfig)
-        .then((order) => {
-          this.order = order
-        })
-        .catch((err) => {
-          if (err.response.status === 400) {
-            this.$navigateBack()
-          }
-        })
-    },
     gotoPaymentDetails() {
       this.$showModal(PaymentDetails, {
         animated: true,
@@ -138,11 +124,29 @@ export default {
           detailsProp: !!this.shippingInfo ? { ...this.shippingInfo } : null
         }
       }).then((data) => {
-        if (data) this.shippingInfo = data
+        if (data) {
+          this.shippingInfo = data
+          this.paymentDetails.payerDetails = data
+        }
       })
     },
+    prepareOrder() {
+      const orderConfig = {
+        productId: this.productId,
+        extras: this.extras
+      }
+      return Api.prepareOrder(orderConfig)
+        .then((order) => {
+          this.order = order
+        })
+        .catch((err) => {
+          if (err.response.data.msg === 'productSold') {
+            this.$navigateBack()
+          }
+        })
+    },
     placeOrder() {
-      const orderObj = {
+      const orderObj = { // we don't need shipping data here (maybe try the same for payer details?)
         paymentToken: this.paymentDetails.token,
         productId: this.productId,
         ...this.paymentDetails.payerDetails
@@ -156,6 +160,11 @@ export default {
               total: resp.total
             }
           })
+        })
+        .catch((err) => {
+          if (err.response.data.msg === 'productSold') {
+            this.$navigateBack()
+          }
         })
     }
   },
