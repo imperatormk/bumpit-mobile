@@ -14,8 +14,12 @@ export default {
     message: {
       type: Object,
       required: true
-    },
-    fromMe: Boolean
+    }
+  },
+  computed: {
+    fromMe() {
+      return this.message.fromMe
+    }
   }
 }
 </script>

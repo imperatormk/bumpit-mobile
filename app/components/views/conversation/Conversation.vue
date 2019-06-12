@@ -1,7 +1,7 @@
 <template>
   <ViewContainer :loading="!loaded" :paddingConfig="{def: '0'}">
     <FlexCol height="100%">
-      <FlexRow alignItems="center" padding="0 20">
+      <FlexRow alignItems="center" padding="20 20 0">
         <ProductBasics flexGrow="3" v-if="product" :product="product"/>
         <StackLayout flexGrow="1">
           <FlexRow width="80%">
@@ -14,11 +14,11 @@
       <Split big/>
       <StackLayout padding="0 20">
         <StackLayout v-for="message in messages" :key="message.id" margin="5">
-          <ChatMessage :message="message" fromMe/>
+          <ChatMessage :message="message"/>
         </StackLayout>
       </StackLayout>
       <Split fill/>
-      <Chatbox/>
+      <Chatbox @sendMessage="sendMessage"/>
     </FlexCol>
   </ViewContainer>
 </template>
@@ -31,6 +31,8 @@ import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 
 const SocketIO = require('nativescript-socket.io')
+
+// TODO: reverse in server, receive not from self on socket
 
 export default {
   props: {
@@ -80,6 +82,12 @@ export default {
         .then((product) => {
           this.product = product
           return product
+        })
+    },
+    sendMessage(message) {
+      return Api.sendMessage(this.conversation.id, message)
+        .then((msg) => {
+          this.messages.push(msg)
         })
     },
     gotoSellerProfile() {

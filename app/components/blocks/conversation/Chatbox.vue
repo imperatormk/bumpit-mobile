@@ -27,6 +27,7 @@ export default {
       const trimmedMessage = this.message.trim()
       if (!trimmedMessage) return
       this.$emit('sendMessage', trimmedMessage)
+      this.message = ''
     }
   }
 }

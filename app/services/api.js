@@ -90,6 +90,11 @@ const conversation = {
     return getAuthHeaders()
       .then(options => http.post('/conversations', { proId: productId }, options))
       .then(resp => resp.data)
+  },
+  sendMessage(conversationId, message) {
+    return getAuthHeaders()
+      .then(options => http.post(`/conversations/${conversationId}`, { content: message }, options))
+      .then(resp => resp.data)
   }
 }
 
