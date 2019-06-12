@@ -53,9 +53,11 @@
             <StarRating :rating="product.seller.rating" dense/>
           </UserBasics>
         </FlexCol>
-        <StackLayout v-if="isAvailable">
+        <FlexCol v-if="isAvailable">
+          <StateButton inactive @onTap="gotoConversation" text="C"/>
+          <Split vertical/>
           <StateButton @onTap="gotoCheckout" text="Buy"/>
-        </StackLayout>
+        </FlexCol>
       </FlexRow>
     </FlexCol>
   </ViewContainer>
@@ -94,6 +96,9 @@ export default {
     },
   },
   methods: {
+    gotoConversation() {
+      EventBus.$emit('navigateTo', 'Conversation', { productId: this.productId })
+    },
     gotoCheckout() {
       EventBus.$emit('navigateTo', 'Checkout', { productId: this.productId })
     }

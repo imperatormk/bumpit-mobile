@@ -23,6 +23,8 @@ import Profile from '@/components/views/account/Profile'
 import EditProfile from '@/components/views/account/EditProfile'
 import PaymentDetails from '@/components/views/order/PaymentDetails'
 
+import Conversation from '@/components/views/conversation/Conversation'
+
 import EventBus from '@/services/event-bus'
 
 export default {
@@ -62,6 +64,9 @@ export default {
           break
         case 'ProductDetails':
           comp = ProductDetails
+          break
+        case 'Conversation':
+          comp = Conversation
           break
         case 'Checkout':
           comp = Checkout

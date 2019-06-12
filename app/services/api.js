@@ -26,7 +26,7 @@ const getAuthHeadersMock = (opts) => {
     })
 }
 
-export default {
+const product = {
   getProducts() {
     return http.get('/products')
       .then(resp => resp.data)
@@ -35,6 +35,9 @@ export default {
     return http.get(`/products/${productId}`)
       .then(resp => resp.data)
   },
+}
+
+const order = {
   getOrder(orderId) {
     return http.get(`/orders/${orderId}`)
       .then(resp => resp.data)
@@ -53,15 +56,9 @@ export default {
       })
       .then(resp => resp.data)
   },
-  getConnections(userId, config) {
-    const data = config || {}
-    return http.post(`/accounts/${userId}/connections`, data)
-      .then(resp => resp.data)
-  },
-  getUser(userId) {
-    return http.get(`/accounts/${userId}`)
-      .then(resp => resp.data)
-  },
+}
+
+const shippingInfo = {
   getShippingInfo() {
     return getAuthHeaders()
       .then((options) => http.get('/auth/user/shippingInfo', options))
@@ -73,5 +70,33 @@ export default {
         return http.post('/auth/user/shippingInfo', data, options)
       })
       .then(resp => resp.data)
+  },
+}
+
+const user = {
+  getConnections(userId, config) {
+    const data = config || {}
+    return http.post(`/accounts/${userId}/connections`, data)
+      .then(resp => resp.data)
+  },
+  getUser(userId) {
+    return http.get(`/accounts/${userId}`)
+      .then(resp => resp.data)
+  },
+}
+
+const conversation = {
+  getConversation(productId) {
+    return getAuthHeaders()
+      .then(options => http.post('/conversations', { proId: productId }, options))
+      .then(resp => resp.data)
   }
+}
+
+export default {
+  ...product,
+  ...order,
+  ...shippingInfo,
+  ...user,
+  ...conversation,
 }
