@@ -1,7 +1,7 @@
 <template>
-  <ViewContainer :loading="!loaded">
+  <ViewContainer :loading="!loaded" :paddingConfig="{def: '0'}">
     <FlexCol height="100%">
-      <FlexRow alignItems="center">
+      <FlexRow alignItems="center" padding="0 20">
         <ProductBasics flexGrow="3" v-if="product" :product="product"/>
         <StackLayout flexGrow="1">
           <FlexRow width="80%">
@@ -12,11 +12,11 @@
         </StackLayout>
       </FlexRow>
       <Split big/>
-      <FlexCol>
+      <StackLayout padding="0 20">
         <StackLayout v-for="message in messages" :key="message.id" margin="5">
           <ChatMessage :message="message" fromMe/>
         </StackLayout>
-      </FlexCol>
+      </StackLayout>
       <Split fill/>
       <Chatbox/>
     </FlexCol>
@@ -30,6 +30,8 @@ import ProductBasics from '@/components/blocks/product/ProductBasics'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 
+const SocketIO = require('nativescript-socket.io')
+
 export default {
   props: {
     productId: {
@@ -41,12 +43,22 @@ export default {
     this.getConversation()
       .then(() => this.getProduct())
       .then(() => {
+        this.socketio = SocketIO.connect('http://18.188.233.81')
+
+        this.socketio.on('connect', () => {
+          this.socketio.emit('joinConv', `conv${this.conversation.id}`)
+          this.socketio.on('msgReceived', (msg) => {
+            this.messages.push(msg)
+          })
+        })
+
         this.loaded = true
       })
   },
   data: () => ({
     conversation: null,
     product: null,
+    socketio: null,
     loaded: false
   }),
   computed: {
