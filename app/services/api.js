@@ -26,6 +26,20 @@ const getAuthHeadersMock = (opts) => {
     })
 }
 
+const brand = {
+  getBrands() {
+    return http.get('/brands')
+      .then(resp => resp.data)
+  }
+}
+
+const category = {
+  getCategories() {
+    return http.get('/categories')
+      .then(resp => resp.data)
+  }
+}
+
 const product = {
   getProducts() {
     return http.get('/products')
@@ -99,6 +113,8 @@ const conversation = {
 }
 
 export default {
+  ...brand,
+  ...category,
   ...product,
   ...order,
   ...shippingInfo,
