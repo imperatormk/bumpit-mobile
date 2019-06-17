@@ -13,6 +13,7 @@
   "repository": "<fill-your-repository-here>",
   "dependencies": {
     "axios": "0.18.0",
+    "nativescript-background-http": "3.4.1",
     "nativescript-carousel": "4.1.0",
     "nativescript-imagepicker": "~6.1.0",
     "nativescript-stripe": "5.1.0",
