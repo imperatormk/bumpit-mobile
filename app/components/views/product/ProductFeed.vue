@@ -1,6 +1,7 @@
 <template>
   <ViewContainer :loading="!loaded">
-    <FlexCol alignItems="center" height="100%">
+    <FlexCol alignItems="center">
+      <LabelButton block v-if="true" text="Post new product" @onTap="gotoNewProduct"/>
       <SearchBar hint="Search hint" :text="searchTerm" @loaded="$event.object.android.clearFocus()"/>
 
       <Split size="15"/>
@@ -11,12 +12,12 @@
       </FlexRow>
 
       <Split size="15"/>
-      <FlexRow flexWrap="wrap">
-        <StackLayout v-for="product in products" :key="product.id" width="50%">
-          <ProductSummary @selected="openProductDetails(product)" :product="product"/>
-        </StackLayout>
-      </FlexRow>
     </FlexCol>
+    <FlexRow flexWrap="wrap" slot="scrollable">
+      <StackLayout v-for="product in products" :key="product.id" width="50%">
+        <ProductSummary @selected="gotoProductDetails(product)" :product="product"/>
+      </StackLayout>
+    </FlexRow>
   </ViewContainer>
 </template>
 
@@ -45,8 +46,11 @@ export default {
           this.loaded = true
         })
     },
-    openProductDetails(product) {
+    gotoProductDetails(product) {
       EventBus.$emit('navigateTo', 'ProductDetails', { productId: product.id })
+    },
+    gotoNewProduct() {
+      EventBus.$emit('navigateTo', 'NewProduct')
     },
     changeProductsGroup(productsGroup) {
       this.productsGroup = productsGroup

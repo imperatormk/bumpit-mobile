@@ -12,6 +12,7 @@
 <script>
 import ProductFeed from '@/components/views/product/ProductFeed'
 import ProductDetails from '@/components/views/product/ProductDetails'
+import NewProduct from '@/components/views/product/NewProduct'
 
 import Checkout from '@/components/views/order/Checkout'
 import AfterCheckout from '@/components/views/order/AfterCheckout'
@@ -62,6 +63,9 @@ export default {
           break
         case 'ProductDetails':
           comp = ProductDetails
+          break
+        case 'NewProduct':
+          comp = NewProduct
           break
         case 'Conversation':
           break

@@ -1,6 +1,6 @@
 <template>
-  <StackLayout backgroundColor="#e1e1e1" borderRadius="10">
-    <FlexRow alignItems="center" justifyContent="center" width="100%" height="200" @tap="addPhotos">
+  <StackLayout>
+    <FlexRow backgroundColor="#e1e1e1" borderRadius="10" alignItems="center" justifyContent="center" width="100%" height="200" @tap="addPhotos">
       <Label @tap="addPhotos" text="Add photos of your item" fontSize="20"/>
     </FlexRow>
 
@@ -40,6 +40,7 @@ export default {
             element.options.height = this.thumbSize
           })
           this.imageAssets.push(...selection)
+          this.$emit('imagesChanged', this.imageAssets)
         })
     }
   }

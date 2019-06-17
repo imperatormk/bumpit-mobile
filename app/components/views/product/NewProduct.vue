@@ -1,18 +1,21 @@
 <template>
   <ViewContainer :loading="!loaded">
     <FlexCol slot="scrollable">
-      <Label text="Add item" fontSize="30" fontWeight="bold"/>
+      <Label text="Add item" fontSize="30" fontWeight="bold" color="black"/>
       <Split/>
       <Label text="Listing title" fontSize="20"/>
 
       <Split/>
+      <Split/>
       <Textbox v-model="product.title" hint="Item title (e.g. Nike VaporMax)"/>
 
-      <ImagePicker/>
+      <Split/>
+      <ImagePicker @imagesChanged="productImages = $event"/>
 
       <Split/>
       <Split/>
-      <Label text="Item details" fontSize="25"/>
+      <Label text="Item details" fontSize="25" color="black"/>
+
       <Split/>
       <Label text="Brand" fontSize="20"/>
       <Split/>
@@ -73,7 +76,6 @@ export default {
       this.product.size = size
     },
     postItem() {
-      console.log(this.product)
     }
   },
   data: () => ({
@@ -83,6 +85,7 @@ export default {
       size: 14,
       price: 0.0,
     },
+    productImages: [],
     brands: [],
     categories: [],
     sizes: [11.5, 12, 13, 14, 15],
