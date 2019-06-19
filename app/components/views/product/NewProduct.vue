@@ -132,6 +132,9 @@ export default {
         .then((productId) => {
           EventBus.$emit('navigateTo', 'ProductDetails', { productId })
         })
+        .finally(() => {
+          this.saving = false
+        })
     }
   },
   data: () => ({

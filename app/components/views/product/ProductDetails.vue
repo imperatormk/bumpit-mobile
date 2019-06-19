@@ -5,7 +5,7 @@
         <Carousel indicatorColor="#0076ff">
           <CarouselItem v-for="image in product.images" :key="image.id" backgroundColor="#fefefe" verticalAlignment="middle">
             <StackLayout>
-              <Image stretch="aspectFill" :src="image.url"/>
+              <Image stretch="aspectFill" :src="getImageUrl(image)"/>
             </StackLayout>
           </CarouselItem>
         </Carousel>
@@ -65,6 +65,7 @@
 
 <script>
 import UserBasics from '@/components/blocks/user/UserBasics'
+import System from '@/data/system'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 import mocks from '@/services/mocks'
@@ -96,6 +97,9 @@ export default {
     },
   },
   methods: {
+    getImageUrl(image) {
+      return `${System.apiUrl}${image.url}`
+    },
     gotoConversation() {
       EventBus.$emit('navigateTo', 'Conversation', { productId: this.productId })
     },

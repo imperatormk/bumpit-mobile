@@ -2,6 +2,7 @@ import http from './http'
 import auth from './auth'
 
 import uploadImage from './upload-image'
+import System from '@/data/system'
 
 const getAuthHeaders = (opts) => {
   return getAuthHeadersMock(opts)
@@ -59,7 +60,7 @@ const product = {
       .then(resp => resp.data)
   },
   postProductImages(productId, productImages) {
-    const endpoint = `http://18.188.233.81/api/products/${productId}/images`
+    const endpoint = `${System.apiUrl}/api/products/${productId}/images`
 
     return productImages.map((image) => {
       return new Promise((resolve, reject) => {

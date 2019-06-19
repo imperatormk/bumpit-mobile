@@ -1,7 +1,8 @@
 import axios from 'axios'
+import System from '@/data/system'
 
 const http = axios.create({
-  baseURL: 'http://18.188.233.81/api'
+  baseURL: `${System.apiUrl}/api`
 })
 
 import EventBus from '@/services/event-bus'
