@@ -1,4 +1,4 @@
-import bgHttp from 'nativescript-background-http'
+const bgHttp = require('nativescript-background-http')
 const session = bgHttp.session('image-upload')
 
 const startUpload = (image, endpoint, evCallback) => {
@@ -6,18 +6,19 @@ const startUpload = (image, endpoint, evCallback) => {
     url: endpoint,
     method: 'POST',
     headers: {
-      'Content-Type': 'application/octet-stream'
+      'Content-Type': 'application/octet-stream',
+      'File-Name': image
     }
   }
 
-  const task = session.multipartUpload(params, request)
   const params = [
-    { name: 'fileToUpload', filename: image, mimeType: 'image/jpeg' }
+    { name: 'productImage', filename: image, mimeType: 'image/jpeg' }
   ]
+  const task = session.multipartUpload(params, request)
 
   const onEvent = (e) => {
     const event = {
-      eventTitle: e.eventName + ' ' + e.object.description,
+      eventTitle: e.eventName,
       eventData: JSON.stringify({
         error: e.error ? e.error.toString() : e.error,
         currentBytes: e.currentBytes,
@@ -35,4 +36,6 @@ const startUpload = (image, endpoint, evCallback) => {
   task.on('complete', onEvent.bind(this))
 }
 
-export default startUpload
+export default {
+  startUpload
+}

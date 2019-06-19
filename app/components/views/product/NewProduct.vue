@@ -33,10 +33,19 @@
 
       <Split/>
       <Label text="Price" fontSize="20"/>
-      <Textbox keyboardType="number" v-model="product.price"/>
+      <FlexRow alignItems="center">
+        <StackLayout>
+          <ListPicker :items="currencies"
+            selectedIndex="1"
+            @selectedIndexChange="product.currency = $event"/>
+        </StackLayout>
+        <StackLayout flexGrow="1">
+          <Textbox keyboardType="number" v-model.number="product.price"/>
+        </StackLayout>
+      </FlexRow>
 
       <Split/>
-      <StateButton @onTap="postItem" block text="Post item"/>
+      <StateButton @onTap="postItem" :disabled="saving" :inactive="saving" block text="Post item"/>
     </FlexCol>
   </ViewContainer>
 </template>
@@ -45,6 +54,11 @@
 import ItemSelector from '@/components/common/ItemSelector'
 import ImagePicker from '@/components/common/ImagePicker'
 import Api from '@/services/api'
+import EventBus from '@/services/event-bus'
+
+const fs = require('file-system')
+const applicationModule = require('tns-core-modules/application')
+const imageSourceModule = require("tns-core-modules/image-source")
 
 export default {
   mounted() {
@@ -76,19 +90,67 @@ export default {
       this.product.size = size
     },
     postItem() {
+      const currency = !isNaN(this.product.currency) ? this.currencies[this.product.currency] : this.product.currency
+      const productObj = {
+        ...this.product,
+        currency
+      }
+
+      const validateItem = (item) => {
+        return true &&
+          item.title.trim() &&
+          item.condition != null &&
+          item.currency != null &&
+          item.brandId != null &&
+          item.size != null &&
+          item.price > 1 &&
+          this.productImages.length > 0
+      }
+      if (!validateItem(productObj)) return
+
+      this.saving = true
+      Api.postProduct(productObj)
+        .then((result) => {
+          const productId = result.id
+
+          const prepareImages = this.productImages.map((productImage, idx) => {
+            return imageSourceModule.fromAsset(productImage).then((imageSource) => {
+              let folder = fs.knownFolders.documents()
+              let path = fs.path.join(folder.path, `product_${productId}_${idx}.jpg`)
+              let saved = imageSource.saveToFile(path, 'jpg')
+
+              return path
+            })
+          })
+
+          return Promise.all(prepareImages)
+            .then((productImageNames) => Api.postProductImages(productId, productImageNames))
+            .then(() => productId)
+        })
+        .then((productId) => {
+          EventBus.$emit('navigateTo', 'ProductDetails', { productId })
+        })
+        .catch(() => {
+          this.saving = false
+        })
     }
   },
   data: () => ({
     product: {
       title: '',
-      brand: '',
+      details: '', // pending
+      condition: 1, // pending
+      currency: 1,
+      brandId: null,
       size: 14,
       price: 0.0,
     },
     productImages: [],
     brands: [],
     categories: [],
+    currencies: ['USD', 'AUD', 'CAD', 'EUR'], // get these from consts/server?
     sizes: [11.5, 12, 13, 14, 15],
+    saving: false,
     loaded: false
   }),
   components: {

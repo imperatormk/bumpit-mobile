@@ -1,5 +1,5 @@
 <template>
-  <Button v-bind="$props" @tap="$emit('onTap')" :class="getClass" :width="block ? '100%' : 'auto'"></Button>
+  <Button v-bind="$props" @tap="onTap" :class="getClass" :width="block ? '100%' : 'auto'"></Button>
 </template>
 
 <script>
@@ -7,11 +7,18 @@ export default {
   props: {
     text: String,
     inactive: Boolean,
+    disabled: Boolean,
     rounded: {
       type: Boolean,
       default: true
     },
     block: Boolean
+  },
+  methods: {
+    onTap() {
+      if (this.disabled) return
+      this.$emit('onTap')
+    }
   },
   computed: {
     getClass() {

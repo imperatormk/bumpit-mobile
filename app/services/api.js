@@ -1,6 +1,8 @@
 import http from './http'
 import auth from './auth'
 
+import uploadImage from './upload-image'
+
 const getAuthHeaders = (opts) => {
   return getAuthHeadersMock(opts)
   const options = opts || {}
@@ -49,6 +51,27 @@ const product = {
     return http.get(`/products/${productId}`)
       .then(resp => resp.data)
   },
+  postProduct(product) {
+    return getAuthHeaders()
+      .then((options) => {
+        return http.post('/products', product, options)
+      })
+      .then(resp => resp.data)
+  },
+  postProductImages(productId, productImages) {
+    const endpoint = `http://18.188.233.81/api/products/${productId}/images`
+
+    return productImages.map((image) => {
+      return new Promise((resolve, reject) => {
+        const cb = (e) => {
+          if (e.eventTitle === 'complete') resolve({ status: 'success' })
+          if (e.eventTitle === 'error') reject({ status: 'error', msg: eventData.error })
+        }
+
+        uploadImage.startUpload(image, endpoint, cb)
+      })
+    })
+  }
 }
 
 const order = {
