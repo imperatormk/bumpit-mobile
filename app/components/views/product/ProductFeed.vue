@@ -1,6 +1,6 @@
 <template>
   <ViewContainer :loading="!loaded">
-    <FlexCol alignItems="center">
+    <FlexCol alignItems="center" :height="!products.length ? '100%' : 'auto'">
       <LabelButton block v-if="true" text="Post new product" @onTap="gotoNewProduct"/>
       <SearchBar hint="Product name, brand..." :text="searchTerm" @loaded="$event.object.android.clearFocus()"/>
 
@@ -12,6 +12,9 @@
       </FlexRow>
 
       <Split size="15"/>
+      <FlexCol flexGrow="1" justifyContent="center" alignItems="center" width="100%">
+        <Label v-if="!products.length" text="Nothing to see at the moment..." fontSize="18"/>
+      </FlexCol>
     </FlexCol>
     <FlexRow flexWrap="wrap" slot="scrollable">
       <StackLayout v-for="product in products" :key="product.id" width="50%">
