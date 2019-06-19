@@ -37,14 +37,13 @@
         <StackLayout>
           <ListPicker :items="currencies"
             selectedIndex="1"
-            @selectedIndexChange="product.currency = $event"/>
+            @selectedIndexChange="selectCurrency"/>
         </StackLayout>
         <StackLayout flexGrow="1">
           <Textbox keyboardType="number" v-model.number="product.price"/>
         </StackLayout>
       </FlexRow>
 
-      <Split/>
       <StateButton @onTap="postItem" :disabled="saving" :inactive="saving" block text="Post item"/>
     </FlexCol>
   </ViewContainer>
@@ -89,6 +88,9 @@ export default {
     selectSize(size) {
       this.product.size = size
     },
+    selectCurrency(e) {
+      this.product.currency = e.value
+    },
     postItem() {
       const currency = !isNaN(this.product.currency) ? this.currencies[this.product.currency] : this.product.currency
       const productObj = {
@@ -129,9 +131,6 @@ export default {
         })
         .then((productId) => {
           EventBus.$emit('navigateTo', 'ProductDetails', { productId })
-        })
-        .catch(() => {
-          this.saving = false
         })
     }
   },

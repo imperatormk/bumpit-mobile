@@ -2,7 +2,7 @@
   <ViewContainer :loading="!loaded">
     <FlexCol alignItems="center">
       <LabelButton block v-if="true" text="Post new product" @onTap="gotoNewProduct"/>
-      <SearchBar hint="Search hint" :text="searchTerm" @loaded="$event.object.android.clearFocus()"/>
+      <SearchBar hint="Product name, brand..." :text="searchTerm" @loaded="$event.object.android.clearFocus()"/>
 
       <Split size="15"/>
       <FlexRow justifyContent="center">
