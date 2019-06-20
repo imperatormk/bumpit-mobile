@@ -3,35 +3,39 @@
     <FlexCol slot="scrollable">
       <Label text="Add item" fontSize="30" fontWeight="bold" color="black"/>
       <Split/>
+
       <Label text="Listing title" fontSize="20"/>
+      <Split/>
+      <Split/>
 
-      <Split/>
-      <Split/>
       <Textbox v-model="product.title" hint="Item title (e.g. Nike VaporMax)"/>
-
       <Split/>
+
       <ImagePicker @imagesChanged="productImages = $event"/>
+      <Split/>
+      <Split/>
 
-      <Split/>
-      <Split/>
       <Label text="Item details" fontSize="25" color="black"/>
-
       <Split/>
+
       <Label text="Brand" fontSize="20"/>
       <Split/>
-      <ItemSelector :items="brands" @selected="selectBrand" padding="50"/>
 
+      <ItemSelector :items="brands" @selected="selectBrand" padding="50"/>
       <Split/>
+
       <Label text="Category" fontSize="20"/>
       <Split/>
-      <ItemSelector :items="categories" @selected="selectCategory" padding="50"/>
 
+      <ItemSelector :items="categories" @selected="selectCategory" padding="50"/>
       <Split/>
+
       <Label text="Size" fontSize="20"/>
       <Split/>
-      <ItemSelector :items="sizes" @selected="selectSize" padding="5 10"/>
 
+      <ItemSelector :items="sizes" @selected="selectSize" padding="5 10"/>
       <Split/>
+
       <Label text="Price" fontSize="20"/>
       <FlexRow alignItems="center">
         <StackLayout>
@@ -55,9 +59,10 @@ import ImagePicker from '@/components/common/ImagePicker'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 
+// move these to helpers
 const fs = require('file-system')
 const applicationModule = require('tns-core-modules/application')
-const imageSourceModule = require("tns-core-modules/image-source")
+const imageSourceModule = require('tns-core-modules/image-source')
 
 export default {
   mounted() {
@@ -115,6 +120,7 @@ export default {
         .then((result) => {
           const productId = result.id
 
+          // move this to helpers
           const prepareImages = this.productImages.map((productImage, idx) => {
             return imageSourceModule.fromAsset(productImage).then((imageSource) => {
               let folder = fs.knownFolders.documents()

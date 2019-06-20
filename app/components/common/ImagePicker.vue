@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import * as imagepicker from 'nativescript-imagepicker' 
+import * as imagepicker from 'nativescript-imagepicker'
 import { Observable } from 'tns-core-modules/data/observable'
 import { ItemEventData } from 'tns-core-modules/ui/list-view'
 
@@ -24,7 +24,7 @@ export default {
     imageAssets: []
   }),
   methods: {
-    addPhotos: function() {
+    addPhotos() {
       let context = imagepicker.create({
         mode: 'multiple'
       })

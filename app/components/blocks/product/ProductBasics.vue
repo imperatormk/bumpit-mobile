@@ -29,6 +29,7 @@ export default {
   },
   computed: {
     firstImage() {
+      if (!this.product.images.length) return ''
       return `${System.apiUrl}${this.product.images[0].url}`
     }
   }

@@ -26,6 +26,7 @@ export default {
       return `${this.product.price} ${this.product.currency}`
     },
     firstImage() {
+      if (!this.product.images.length) return ''
       return `${System.apiUrl}${this.product.images[0].url}`
     },
     classes() {
