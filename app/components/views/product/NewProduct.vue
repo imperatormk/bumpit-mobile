@@ -5,9 +5,6 @@
       <Split/>
 
       <Label text="Listing title" fontSize="20"/>
-      <Split/>
-      <Split/>
-
       <Textbox v-model="product.title" hint="Item title (e.g. Nike VaporMax)"/>
       <Split/>
 
@@ -132,8 +129,9 @@ export default {
           })
 
           return Promise.all(prepareImages)
-            .then((productImageNames) => Api.postProductImages(productId, productImageNames))
-            .then(() => productId)
+            .then((productImageNames) =>
+              Promise.all(Api.postProductImages(productId, productImageNames)))
+                .then(() => productId)
         })
         .then((productId) => {
           EventBus.$emit('navigateTo', 'ProductDetails', { productId })

@@ -62,16 +62,8 @@ const product = {
   postProductImages(productId, productImages) {
     const endpoint = `${System.apiUrl}/api/products/${productId}/images`
 
-    return productImages.map((image) => {
-      return new Promise((resolve, reject) => {
-        const cb = (e) => {
-          if (e.eventTitle === 'complete') resolve({ status: 'success' })
-          if (e.eventTitle === 'error') reject({ status: 'error', msg: eventData.error })
-        }
-
-        uploadImage.startUpload(image, endpoint, cb)
-      })
-    })
+    return productImages.map((image) =>
+      uploadImage.startUpload({ path: image, fieldName: 'productImage' }, endpoint))
   }
 }
 
