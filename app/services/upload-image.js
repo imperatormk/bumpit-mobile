@@ -1,19 +1,24 @@
 const bgHttp = require('nativescript-background-http')
 const session = bgHttp.session('image-upload')
 
-const startUpload = (image, endpoint) => {
+const startUpload = (image, endpoint, auth) => {
+  const headers = {
+    'Content-Type': 'application/octet-stream',
+    'File-Name': image.path
+  }
+  if (auth) headers['Authorization'] = auth
+
   const request = {
     url: endpoint,
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/octet-stream',
-      'File-Name': image.path
-    }
+    headers
   }
 
-  const params = [
-    { name: image.fieldName, filename: image.path, mimeType: 'image/jpeg' }
-  ]
+  const params = [{
+    name: image.fieldName,
+    filename: image.path,
+    mimeType: 'image/jpeg'
+  }]
 
   const constructResponse = (e) => {
     const event = {
@@ -30,13 +35,18 @@ const startUpload = (image, endpoint) => {
   }
 
   const task = session.multipartUpload(params, request)
+
   return new Promise((resolve, reject) => {
     task.on('complete', (e) => {
       resolve({ status: 'success' })
     })
     task.on('error', (e) => {
       const errObj = constructResponse(e)
-      reject({ status: 'error', msg: errObj.eventData.error })
+      reject({
+        status: 'error',
+        statusCode: errObj.eventData.responseCode,
+        msg: errObj.eventData.error
+      })
     })
   })
 }

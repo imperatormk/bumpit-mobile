@@ -2,9 +2,7 @@
   <ViewContainer :loading="!loaded">
     <FlexCol slot="scrollable">
       <FlexRow justifyContent="center" alignItems="center" width="100%">
-        <FlexRow width="100" height="100" backgroundColor="#eaeef0" borderRadius="50%" alignItems="center" justifyContent="center">
-          <Label fontSize="24" class="fas" color="#a1a1a2" :text="'\uf030'"/>
-        </FlexRow>
+        <Avatar :avatar="user.avatar" shouldSelect/>
       </FlexRow>
       <Split big/>
 
@@ -127,6 +125,7 @@
 </template>
 
 <script>
+import Avatar from '@/components/blocks/user/Avatar'
 import Auth from '@/services/auth'
 
 export default {
@@ -138,7 +137,7 @@ export default {
     profile: {
       selectedCurrency: 0
     },
-    user: {},
+    user: { avatar: '' },
     loaded: false
   }),
   methods: {
@@ -159,6 +158,9 @@ export default {
           this.getAuthUser()
         })
     }
+  },
+  components: {
+    Avatar
   }
 }
 </script>
