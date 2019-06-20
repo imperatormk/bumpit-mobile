@@ -1,6 +1,6 @@
 <template>
   <StackLayout>
-    <FlexRow @tap="onTap" justifyContent="center" alignItems="center" height="150" width="150" v-if="shouldSelect" borderRadius="100%">
+    <FlexRow @tap="onTap" justifyContent="center" :backgroundColor="getAvatarUrl ? 'white' : '#eaeef0'" alignItems="center" height="150" width="150" v-if="shouldSelect" borderRadius="100%">
       <Image v-if="getAvatarUrl" @tap="onTap" height="150" width="150" :src="getAvatarUrl" borderRadius="100%"/>
       <Label v-else @tap="onTap" backgroundColor="#eaeef0" class="fas" :text="'\uf030'" color="#a1a1a2" fontSize="40"/>
     </FlexRow>
@@ -26,6 +26,7 @@ export default {
     getAvatarUrl() {
       if (this.selAvatar) return this.selAvatar
       if (!this.avatar) return ''
+      if (this.avatar.includes('default') && this.shouldSelect) return '' // a bit dirty
 
       const avatarName = this.avatar
       return `${System.apiUrl}${avatarName}`

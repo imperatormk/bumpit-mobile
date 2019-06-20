@@ -113,6 +113,22 @@ const user = {
     return http.get(`/accounts/${userId}`)
       .then(resp => resp.data)
   },
+  registerUser(userObj) {
+    return http.post(`/accounts/register`, userObj)
+      .then(resp => resp.data)
+  },
+  updateAvatar(avatar) {
+    const endpoint = `${System.apiUrl}/api/accounts/me/avatar`
+
+    return getAuthHeaders()
+      .then(options => uploadImage.startUpload({
+          path: avatar,
+          fieldName: 'avatar'
+        },
+        endpoint,
+        options.headers['Authorization']))
+      .then(resp => resp.data)
+  }
 }
 
 const conversation = {
