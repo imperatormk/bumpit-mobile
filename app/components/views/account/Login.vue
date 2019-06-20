@@ -12,7 +12,7 @@
       <FlexCol>
         <Label text="Username" color="black" fontSize="19"/>
         <TextField hint="e.g. acid" 
-          v-model="username"
+          v-model="user.username"
           secure="false"
           returnKeyType="done"
           fontSize="16"
@@ -25,7 +25,7 @@
       <FlexCol>
         <Label text="Enter your password" color="black" fontSize="19"/>
         <TextField hint="Password"
-          v-model="password"
+          v-model="user.password"
           secure="true"
           returnKeyType="done"
           fontSize="16"
@@ -44,14 +44,24 @@ import Auth from '@/services/auth'
 import EventBus from '@/services/event-bus'
 
 export default {
+  props: {
+    username: String,
+    password: String
+  },
+  created() {
+    if (this.username) this.user.username = this.username
+    if (this.password) this.user.password = this.password
+  },
   data: () => ({
-    username: 'imperatormk',
-    password: 'pece123!'
+    user: {
+      username: '',
+      password: ''
+    }
   }),
   methods: {
     login() {
-      const username = this.username.trim()
-      const password = this.password.trim()
+      const username = this.user.username.trim()
+      const password = this.user.password.trim()
       Auth.login(username, password)
         .then(() => {
           EventBus.$emit('auth:loggedIn')
