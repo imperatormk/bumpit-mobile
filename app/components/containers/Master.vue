@@ -54,8 +54,13 @@ export default {
     EventBus.$off('auth:loggedIn')
     EventBus.$off('navigateTo')
   },
+  data: () => ({
+    currentView: null
+  }),
   methods: {
     navigateTo(viewName, props) {
+      if (this.currentView === viewName) return
+
       let comp = null
       switch (viewName) {
         case 'ProductFeed':
@@ -102,6 +107,7 @@ export default {
         },
         props
       })
+      this.currentView = viewName
     }
   },
 }

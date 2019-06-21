@@ -140,7 +140,7 @@ export default {
           this.order = order
         })
         .catch((err) => {
-          if (err.response.data.msg === 'productSold') {
+          if (err.response.status === 400) {
             this.$navigateBack()
           }
         })
@@ -162,9 +162,9 @@ export default {
           })
         })
         .catch((err) => {
-          if (err.response.data.msg === 'productSold') {
-            this.$navigateBack()
-          }
+          const fatalMessages = ['productSold', 'cantBuyFromSelf']
+          const errMsg = err.response.data.msg
+          if (fatalMessages.includes(errMsg)) this.$navigateBack()
         })
     }
   },
