@@ -129,9 +129,11 @@ export default {
           })
 
           return Promise.all(prepareImages)
-            .then((productImageNames) =>
-              Promise.all(Api.postProductImages(productId, productImageNames)))
+            .then((productImageNames) => {
+              return Api.postProductImages(productId, productImageNames)
+                .then((promises) => Promise.all(promises))
                 .then(() => productId)
+            })
         })
         .then((productId) => {
           EventBus.$emit('navigateTo', 'ProductDetails', { productId })
