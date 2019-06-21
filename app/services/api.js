@@ -62,8 +62,16 @@ const product = {
   postProductImages(productId, productImages) {
     const endpoint = `${System.apiUrl}/api/products/${productId}/images`
 
-    return productImages.map((image) =>
-      uploadImage.startUpload({ path: image, fieldName: 'productImage' }, endpoint))
+    return getAuthHeaders()
+      .then((options) => {
+        return productImages.map((image) =>
+          uploadImage.startUpload({
+            path: image,
+            fieldName: 'productImage'
+          },
+          endpoint,
+          options.headers['Authorization']))
+      })
   }
 }
 
