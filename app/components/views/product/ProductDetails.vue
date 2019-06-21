@@ -54,8 +54,8 @@
           </UserBasics>
         </FlexCol>
         <FlexCol v-if="isAvailable">
-          <StateButton inactive @onTap="gotoConversation" text="C"/>
-          <Split vertical/>
+          <StateButton inactive @onTap="gotoConversation" class="far" :text="'\uf075'"/>
+          <StackLayout margin="3"/>
           <StateButton @onTap="gotoCheckout" text="Buy"/>
         </FlexCol>
       </FlexRow>

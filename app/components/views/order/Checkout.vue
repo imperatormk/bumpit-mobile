@@ -46,10 +46,13 @@ export default {
   },
   created() {
     this.getProduct()
-      .then(this.getShippingInfo())
-      .then(this.prepareOrder())
+      .then(() => this.getShippingInfo())
+      .then(() => this.prepareOrder())
       .then(() => {
         this.loaded = true
+      })
+      .catch((err) => {
+        if (err.status === 400) this.$navigateBack()
       })
   },
   data: () => ({
@@ -89,6 +92,10 @@ export default {
         .then((product) => {
           this.product = product
         })
+        .catch((err) => Promise.reject({
+          status: err.response.status,
+          message: err.response.data.msg
+        }))
     },
     getShippingInfo() {
       return Api.getShippingInfo()
@@ -139,11 +146,10 @@ export default {
         .then((order) => {
           this.order = order
         })
-        .catch((err) => {
-          if (err.response.status === 400) {
-            this.$navigateBack()
-          }
-        })
+        .catch((err) => Promise.reject({
+          status: err.response.status,
+          message: err.response.data.msg
+        }))
     },
     placeOrder() {
       const orderObj = { // we don't need shipping data here (maybe try the same for payer details?)
@@ -161,11 +167,10 @@ export default {
             }
           })
         })
-        .catch((err) => {
-          const fatalMessages = ['productSold', 'cantBuyFromSelf']
-          const errMsg = err.response.data.msg
-          if (fatalMessages.includes(errMsg)) this.$navigateBack()
-        })
+        .catch((err) => Promise.reject({
+          status: err.response.status,
+          message: err.response.data.msg
+        }))
     }
   },
   components: {
