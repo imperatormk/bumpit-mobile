@@ -2,7 +2,7 @@
   <StackLayout>
     <StackLayout @tap="addPhotos">
       <FlexRow backgroundColor="#e1e1e1" borderRadius="10" alignItems="center" justifyContent="center" width="100%" height="200">
-        <Label @tap="addPhotos" text="Add photos of your item" fontSize="20"/>
+        <Label text="Add photos of your item" fontSize="20"/>
       </FlexRow>
     </StackLayout>
 

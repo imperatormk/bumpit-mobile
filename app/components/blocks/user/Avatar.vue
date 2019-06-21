@@ -1,10 +1,10 @@
 <template>
   <StackLayout>
     <FlexRow @tap="onTap" justifyContent="center" :backgroundColor="getAvatarUrl ? 'white' : '#eaeef0'" alignItems="center" height="150" width="150" v-if="shouldSelect" borderRadius="100%">
-      <Image v-if="getAvatarUrl" @tap="onTap" height="150" width="150" :src="getAvatarUrl" borderRadius="100%"/>
+      <Image v-if="getAvatarUrl" @tap="onTap" :height="size" :width="size" :src="getAvatarUrl" borderRadius="100%"/>
       <Label v-else @tap="onTap" backgroundColor="#eaeef0" class="fas" :text="'\uf030'" color="#a1a1a2" fontSize="40"/>
     </FlexRow>
-    <Image v-else-if="getAvatarUrl" height="150" width="150" :src="getAvatarUrl" borderRadius="100%"/>
+    <Image v-else-if="getAvatarUrl" :height="size" :width="size" :src="getAvatarUrl" borderRadius="100%"/>
   </StackLayout>
 </template>
 
@@ -17,7 +17,8 @@ import System from '@/data/system'
 export default {
   props: {
     shouldSelect: Boolean,
-    avatar: String
+    avatar: String,
+    small: Boolean,
   },
   data: () => ({
     selAvatar: null
@@ -30,6 +31,10 @@ export default {
 
       const avatarName = this.avatar
       return `${System.apiUrl}${avatarName}`
+    },
+    size() {
+      if (this.small) return 50
+      return 150
     }
   },
   methods: {
