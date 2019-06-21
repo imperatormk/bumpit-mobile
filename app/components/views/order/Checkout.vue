@@ -52,7 +52,7 @@ export default {
         this.loaded = true
       })
       .catch((err) => {
-        if (err.status === 400) this.$navigateBack()
+        if (err.status === 409) this.$navigateBack()
       })
   },
   data: () => ({
@@ -167,10 +167,13 @@ export default {
             }
           })
         })
-        .catch((err) => Promise.reject({
-          status: err.response.status,
-          message: err.response.data.msg
-        }))
+        .catch((err) => {
+          const errObj = {
+            status: err.response.status,
+            message: err.response.data.msg
+          }
+          if (errObj.status === 409) this.$navigateBack()
+        })
     }
   },
   components: {
