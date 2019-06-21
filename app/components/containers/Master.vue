@@ -44,7 +44,7 @@ export default {
       this.navigateTo('Login')
     })
     EventBus.$on('auth:loggedIn', () => {
-      this.navigateTo('ProductFeed')
+      this.navigateTo('EditProfile')
     })
     EventBus.$on('navigateTo', this.navigateTo)
   },
