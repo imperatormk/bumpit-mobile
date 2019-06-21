@@ -14,7 +14,7 @@
 
       <Split big/>
       <FlexRow justifyContent="space-around">
-        <FlexCol alignItems="center">
+        <FlexCol v-if="decimalRating" alignItems="center">
           <StarRating fontWeight="bold" color="#0076ff" dense>
             <Label :text="decimalRating" color="black" fontSize="25" fontWeight="bold"/>
           </StarRating>
@@ -123,7 +123,7 @@ export default {
   computed: {
     decimalRating() {
       const rating = this.user.rating
-      return rating ? rating.toFixed(1) : '/'
+      return rating ? rating.toFixed(1) : null
     },
     reviewsCount() {
       const reviews = this.user.reviews

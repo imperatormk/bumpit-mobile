@@ -50,7 +50,7 @@
       <FlexRow justifyContent="space-between" alignItems="center">
         <FlexCol>
           <UserBasics :user="product.seller" fontSize="18">
-            <StarRating :rating="product.seller.rating" dense/>
+            <StarRating v-if="product.seller.rating" :rating="product.seller.rating" dense/>
           </UserBasics>
         </FlexCol>
         <FlexCol v-if="isAvailable">
