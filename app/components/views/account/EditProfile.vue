@@ -119,7 +119,7 @@
 
       <StateButton text="Save changes"/>
       <Split/>
-      <StateButton @onTap="logoutTest" v-if="user" text="Logout"/>
+      <StateButton @onTap="logout" v-if="user" text="Logout"/>
     </FlexCol>
   </ViewContainer>
 </template>
@@ -152,7 +152,7 @@ export default {
           this.loaded = true
         })
     },
-    logoutTest() {
+    logout() {
       Auth.logout()
         .then((resp) => {
           this.getAuthUser()

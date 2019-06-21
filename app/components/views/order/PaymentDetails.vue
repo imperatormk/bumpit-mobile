@@ -4,7 +4,7 @@
       <CreditCardView id="card"/>
       <MyDetails v-model="details"/>
       <Split fill/>
-      <StateButton @onTap="updateDetails" block text="Add payment details"/>
+      <StateButton @onTap="updateDetails" :disabled="updating" :inactive="updating" block text="Add payment details"/>
     </FlexCol>
   </ViewContainer>
 </template>
@@ -17,7 +17,6 @@ import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 
 const stripe = new Stripe('pk_test_GMNKDApw27UoQosG2hsXV1xT')
-const cc = new Card('4242424242424242', 12, 21, '069') // temp
 
 export default {
   props: {
@@ -47,6 +46,7 @@ export default {
       zipcode: '',
       contactPhone: ''
     },
+    updating: false,
     loaded: false
   }),
   methods: {
@@ -56,7 +56,9 @@ export default {
       if (!valid) return // TODO: all are required atm
 
       const card = this.pageRef.getViewById('card').card
+      this.updating = true
       stripe.createToken(cc, (error, tokenObj) => {
+        this.updating = false
         if (error) return
         const paymentDetails = {
           token: tokenObj.id,

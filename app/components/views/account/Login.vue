@@ -56,15 +56,22 @@ export default {
     user: {
       username: '',
       password: ''
-    }
+    },
+    loggingIn: false
   }),
   methods: {
     login() {
       const username = this.user.username.trim()
       const password = this.user.password.trim()
+      if (!username || !password) return
+
+      this.loggingIn = true
       Auth.login(username, password)
         .then(() => {
           EventBus.$emit('auth:loggedIn')
+        })
+        .finally(() => {
+          this.loggingIn = false
         })
     },
     gotoRegister() {

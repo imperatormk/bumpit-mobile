@@ -24,7 +24,7 @@
       <Split big/>
       <DataGrid :data="chargeItems"/>
       <Split fill/>
-      <StateButton @onTap="placeOrder" block text="Place order"/>
+      <StateButton @onTap="placeOrder" :disabled="ordering" :inactive="ordering" block text="Place order"/>
     </FlexCol>
   </ViewContainer>
 </template>
@@ -65,6 +65,7 @@ export default {
     },
     shippingInfo: null,
     extras: ['authenticationService'],
+    ordering: false,
     loaded: false
   }),
   computed: {
@@ -157,6 +158,7 @@ export default {
         productId: this.productId,
         ...this.paymentDetails.payerDetails
       }
+      this.ordering = true
       Api.performOrder(orderObj)
         .then((resp) => {
           EventBus.$emit('navigateTo', 'AfterCheckout', {
@@ -173,6 +175,9 @@ export default {
             message: err.response.data.msg
           }
           if (errObj.status === 409) this.$navigateBack()
+        })
+        .finally(() => {
+          this.ordering = false
         })
     }
   },
