@@ -44,8 +44,8 @@ const category = {
 }
 
 const product = {
-  getProducts() {
-    return http.get('/products')
+  getProducts(params) {
+    return http.get('/products', { params })
       .then(resp => resp.data)
   },
   getProduct(productId) {

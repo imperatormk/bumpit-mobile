@@ -66,7 +66,6 @@ import ProductSummary from '@/components/blocks/product/ProductSummary'
 import Auth from '@/services/auth'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
-import mocks from '@/services/mocks'
 
 export default {
   props: {
@@ -85,6 +84,9 @@ export default {
       })
       .then((user) => {
         this.user = user
+        return this.getProducts()
+      })
+      .then(() => {
         this.loaded = true
       })
   },
@@ -114,7 +116,25 @@ export default {
     },
     changeProductsGroup(productsGroup) {
       this.productsGroup = productsGroup
-      this.products.push(mocks.product)
+      this.getProducts()
+    },
+    getProducts() {
+      const userProducts = Api.getProducts({ selId: this.userId })
+      const followingProducts = Promise.resolve([])
+      let action = null
+      switch (this.productsGroup) {
+        case 0:
+          action = userProducts
+          break
+        case 1:
+          action = followingProducts
+          break
+      }
+      if (action) {
+        action.then((products) => {
+          this.products = products
+        })
+      }
     },
     gotoEditProfile() {
       EventBus.$emit('navigateTo', 'EditProfile')
