@@ -50,13 +50,17 @@
       </FlexRow>
     </FlexCol>
 
-    <StackLayout v-show="!!products.length" slot="scrollable">
+    <FlexCol slot="scrollable">
       <FlexRow flexWrap="wrap">
         <StackLayout v-for="product in products" :key="product.id" width="50%">
-          <ProductSummary :product="product" simple/>
+          <ProductSummary @selected="gotoProductDetails(product)" :product="product"/>
         </StackLayout>
       </FlexRow>
-    </StackLayout>
+      <StackLayout v-if="hasMore">
+        <Split big/>
+        <StateButton text="Load more" @onTap="loadMoreProducts" block/>
+      </StackLayout>
+    </FlexCol>
   </ViewContainer>
 </template>
 
@@ -67,6 +71,11 @@ import Auth from '@/services/auth'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 
+const pagination = {
+  page: 1,
+  size: 6
+}
+
 export default {
   props: {
     userId: {
@@ -75,16 +84,16 @@ export default {
     }
   },
   mounted() {
-    const userId = this.userId
-    const userAction = userId == null ? this.getAuthUser() : this.getUser(userId)
+    const { userId } = this
+    const userAction = !userId ? this.getAuthUser() : this.getUser(userId)
+
     return userAction
-      .then((user) => {
-        return this.getConnections(user.id)
-          .then((connections) => ({ ...user, connections }))
-      })
+      .then(user => this.getConnections(user.id)
+        .then(connections => ({ ...user, connections }))
+      )
       .then((user) => {
         this.user = user
-        return this.getProducts()
+        return this.loadMoreProducts()
       })
       .then(() => {
         this.loaded = true
@@ -92,8 +101,11 @@ export default {
   },
   data: () => ({
     user: {},
-    productsGroup: 0,
+    pagination,
     products: [],
+    totalProducts: 0,
+    productsGroup: 0,
+    inbeforeLoad: true,
     noBioMesssage: 'Tap top add a bio to let community know more about you',
     noItemMessages: [
       'List an item to sale',
@@ -101,45 +113,6 @@ export default {
     ],
     loaded: false
   }),
-  methods: {
-    getAuthUser() {
-      return Auth.getAuthUser()
-    },
-    getUser(userId) {
-      return Api.getUser(userId)
-    },
-    getConnections(userId) {
-      return Api.getConnections(userId, { count: true })
-        .then((connections) => {
-          return connections
-        })
-    },
-    changeProductsGroup(productsGroup) {
-      this.productsGroup = productsGroup
-      this.getProducts()
-    },
-    getProducts() {
-      const userProducts = Api.getProducts({ selId: this.userId })
-      const followingProducts = Promise.resolve([])
-      let action = null
-      switch (this.productsGroup) {
-        case 0:
-          action = userProducts
-          break
-        case 1:
-          action = followingProducts
-          break
-      }
-      if (action) {
-        action.then((products) => {
-          this.products = products
-        })
-      }
-    },
-    gotoEditProfile() {
-      EventBus.$emit('navigateTo', 'EditProfile')
-    }
-  },
   computed: {
     decimalRating() {
       const rating = this.user.rating
@@ -156,6 +129,56 @@ export default {
       }
       const connections = this.user.connections
       return Object.assign({}, defaultValues, connections)
+    },
+    hasMore() {
+      return this.inbeforeLoad || (this.totalProducts > this.products.length)
+    }
+  },
+  methods: {
+    getAuthUser() {
+      return Auth.getAuthUser()
+    },
+    getUser(userId) {
+      return Api.getUser(userId)
+    },
+    getConnections(userId) {
+      return Api.getConnections(userId, { count: true })
+        .then((connections) => {
+          return connections
+        })
+    },
+    changeProductsGroup(productsGroup) {
+      this.productsGroup = productsGroup
+      this.pagination = pagination
+      this.products = []
+      this.inbeforeLoad = true
+      this.loadMoreProducts()
+    },
+    loadMoreProducts() {
+      if (!this.hasMore) return Promise.resolve()
+
+      const userProducts = Api.getProducts({ selId: this.user.id }, this.pagination)
+      const followingProducts = Promise.resolve([])
+      let action = null
+      switch (this.productsGroup) {
+        case 0:
+          action = userProducts
+          break
+        case 1:
+          action = followingProducts
+          break
+      }
+      if (action) {
+        action.then((result) => {
+          this.products.push(...result.content)
+          this.totalProducts = result.totalElements
+          this.pagination.page += 1
+          this.inbeforeLoad = false
+        })
+      }
+    },
+    gotoEditProfile() {
+      EventBus.$emit('navigateTo', 'EditProfile')
     }
   },
   components: {

@@ -16,11 +16,17 @@
         <Label v-if="!products.length" text="Nothing to see at the moment..." fontSize="18"/>
       </FlexCol>
     </FlexCol>
-    <FlexRow flexWrap="wrap" slot="scrollable">
-      <StackLayout v-for="product in products" :key="product.id" width="50%">
-        <ProductSummary @selected="gotoProductDetails(product)" :product="product"/>
+    <FlexCol slot="scrollable">
+      <FlexRow flexWrap="wrap">
+        <StackLayout v-for="product in products" :key="product.id" width="50%">
+          <ProductSummary @selected="gotoProductDetails(product)" :product="product"/>
+        </StackLayout>
+      </FlexRow>
+      <StackLayout v-if="hasMore">
+        <Split big/>
+        <StateButton text="Load more" @onTap="loadMoreProducts" block/>
       </StackLayout>
-    </FlexRow>
+    </FlexCol>
   </ViewContainer>
 </template>
 
@@ -30,23 +36,40 @@ import ProductSummary from '@/components/blocks/product/ProductSummary'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 
+const pagination = {
+  page: 1,
+  size: 6
+}
+
 export default {
   created() {
-    this.loadProducts()
+    this.loadMoreProducts()
+      .then(() => {
+        this.loaded = true
+      })
   },
   data: () => ({
+    searchTerm: '', // TODO: implement this
+    pagination,
     products: [],
-    searchTerm: '',
+    totalProducts: 0,
     productsGroup: 0,
     loaded: false
   }),
+  computed: {
+    hasMore() {
+      return !this.loaded || (this.totalProducts > this.products.length)
+    }
+  },
   methods: {
-    loadProducts() {
-      this.loaded = false
-      Api.getProducts()
-        .then((products) => {
-          this.products = products
-          this.loaded = true
+    loadMoreProducts() {
+      if (!this.hasMore) return Promise.resolve()
+
+      return Api.getProducts({}, this.pagination)
+        .then((result) => {
+          this.products.push(...result.content)
+          this.totalProducts = result.totalElements
+          this.pagination.page += 1
         })
     },
     gotoProductDetails(product) {
