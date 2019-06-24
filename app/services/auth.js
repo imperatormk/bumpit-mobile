@@ -11,6 +11,7 @@ const storeJwt = (jwtObject) => {
   appSettings.setString('jwtToken', jwtToken)
   return Promise.resolve({ status: 'success' })
 }
+
 const getAuthHeaders = (opts) => {
   const options = opts || {}
 
@@ -29,6 +30,9 @@ export default {
     return getAuthHeaders()
       .then(options => http.get('/auth/user', options))
       .then(resp => resp.data)
+  },
+  getAuthHeaders(opts) {
+    return getAuthHeaders(opts)
   },
   login(username, password) {
     return http.post('/auth/login', { username, password })

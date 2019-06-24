@@ -4,30 +4,7 @@ import auth from './auth'
 import uploadImage from './upload-image'
 import System from '@/data/system'
 
-const getAuthHeaders = (opts) => {
-  return getAuthHeadersMock(opts)
-  const options = opts || {}
-  return auth.getJwt()
-    .then((token) => {
-      const optionsRes = options
-      optionsRes.headers = {
-        Authorization: `JWT ${token}`
-      }
-      return optionsRes
-    })
-}
-
-const getAuthHeadersMock = (opts) => {
-  const options = opts || {}
-  return Promise.resolve('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImltcGVyYXRvcm1rIiwiaWF0IjoxNTU3ODY5ODg5fQ.-6PWoE1CT303idkQ7VzS-5BisSneKUy9og3sCdyj6MI')
-    .then((token) => {
-      const optionsRes = options
-      optionsRes.headers = {
-        Authorization: `JWT ${token}`
-      }
-      return optionsRes
-    })
-}
+const { getAuthHeaders } = auth
 
 const brand = {
   getBrands() {
@@ -44,7 +21,11 @@ const category = {
 }
 
 const product = {
-  getProducts(params) {
+  getProducts(filter, pageData) {
+    const params = {
+      ...filter,
+      ...pageData
+    }
     return http.get('/products', { params })
       .then(resp => resp.data)
   },
