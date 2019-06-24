@@ -63,7 +63,6 @@
 import ProductBasics from '@/components/blocks/product/ProductBasics'
 import UserBasics from '@/components/blocks/user/UserBasics'
 import Api from '@/services/api'
-import mocks from '@/services/mocks'
 
 export default {
   props: {

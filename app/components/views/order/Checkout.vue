@@ -35,7 +35,6 @@ import PaymentDetails from '@/components/views/order/PaymentDetails'
 import ShippingDetails from '@/components/views/account/ShippingDetails'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
-import mocks from '@/services/mocks'
 
 export default {
   props: {
