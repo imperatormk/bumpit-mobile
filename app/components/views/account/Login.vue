@@ -34,7 +34,7 @@
           class="input input-border"></TextField>
       </FlexCol>
       <Split fill/>
-      <StateButton @onTap="login" text="Login"/>
+      <StateButton @onTap="login" text="Login" :disabled="loggingIn" :inactive="loggingIn"/>
     </FlexCol>
   </ViewContainer>
 </template>
