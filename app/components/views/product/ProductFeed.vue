@@ -36,34 +36,34 @@ import ProductSummary from '@/components/blocks/product/ProductSummary'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 
-const pagination = {
-  page: 1,
-  size: 6
-}
-
 export default {
   created() {
-    this.loadMoreProducts()
+    this.pagination = { ...this.defaultPagination }
+    this.loadMoreProducts(true)
       .then(() => {
         this.loaded = true
       })
   },
   data: () => ({
     searchTerm: '', // TODO: implement this
-    pagination,
+    pagination: {},
     products: [],
     totalProducts: 0,
     productsGroup: 0,
+    defaultPagination: {
+      page: 1,
+      size: 6
+    },
     loaded: false
   }),
   computed: {
     hasMore() {
-      return !this.loaded || (this.totalProducts > this.products.length)
+      return this.totalProducts > this.products.length
     }
   },
   methods: {
-    loadMoreProducts() {
-      if (!this.hasMore) return Promise.resolve()
+    loadMoreProducts(first) {
+      if (!this.hasMore && !first) return Promise.resolve()
 
       return Api.getProducts({}, this.pagination)
         .then((result) => {

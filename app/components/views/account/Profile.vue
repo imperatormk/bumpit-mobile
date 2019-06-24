@@ -71,11 +71,6 @@ import Auth from '@/services/auth'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 
-const pagination = {
-  page: 1,
-  size: 6
-}
-
 export default {
   props: {
     userId: {
@@ -87,13 +82,14 @@ export default {
     const { userId } = this
     const userAction = !userId ? this.getAuthUser() : this.getUser(userId)
 
+    this.pagination = { ...this.defaultPagination }
     return userAction
       .then(user => this.getConnections(user.id)
         .then(connections => ({ ...user, connections }))
       )
       .then((user) => {
         this.user = user
-        return this.loadMoreProducts()
+        return this.loadMoreProducts(true)
       })
       .then(() => {
         this.loaded = true
@@ -101,16 +97,19 @@ export default {
   },
   data: () => ({
     user: {},
-    pagination,
+    pagination: {},
     products: [],
     totalProducts: 0,
     productsGroup: 0,
-    inbeforeLoad: true,
     noBioMesssage: 'Tap top add a bio to let community know more about you',
     noItemMessages: [
       'List an item to sale',
       'No liked items'
     ],
+    defaultPagination: {
+      page: 1,
+      size: 6
+    },
     loaded: false
   }),
   computed: {
@@ -131,7 +130,7 @@ export default {
       return Object.assign({}, defaultValues, connections)
     },
     hasMore() {
-      return this.inbeforeLoad || (this.totalProducts > this.products.length)
+      return this.totalProducts > this.products.length
     }
   },
   methods: {
@@ -149,13 +148,12 @@ export default {
     },
     changeProductsGroup(productsGroup) {
       this.productsGroup = productsGroup
-      this.pagination = pagination
+      this.pagination = { ...this.defaultPagination }
       this.products = []
-      this.inbeforeLoad = true
-      this.loadMoreProducts()
+      this.loadMoreProducts(true)
     },
-    loadMoreProducts() {
-      if (!this.hasMore) return Promise.resolve()
+    loadMoreProducts(first) {
+      if (!this.hasMore && !first) return Promise.resolve()
 
       const userProducts = Api.getProducts({ selId: this.user.id }, this.pagination)
       const followingProducts = Promise.resolve([])
@@ -173,7 +171,6 @@ export default {
           this.products.push(...result.content)
           this.totalProducts = result.totalElements
           this.pagination.page += 1
-          this.inbeforeLoad = false
         })
       }
     },
