@@ -1,39 +1,44 @@
 {
   "project_info": {
-    "project_number": "33002893899",
-    "firebase_url": "https://car-rental-b26b7.firebaseio.com",
-    "project_id": "car-rental-b26b7",
-    "storage_bucket": "car-rental-b26b7.appspot.com"
+    "project_number": "553443503630",
+    "firebase_url": "https://laced-90266.firebaseio.com",
+    "project_id": "laced-90266",
+    "storage_bucket": "laced-90266.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:33002893899:android:1aa8448c56b58a16",
+        "mobilesdk_app_id": "1:553443503630:android:54f1e07ec3e49303",
         "android_client_info": {
-          "package_name": "com.bumpit"
+          "package_name": "com.golaced.Laced"
         }
       },
       "oauth_client": [
         {
-          "client_id": "33002893899-9vqs9kk47iuj43ofml42tosba2f3rk2u.apps.googleusercontent.com",
+          "client_id": "553443503630-6uf60gvsj2c6haomeek99csv9o657h3m.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCijF8lzSzSoCAAIjeiyR9IZBN6FEE8L4k"
+          "current_key": "AIzaSyBRz1zrCiweWEU-Lj0Fr-_aModdafOz-CU"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "553443503630-6uf60gvsj2c6haomeek99csv9o657h3m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "553443503630-ojliftqlm7kpbv6n0s10enfmdkbe2dpm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.golaced.Laced"
+              }
+            }
+          ]
         }
       }
     }

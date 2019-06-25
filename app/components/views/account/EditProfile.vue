@@ -146,7 +146,7 @@ export default {
     },
     getAuthUser() {
       this.loaded = false
-      return Auth.getAuthUser()
+      return Auth.getAuthUser(true)
         .then((user) => {
           this.user = user
           this.loaded = true

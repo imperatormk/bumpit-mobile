@@ -107,7 +107,7 @@ const user = {
       .then(resp => resp.data)
   },
   updateAvatar(avatar) {
-    const endpoint = `${System.apiUrl}/api/accounts/me/avatar`
+    const endpoint = `${System.apiUrl}/api/auth/user/avatar`
 
     return getAuthHeaders()
       .then(options => uploadImage.startUpload({
