@@ -29,7 +29,7 @@ export default {
   getAuthUser(includeSettings) {
     const params = { includeSettings: !!includeSettings }
     return getAuthHeaders({ params })
-      .then(options => http.get('/auth/user', options))
+      .then(options => http.get('/user', options))
       .then(resp => resp.data)
   },
   getAuthHeaders(opts) {

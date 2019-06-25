@@ -80,13 +80,13 @@ const order = {
 const shippingInfo = {
   getShippingInfo() {
     return getAuthHeaders()
-      .then((options) => http.get('/auth/user/shippingInfo', options))
+      .then((options) => http.get('/user/shippingInfo', options))
       .then(resp => resp.data)
   },
   updateShippingInfo(data) {
     return getAuthHeaders()
       .then((options) => {
-        return http.post('/auth/user/shippingInfo', data, options)
+        return http.post('/user/shippingInfo', data, options)
       })
       .then(resp => resp.data)
   },
@@ -107,7 +107,7 @@ const user = {
       .then(resp => resp.data)
   },
   updateAvatar(avatar) {
-    const endpoint = `${System.apiUrl}/api/auth/user/avatar`
+    const endpoint = `${System.apiUrl}/user/avatar`
 
     return getAuthHeaders()
       .then(options => uploadImage.startUpload({
