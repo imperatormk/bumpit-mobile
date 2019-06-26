@@ -2,8 +2,8 @@
   <ViewContainer>
     <FlexCol height="100%">
       <FlexRow justifyContent="space-between" alignItems="center">
-        <Label text="Login" fontSize="26" color="black" class="bold"/>
-        <Label @tap="gotoRegister" text="Sign Up" fontSize="18" class="bold"/>
+        <Label text="Login" fontSize="26" color="black" class="bold" fontWeight="bold"/>
+        <Label @tap="gotoRegister" text="Sign Up" fontSize="18" class="bold" fontWeight="bold"/>
       </FlexRow>
       <Split/>
       <Label text="Enter your information to get started" color="#9599a4" fontSize="16"/>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import Auth from '@/services/auth' 
+import Auth from '@/services/auth'
 import EventBus from '@/services/event-bus'
 
 export default {

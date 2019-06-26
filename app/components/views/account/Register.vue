@@ -96,6 +96,11 @@ export default {
       this.registering = true
       return Api.registerUser(reqObj)
         .then((result) => {
+          const { username, password } = reqObj
+          return Auth.login(username, password)
+            .then(() => result)
+        })
+        .then((result) => {
           const userId = result.id
 
           let saveLocalAvatarPromise = Promise.resolve()
@@ -113,15 +118,15 @@ export default {
 
           return saveLocalAvatarPromise
             .then(() => {
-              this.gotoLogin()
+              this.gotoEditProfile()
             })
         })
         .finally(() => {
           this.registering = false
         })
     },
-    gotoLogin() {
-      EventBus.$emit('navigateTo', 'Login', { username: this.user.username })
+    gotoEditProfile() {
+      EventBus.$emit('navigateTo', 'EditProfile')
     }
   },
   components: {
