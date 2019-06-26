@@ -1,6 +1,9 @@
 const bgHttp = require('nativescript-background-http')
 const session = bgHttp.session('image-upload')
 
+const fs = require('tns-core-modules/file-system')
+const imageSourceModule = require('tns-core-modules/image-source')
+
 const startUpload = (image, endpoint, auth) => {
   const headers = {
     'Content-Type': 'application/octet-stream',
@@ -51,6 +54,17 @@ const startUpload = (image, endpoint, auth) => {
   })
 }
 
+const saveTempImage = (avatar, filename = 'image', ext = 'jpg') => {
+  return imageSourceModule.fromAsset(avatar).then((imageSource) => {
+    let folder = fs.knownFolders.documents()
+    let path = fs.path.join(folder.path, `${filename}_${Date.now()}.${ext}`)
+    imageSource.saveToFile(path, ext)
+
+    return path
+  })
+}
+
 export default {
-  startUpload
+  startUpload,
+  saveTempImage
 }

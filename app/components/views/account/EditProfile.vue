@@ -166,12 +166,8 @@ import Auth from '@/services/auth'
 import EventBus from '@/services/event-bus'
 import { Alert } from '@/services/ui-utils'
 
+import uploadImage from '@/services/upload-image'
 const dialogs = require('tns-core-modules/ui/dialogs')
-
-// move these to helpers
-const fs = require('file-system')
-const applicationModule = require('tns-core-modules/application')
-const imageSourceModule = require('tns-core-modules/image-source')
 
 export default {
   mounted() {
@@ -255,19 +251,13 @@ export default {
       Api.updateUser(userObj)
         .then(() => {
           let saveLocalAvatarPromise = Promise.resolve()
-          // move this to helpers
+
           if (this.avatarChanged) {
-            const userId = this.user.id
             const avatar = this.user.avatar
 
-            const saveLocalAvatar = imageSourceModule.fromAsset(avatar).then((imageSource) => {
-              let folder = fs.knownFolders.documents()
-              let path = fs.path.join(folder.path, `avatar_${this.user.username}_${Date.now()}.jpg`)
-              let saved = imageSource.saveToFile(path, 'jpg')
-
-              return path
-            })
-            saveLocalAvatarPromise = saveLocalAvatar.then(path => Api.updateAvatar(path))
+            const filename = `avatar_${this.user.username}_${Date.now()}`
+            saveLocalAvatarPromise = uploadImage.saveTempImage(avatar, filename)
+              .then(path => Api.updateAvatar(path))
           }
 
           return saveLocalAvatarPromise

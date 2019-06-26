@@ -55,11 +55,7 @@ import ItemSelector from '@/components/common/ItemSelector'
 import ImagePicker from '@/components/common/ImagePicker'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
-
-// move these to helpers
-const fs = require('file-system')
-const applicationModule = require('tns-core-modules/application')
-const imageSourceModule = require('tns-core-modules/image-source')
+import uploadImage from '@/services/upload-image'
 
 export default {
   mounted() {
@@ -119,13 +115,8 @@ export default {
 
           // move this to helpers
           const prepareImages = this.productImages.map((productImage, idx) => {
-            return imageSourceModule.fromAsset(productImage).then((imageSource) => {
-              let folder = fs.knownFolders.documents()
-              let path = fs.path.join(folder.path, `product_${productId}_${idx}.jpg`)
-              let saved = imageSource.saveToFile(path, 'jpg')
-
-              return path
-            })
+            const filename = `product_${productId}_${idx}.jpg`
+            return uploadImage.saveTempImage(productImage, filename)
           })
 
           return Promise.all(prepareImages)

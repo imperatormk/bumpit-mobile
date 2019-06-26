@@ -57,11 +57,7 @@ import Avatar from '@/components/blocks/user/Avatar'
 import Api from '@/services/api'
 import Auth from '@/services/auth' 
 import EventBus from '@/services/event-bus'
-
-// move these to helpers
-const fs = require('file-system')
-const applicationModule = require('tns-core-modules/application')
-const imageSourceModule = require('tns-core-modules/image-source')
+import uploadImage from '@/services/upload-image'
 
 export default {
   data: () => ({
@@ -98,22 +94,14 @@ export default {
         .then((result) => {
           const { username, password } = reqObj
           return Auth.login(username, password)
-            .then(() => result)
         })
-        .then((result) => {
-          const userId = result.id
-
+        .then(() => {
           let saveLocalAvatarPromise = Promise.resolve()
           // move this to helpers
           if (avatar) {
-            const saveLocalAvatar = imageSourceModule.fromAsset(avatar).then((imageSource) => {
-              let folder = fs.knownFolders.documents()
-              let path = fs.path.join(folder.path, `avatar_${this.user.username}_${Date.now()}.jpg`)
-              let saved = imageSource.saveToFile(path, 'jpg')
-
-              return path
-            })
-            saveLocalAvatarPromise = saveLocalAvatar.then(path => Api.updateAvatar(path))
+            const filename = `avatar_${this.user.username}_${Date.now()}`
+            saveLocalAvatarPromise = uploadImage.saveTempImage(avatar, filename)
+              .then(path => Api.updateAvatar(path))
           }
 
           return saveLocalAvatarPromise
