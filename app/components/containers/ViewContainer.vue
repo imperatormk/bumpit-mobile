@@ -39,9 +39,13 @@ export default {
     EventBus.$on('getPageRef', (cb) => {
       cb(this.$refs.pageRef.nativeView)
     })
+    EventBus.$on('auth:noUser', () => {
+      this.$store.dispatch('authentication/logout')
+    })
   },
   destroyed() {
     EventBus.$off('getPageRef')
+    EventBus.$off('auth:noUser')
   },
   computed: {
     getStyle() {

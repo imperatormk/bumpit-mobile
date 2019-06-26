@@ -35,6 +35,9 @@ import InitialItem from '@/components/views/product/ProductFeed'
 
 import store from '@/store'
 
+import globalMixin from '@/mixins/global'
+Vue.mixin(globalMixin)
+
 new Vue({
   render: h => h(Master, [h(InitialItem)]),
   store

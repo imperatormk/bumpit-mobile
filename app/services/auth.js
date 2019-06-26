@@ -1,8 +1,9 @@
 import http from './http'
 const appSettings = require('tns-core-modules/application-settings')
 
-const getJwt = () => {
+const getJwt = (sync) => {
   const jwtToken = appSettings.getString('jwtToken') || ''
+  if (sync) return jwtToken
   return Promise.resolve(jwtToken)
 }
 
@@ -34,6 +35,9 @@ export default {
   },
   getAuthHeaders(opts) {
     return getAuthHeaders(opts)
+  },
+  getJwt(sync) {
+    return getJwt(sync)
   },
   login(username, password) {
     return http.post('/auth/login', { username, password })

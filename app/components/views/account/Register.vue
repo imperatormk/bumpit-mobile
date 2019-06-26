@@ -93,7 +93,7 @@ export default {
       return Api.registerUser(reqObj)
         .then((result) => {
           const { username, password } = reqObj
-          return Auth.login(username, password)
+          return this.$store.dispatch('authentication/login', { username, password })
         })
         .then(() => {
           let saveLocalAvatarPromise = Promise.resolve()

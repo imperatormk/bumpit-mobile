@@ -274,7 +274,7 @@ export default {
         })
     },
     logout() {
-      Auth.logout()
+      this.$store.dispatch('authentication/logout')
         .then(() => this.getAuthUser())
     }
   },

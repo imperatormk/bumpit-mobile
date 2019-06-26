@@ -11,7 +11,6 @@ import EventBus from '@/services/event-bus'
 http.interceptors.response.use(response => response, (error) => {
   if (error && error.response) {
     if (error.response.status === 401) {
-      // clear jwt here
       EventBus.$emit('auth:noUser')
     } else {
       Alert.showAlert({

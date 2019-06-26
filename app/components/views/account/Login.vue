@@ -66,7 +66,7 @@ export default {
       if (!username || !password) return
 
       this.loggingIn = true
-      Auth.login(username, password)
+      return this.$store.dispatch('authentication/login', { username, password })
         .then(() => {
           EventBus.$emit('auth:loggedIn')
         })
