@@ -27,7 +27,7 @@ export default {
     },
     firstImage() {
       if (!this.product.images.length) return ''
-      return `${System.apiUrl}${this.product.images[0].url}`
+      return `${System.serverUrl}${this.product.images[0].url}`
     },
     classes() {
       return {

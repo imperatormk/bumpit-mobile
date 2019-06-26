@@ -81,7 +81,7 @@ export default {
   methods: {
     register() {
       let reqObj = { ...this.user }
-      const avatar = reqObj.avatar || true // temp
+      const avatar = reqObj.avatar
       delete reqObj.avatar
 
       let errors = 0
@@ -98,17 +98,21 @@ export default {
         .then((result) => {
           const userId = result.id
 
+          let saveLocalAvatarPromise = Promise.resolve()
           // move this to helpers
-          const saveLocalAvatar = imageSourceModule.fromAsset(avatar).then((imageSource) => {
-            let folder = fs.knownFolders.documents()
-            let path = fs.path.join(folder.path, `avatar_${this.user.username}_${Date.now()}.jpg`)
-            let saved = imageSource.saveToFile(path, 'jpg')
+          if (avatar) {
+            const saveLocalAvatar = imageSourceModule.fromAsset(avatar).then((imageSource) => {
+              let folder = fs.knownFolders.documents()
+              let path = fs.path.join(folder.path, `avatar_${this.user.username}_${Date.now()}.jpg`)
+              let saved = imageSource.saveToFile(path, 'jpg')
 
-            return path
-          })
+              return path
+            })
+            saveLocalAvatarPromise = saveLocalAvatar.then(path => Api.updateAvatar(path))
+          }
 
-          return saveLocalAvatar.then(path => Api.updateAvatar(path))
-            .then((result) => {
+          return saveLocalAvatarPromise
+            .then(() => {
               this.gotoLogin()
             })
         })

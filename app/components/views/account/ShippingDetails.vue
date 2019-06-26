@@ -57,12 +57,18 @@ export default {
     updateDetails() {
       const shippingDetails = Object.keys(this.shippingDetails).map(key => this.shippingDetails[key])
       const valid = shippingDetails.filter(detail => !detail).length === 0
-      if (!valid) return // TODO: all are required atm
+      if (!valid) {
+        Alert.showAlert({
+          title: 'Error',
+          message: 'Please make sure all fields have been filled',
+          type: 'error'
+        })
+        return // TODO: all are required atm
+      }
 
       this.updating = true
       Api.updateShippingInfo(this.shippingDetails)
         .then(() => {
-          this.updating = false
           if (!this.shouldLoad) { // TODO: think about a better check
             this.$modal.close(this.shippingDetails)
           } else {
@@ -72,6 +78,9 @@ export default {
               type: 'info'
             })
           }
+        })
+        .finally(() => {
+          this.updating = false
         })
     }
   },

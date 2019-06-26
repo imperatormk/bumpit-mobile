@@ -3,7 +3,7 @@ import System from '@/data/system'
 import { Alert } from '@/services/ui-utils'
 
 const http = axios.create({
-  baseURL: `${System.apiUrl}/api`
+  baseURL: `${System.serverUrl}/api`
 })
 
 import EventBus from '@/services/event-bus'

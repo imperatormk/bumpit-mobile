@@ -41,7 +41,7 @@ const product = {
       .then(resp => resp.data)
   },
   postProductImages(productId, productImages) {
-    const endpoint = `${System.apiUrl}/api/products/${productId}/images`
+    const endpoint = `${System.serverUrl}/api/products/${productId}/images`
 
     return getAuthHeaders()
       .then((options) => {
@@ -106,8 +106,15 @@ const user = {
     return http.post(`/accounts/register`, userObj)
       .then(resp => resp.data)
   },
+  updateUser(userObj) {
+    return getAuthHeaders()
+      .then((options) => {
+        return http.put('/user', userObj, options)
+      })
+      .then(resp => resp.data)
+  },
   updateAvatar(avatar) {
-    const endpoint = `${System.apiUrl}/user/avatar`
+    const endpoint = `${System.serverUrl}/api/user/avatar`
 
     return getAuthHeaders()
       .then(options => uploadImage.startUpload({

@@ -2,7 +2,7 @@
   <ViewContainer :loading="!loaded">
     <FlexCol slot="scrollable">
       <FlexRow justifyContent="center" alignItems="center" width="100%">
-        <Avatar :avatar="user.avatar" shouldSelect/>
+        <Avatar @avatarPicked="onAvatarPicked" :avatar="!avatarChanged ? user.avatar : ''" shouldSelect/>
       </FlexRow>
       <Split big/>
 
@@ -100,12 +100,18 @@
         <Label class="category" text="Localization"/>
         <Split big/>
 
-        <StackLayout @tap="editField('language', true)">
-          <FlexRow justifyContent="space-between">
-            <Label class="label" text="Language"/>
-            <Label :text="user.settings.language"/>
-          </FlexRow>
-        </StackLayout>
+        <FlexCol>
+          <Label class="label" text="Language"/>
+          <Split/>
+          <ScrollView orientation="horizontal" :scrollBarIndicatorVisible="false">
+            <FlexRow>
+              <StackLayout v-for="(language, idx) in languages" :key="idx" @tap="selectLanguage(idx)"
+                :backgroundColor="selectedLanguage === idx ? 'black' : 'white'" padding="5 10">
+                <Label :text="language" :color="selectedLanguage === idx ? 'white' : 'black'"/>
+              </StackLayout>
+            </FlexRow>
+          </ScrollView>
+        </FlexCol>
         <Split big/>
 
         <FlexCol>
@@ -113,7 +119,8 @@
           <Split/>
           <ScrollView orientation="horizontal" :scrollBarIndicatorVisible="false">
             <FlexRow>
-              <StackLayout v-for="(currency, idx) in currencies" :key="idx" @tap="selectCurrency(idx)" :backgroundColor="selectedCurrency === idx ? 'black' : 'white'" padding="5 10">
+              <StackLayout v-for="(currency, idx) in currencies" :key="idx" @tap="selectCurrency(idx)"
+                :backgroundColor="selectedCurrency === idx ? 'black' : 'white'" padding="5 10">
                 <Label :text="currency" :color="selectedCurrency === idx ? 'white' : 'black'"/>
               </StackLayout>
             </FlexRow>
@@ -145,7 +152,7 @@
       </FlexCol>
       <Split size="30"/>
 
-      <StateButton @onTap="saveChanges" text="Save changes"/>
+      <StateButton @onTap="saveChanges" :disabled="updating" :inactive="updating" text="Save changes"/>
       <Split/>
       <StateButton @onTap="logout" v-if="user" text="Logout"/>
     </FlexCol>
@@ -154,22 +161,37 @@
 
 <script>
 import Avatar from '@/components/blocks/user/Avatar'
+import Api from '@/services/api'
 import Auth from '@/services/auth'
 import EventBus from '@/services/event-bus'
+import { Alert } from '@/services/ui-utils'
 
 const dialogs = require('tns-core-modules/ui/dialogs')
+
+// move these to helpers
+const fs = require('file-system')
+const applicationModule = require('tns-core-modules/application')
+const imageSourceModule = require('tns-core-modules/image-source')
 
 export default {
   mounted() {
     this.getAuthUser()
   },
   data: () => ({
-    currencies: ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY'],
+    languages: ['EN', 'CH', 'TW'],
+    currencies: ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY'],
+    selectedLanguage: 0,
     selectedCurrency: 0,
     user: { avatar: '', settings: {} },
+    avatarChanged: false,
+    updating: false,
     loaded: false
   }),
   methods: {
+    selectLanguage(idx) {
+      this.selectedLanguage = idx
+      this.user.settings.language = this.languages[idx]
+    },
     selectCurrency(idx) {
       this.selectedCurrency = idx
       this.user.settings.currency = this.currencies[idx]
@@ -179,6 +201,8 @@ export default {
       return Auth.getAuthUser(true)
         .then((user) => {
           this.user = user
+          this.selectedLanguage = this.languages.findIndex(language => language === this.user.settings.language)
+          this.selectedCurrency = this.currencies.findIndex(currency => currency === this.user.settings.currency)
           this.loaded = true
         })
     },
@@ -209,9 +233,55 @@ export default {
     gotoShippingDetails() {
       EventBus.$emit('navigateTo', 'ShippingDetails')
     },
+    onAvatarPicked(e) {
+      this.avatarChanged = true
+      this.user.avatar = e
+    },
     saveChanges() {
       const userObj = JSON.parse(JSON.stringify(this.user))
-      console.log(userObj)
+
+      const userDetails = Object.keys(userObj).map(key => userObj[key])
+      const valid = userDetails.filter(detail => !detail).length === 0
+      if (!valid) {
+        Alert.showAlert({
+          title: 'Error',
+          message: 'Please make sure all fields have been filled',
+          type: 'error'
+        })
+        return // TODO: all are required atm
+      }
+
+      this.updating = true
+      Api.updateUser(userObj)
+        .then(() => {
+          let saveLocalAvatarPromise = Promise.resolve()
+          // move this to helpers
+          if (this.avatarChanged) {
+            const userId = this.user.id
+            const avatar = this.user.avatar
+
+            const saveLocalAvatar = imageSourceModule.fromAsset(avatar).then((imageSource) => {
+              let folder = fs.knownFolders.documents()
+              let path = fs.path.join(folder.path, `avatar_${this.user.username}_${Date.now()}.jpg`)
+              let saved = imageSource.saveToFile(path, 'jpg')
+
+              return path
+            })
+            saveLocalAvatarPromise = saveLocalAvatar.then(path => Api.updateAvatar(path))
+          }
+
+          return saveLocalAvatarPromise
+        })
+        .then(() => {
+          Alert.showAlert({
+            title: 'Success',
+            message: 'User details have been updated',
+            type: 'info'
+          })
+        })
+        .finally(() => {
+          this.updating = false
+        })
     },
     logout() {
       Auth.logout()

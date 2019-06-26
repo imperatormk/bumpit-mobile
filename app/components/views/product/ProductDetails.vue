@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     getImageUrl(image) {
-      return `${System.apiUrl}${image.url}`
+      return `${System.serverUrl}${image.url}`
     },
     gotoConversation() {
       EventBus.$emit('navigateTo', 'Conversation', { productId: this.productId })

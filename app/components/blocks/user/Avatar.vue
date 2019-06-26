@@ -30,7 +30,7 @@ export default {
       if (this.avatar.includes('default') && this.shouldSelect) return '' // a bit dirty
 
       const avatarName = this.avatar
-      return `${System.apiUrl}${avatarName}`
+      return `${System.serverUrl}${avatarName}`
     },
     size() {
       if (this.small) return 50
