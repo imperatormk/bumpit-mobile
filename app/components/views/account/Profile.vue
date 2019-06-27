@@ -35,7 +35,7 @@
       </FlexRow>
 
       <Split big/>
-      <Label fontSize="16" :text="user.bio || noBioMesssage" textWrap="true"/>
+      <Label @tap="gotoEditProfile" fontSize="16" :text="user.bio || noBioMesssage" textWrap="true"/>
 
       <Split big/>
       <FlexRow justifyContent="center">
@@ -101,7 +101,7 @@ export default {
     products: [],
     totalProducts: 0,
     productsGroup: 0,
-    noBioMesssage: 'Tap top add a bio to let community know more about you',
+    noBioMesssage: 'Tap to add a bio to let community know more about you',
     noItemMessages: [
       'List an item to sale',
       'No liked items'
@@ -159,14 +159,15 @@ export default {
       if (!this.hasMore && !first) return Promise.resolve()
 
       const userProducts = Api.getProducts({ selId: this.user.id }, this.pagination)
-      const followingProducts = Promise.resolve([])
+      const likedProducts = Api.getUserLikedProducts({ likerId: this.user.id }, this.pagination)
+
       let action = null
       switch (this.productsGroup) {
         case 0:
           action = userProducts
           break
         case 1:
-          action = followingProducts
+          action = likedProducts
           break
       }
       if (action) {
@@ -176,6 +177,9 @@ export default {
           this.pagination.page += 1
         })
       }
+    },
+    gotoProductDetails(product) {
+      EventBus.$emit('navigateTo', 'ProductDetails', { productId: product.id })
     },
     gotoEditProfile() {
       EventBus.$emit('navigateTo', 'EditProfile')

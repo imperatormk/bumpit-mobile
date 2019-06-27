@@ -86,6 +86,14 @@ const shippingInfo = {
 }
 
 const like = {
+  getUserLikedProducts(filter, pageData) {
+    const params = {
+      ...filter,
+      ...pageData
+    }
+    return http.get('/likes', { params })
+      .then(resp => resp.data)
+  },
   toggleProductLike(productId, data) {
     return getAuthHeaders()
       .then(options => http.post(`/likes/${productId}`, data, options))
