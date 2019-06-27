@@ -91,7 +91,7 @@ export default {
         this.user = user
         return this.loadMoreProducts(true)
       })
-      .then(() => {
+      .finally(() => {
         this.loaded = true
       })
   },
@@ -159,7 +159,7 @@ export default {
       if (!this.hasMore && !first) return Promise.resolve()
 
       const userProducts = Api.getProducts({ selId: this.user.id }, this.pagination)
-      const likedProducts = Api.getUserLikedProducts({ likerId: this.user.id }, this.pagination)
+      const likedProducts = Api.getUserLikedProducts(this.user.id, this.pagination)
 
       let action = null
       switch (this.productsGroup) {

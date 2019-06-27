@@ -86,9 +86,17 @@ const shippingInfo = {
 }
 
 const like = {
-  getUserLikedProducts(filter, pageData) {
+  getUserLikedProducts(likerId, pageData) {
     const params = {
-      ...filter,
+      likerId,
+      ...pageData
+    }
+    return http.get('/likes', { params })
+      .then(resp => resp.data)
+  },
+  getLikesToUser(likeeId, pageData) {
+    const params = {
+      likeeId,
       ...pageData
     }
     return http.get('/likes', { params })

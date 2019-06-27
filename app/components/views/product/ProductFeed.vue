@@ -40,7 +40,7 @@ export default {
   created() {
     this.pagination = { ...this.defaultPagination }
     this.loadMoreProducts(true)
-      .then(() => {
+      .finally(() => {
         this.loaded = true
       })
   },
