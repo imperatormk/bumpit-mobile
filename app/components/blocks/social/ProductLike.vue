@@ -11,7 +11,7 @@
           <Label textWrap="true">
             <Span :text="productLike.liker.username" color="#000" fontWeight="bold"/>
             <Span text=" has liked your product." color="#000"/>
-            <Span :text="' ' + when" color="#9c9c9c"/>
+            <Span :text="' ' + when()" color="#9c9c9c"/>
           </Label>
         </FlexRow>
       </StackLayout>
@@ -32,6 +32,7 @@ import EventBus from '@/services/event-bus'
 import System from '@/data/system'
 
 // move to ui-utils?
+import moment from 'moment'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 TimeAgo.addLocale(en)
@@ -48,9 +49,6 @@ export default {
     firstImage() {
       if (!this.productLike.product.images.length) return ''
       return `${System.serverUrl}${this.productLike.product.images[0].url}`
-    },
-    when() {
-      return timeAgo.format(new Date())
     }
   },
   methods: {
@@ -61,6 +59,11 @@ export default {
     gotoUser() {
       const userId = this.productLike.liker.id
       EventBus.$emit('navigateTo', 'Profile', { userId })
+    },
+    when() {
+      const date = this.productLike.createdAt
+      const momentObj = moment(date).toDate()
+      return timeAgo.format(momentObj, 'twitter') || 'just now'
     }
   },
   components: {
