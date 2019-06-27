@@ -30,14 +30,13 @@ const product = {
       .then(resp => resp.data)
   },
   getProduct(productId) {
-    return http.get(`/products/${productId}`)
+    return getAuthHeaders()
+      .then(options => http.get(`/products/${productId}`, options))
       .then(resp => resp.data)
   },
   postProduct(product) {
     return getAuthHeaders()
-      .then((options) => {
-        return http.post('/products', product, options)
-      })
+      .then(options => http.post('/products', product, options))
       .then(resp => resp.data)
   },
   postProductImages(productId, productImages) {
@@ -63,16 +62,12 @@ const order = {
   },
   prepareOrder(order) {
     return getAuthHeaders()
-      .then((options) => {
-        return http.post('/orders/prepare', order, options)
-      })
+      .then(options => http.post('/orders/prepare', order, options))
       .then(resp => resp.data)
   },
   performOrder(order) {
     return getAuthHeaders()
-      .then((options) => {
-        return http.post('/orders/create', order, options)
-      })
+      .then(options => http.post('/orders/create', order, options))
       .then(resp => resp.data)
   },
 }
@@ -80,16 +75,22 @@ const order = {
 const shippingInfo = {
   getShippingInfo() {
     return getAuthHeaders()
-      .then((options) => http.get('/user/shippingInfo', options))
+      .then(options => http.get('/user/shippingInfo', options))
       .then(resp => resp.data)
   },
   updateShippingInfo(data) {
     return getAuthHeaders()
-      .then((options) => {
-        return http.post('/user/shippingInfo', data, options)
-      })
+      .then(options => http.post('/user/shippingInfo', data, options))
       .then(resp => resp.data)
   },
+}
+
+const like = {
+  toggleProductLike(productId, data) {
+    return getAuthHeaders()
+      .then(options => http.post(`/likes/${productId}`, data, options))
+      .then(resp => resp.data)
+  }
 }
 
 const user = {
@@ -108,9 +109,7 @@ const user = {
   },
   updateUser(userObj) {
     return getAuthHeaders()
-      .then((options) => {
-        return http.put('/user', userObj, options)
-      })
+      .then(options => http.put('/user', userObj, options))
       .then(resp => resp.data)
   },
   updateAvatar(avatar) {
@@ -146,6 +145,7 @@ export default {
   ...product,
   ...order,
   ...shippingInfo,
+  ...like,
   ...user,
   ...conversation,
 }

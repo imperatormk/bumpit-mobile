@@ -11,10 +11,10 @@
         </Carousel>
       </StackLayout>
 
-      <StackLayout col="0" row="0" paddingRight="20" paddingBottom="10">
+      <StackLayout @tap="toggleLike" col="0" row="0" paddingRight="20" paddingBottom="10" v-if="isLoggedIn">
         <FlexRow justifyContent="flex-end" alignItems="flex-end" height="100%">
           <FlexRow width="50" height="50" backgroundColor="#0076ff" borderRadius="50%" alignItems="center" justifyContent="center">
-            <Label fontSize="24" class="far" color="white" :text="'\uf004'"/>
+            <Label fontSize="24" :class="product.likedByMe ? 'fas' : 'far'" color="white" :text="'\uf004'"/>
           </FlexRow>
         </FlexRow>
       </StackLayout>
@@ -96,6 +96,19 @@ export default {
     },
   },
   methods: {
+    toggleLike() {
+      const { likedByMe } = this.product
+      const data = { action: !likedByMe ? 'like' : 'unlike' }
+
+      Api.toggleProductLike(this.product.id, data)
+        .then((result) => {
+          if (result.status === 'liked') {
+            this.product.likedByMe = true
+          } else if (result.status === 'unliked') {
+            this.product.likedByMe = false
+          }
+        })
+    },
     getImageUrl(image) {
       return `${System.serverUrl}${image.url}`
     },

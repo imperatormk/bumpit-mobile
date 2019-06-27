@@ -7,7 +7,7 @@
           <Split small/>
           <Label fontSize="16" :text="user.location"/>
         </FlexCol>
-        <FlexCol slot="actions" justifyContent="space-around">
+        <FlexCol v-if="isLoggedIn && isMe" slot="actions" justifyContent="space-around">
           <StateButton @onTap="gotoEditProfile" text="Edit" inactive/>
         </FlexCol>
       </UserBasics>
@@ -131,6 +131,9 @@ export default {
     },
     hasMore() {
       return this.totalProducts > this.products.length
+    },
+    isMe() {
+      return this.user.id === this.loggedInUser.id
     }
   },
   methods: {
