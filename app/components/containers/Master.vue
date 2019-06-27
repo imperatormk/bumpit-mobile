@@ -14,6 +14,8 @@ import ProductFeed from '@/components/views/product/ProductFeed'
 import ProductDetails from '@/components/views/product/ProductDetails'
 import NewProduct from '@/components/views/product/NewProduct'
 
+import Likes from '@/components/views/account/Likes'
+
 import Checkout from '@/components/views/order/Checkout'
 import AfterCheckout from '@/components/views/order/AfterCheckout'
 import OrderDetailsBase from '@/components/views/order/OrderDetailsBase'
@@ -34,6 +36,9 @@ export default {
       switch (index) {
         case 0:
           comp = 'ProductFeed'
+          break
+        case 1:
+          comp = 'Likes'
           break
         case 4:
           comp = 'Profile'
@@ -72,6 +77,9 @@ export default {
           break
         case 'NewProduct':
           comp = NewProduct
+          break
+        case 'Likes':
+          comp = Likes
           break
         case 'Conversation':
           break

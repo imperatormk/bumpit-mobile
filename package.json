@@ -13,6 +13,7 @@
   "repository": "<fill-your-repository-here>",
   "dependencies": {
     "axios": "0.18.0",
+    "javascript-time-ago": "2.0.1",
     "jwt-decode": "2.2.0",
     "nativescript-background-http": "3.4.1",
     "nativescript-carousel": "4.1.0",

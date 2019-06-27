@@ -1,8 +1,8 @@
 <template>
-  <StackLayout>
-    <FlexRow @tap="onTap" justifyContent="center" :backgroundColor="getAvatarUrl ? 'white' : '#eaeef0'" alignItems="center" height="150" width="150" v-if="shouldSelect" borderRadius="100%">
-      <Image v-if="getAvatarUrl" @tap="onTap" :height="size" :width="size" :src="getAvatarUrl" borderRadius="100%"/>
-      <Label v-else @tap="onTap" backgroundColor="#eaeef0" class="fas" :text="'\uf030'" color="#a1a1a2" fontSize="40"/>
+  <StackLayout @tap="onTap">
+    <FlexRow justifyContent="center" :backgroundColor="getAvatarUrl ? 'white' : '#eaeef0'" alignItems="center" :height="size" :width="size" v-if="shouldSelect" borderRadius="100%">
+      <Image v-if="getAvatarUrl" :height="size" :width="size" :src="getAvatarUrl" borderRadius="100%"/>
+      <Label v-else backgroundColor="#eaeef0" class="fas" :text="'\uf030'" color="#a1a1a2" fontSize="40"/>
     </FlexRow>
     <Image v-else-if="getAvatarUrl" :height="size" :width="size" :src="getAvatarUrl" borderRadius="100%"/>
   </StackLayout>
@@ -41,6 +41,8 @@ export default {
     onTap() {
       if (this.shouldSelect) {
         this.selectAvatar()
+      } else {
+        this.$emit('onTap')
       }
     },
     selectAvatar() {
