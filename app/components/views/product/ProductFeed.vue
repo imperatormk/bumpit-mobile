@@ -2,7 +2,7 @@
   <ViewContainer :loading="!loaded">
     <FlexCol alignItems="center" :height="!products.length ? '100%' : 'auto'">
       <LabelButton block v-if="true" text="Post new product" @onTap="gotoNewProduct"/>
-      <SearchBar hint="Product name, brand..." :text="searchTerm" @loaded="$event.object.android.clearFocus()"/>
+      <SearchBar hint="Product name, brand..." :text="searchTerm" @loaded="clearFocus"/>
 
       <Split size="15"/>
       <FlexRow justifyContent="center">
@@ -80,6 +80,9 @@ export default {
     },
     changeProductsGroup(productsGroup) {
       this.productsGroup = productsGroup
+    },
+    clearFocus(e) {
+      e && e.object && e.object.android && e.object.android.clearFocus()
     }
   },
   components: {
