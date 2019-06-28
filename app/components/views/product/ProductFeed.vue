@@ -64,8 +64,11 @@ export default {
   methods: {
     loadMoreProducts(first) {
       if (!this.hasMore && !first) return Promise.resolve()
+      
+      const byFollowees = this.productsGroup === 1
+      const productsPromise = !byFollowees ? Api.getProducts : Api.getProductsByFollowees
 
-      return Api.getProducts({}, this.pagination)
+      return productsPromise(this.pagination)
         .then((result) => {
           this.products.push(...result.content)
           this.totalProducts = result.totalElements
@@ -80,6 +83,9 @@ export default {
     },
     changeProductsGroup(productsGroup) {
       this.productsGroup = productsGroup
+      this.pagination = { ...this.defaultPagination }
+      this.products = []
+      this.loadMoreProducts(true)
     },
     clearFocus(e) {
       e && e.object && e.object.android && e.object.android.clearFocus()

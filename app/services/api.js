@@ -21,12 +21,17 @@ const category = {
 }
 
 const product = {
-  getProducts(filter, pageData) {
+  getProducts(pageData = {}, filter = {}) {
     const params = {
       ...filter,
       ...pageData
     }
     return http.get('/products', { params })
+      .then(resp => resp.data)
+  },
+  getProductsByFollowees() {
+    return getAuthHeaders()
+      .then(options => http.get(`/products/following`, options))
       .then(resp => resp.data)
   },
   getProduct(productId) {

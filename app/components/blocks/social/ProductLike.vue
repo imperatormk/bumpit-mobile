@@ -63,7 +63,7 @@ export default {
     when() {
       const date = this.productLike.createdAt
       const momentObj = moment(date).toDate()
-      return timeAgo.format(momentObj, 'twitter') || 'just now'
+      return timeAgo.format(momentObj, 'twitter') || timeAgo.format(momentObj)
     }
   },
   components: {
