@@ -24,14 +24,18 @@
           <Label :text="reviewsCount" color="black" fontSize="25" fontWeight="bold"/>
           <Label text="Reviews"/>
         </FlexCol>
-        <FlexCol alignItems="center">
-          <Label :text="connections.followers" color="black" fontSize="25" fontWeight="bold"/>
-          <Label text="Followers"/>
-        </FlexCol>
-        <FlexCol alignItems="center">
-          <Label :text="connections.followees" color="black" fontSize="25" fontWeight="bold"/>
-          <Label text="Following"/>
-        </FlexCol>
+        <StackLayout @tap="gotoConnections">
+          <FlexCol alignItems="center">
+            <Label :text="connections.followers" color="black" fontSize="25" fontWeight="bold"/>
+            <Label text="Followers"/>
+          </FlexCol>
+        </StackLayout>
+        <StackLayout @tap="gotoConnections">
+          <FlexCol alignItems="center">
+            <Label :text="connections.followees" color="black" fontSize="25" fontWeight="bold"/>
+            <Label text="Following"/>
+          </FlexCol>
+        </StackLayout>
       </FlexRow>
 
       <Split big/>
@@ -183,6 +187,9 @@ export default {
     },
     gotoEditProfile() {
       EventBus.$emit('navigateTo', 'EditProfile')
+    },
+    gotoConnections() {
+      EventBus.$emit('navigateTo', 'Connections', { userId: this.user.id })
     }
   },
   components: {

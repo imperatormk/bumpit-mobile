@@ -15,6 +15,7 @@ import ProductDetails from '@/components/views/product/ProductDetails'
 import NewProduct from '@/components/views/product/NewProduct'
 
 import Likes from '@/components/views/account/Likes'
+import Connections from '@/components/views/account/Connections'
 
 import Checkout from '@/components/views/order/Checkout'
 import AfterCheckout from '@/components/views/order/AfterCheckout'
@@ -80,6 +81,9 @@ export default {
           break
         case 'Likes':
           comp = Likes
+          break
+        case 'Connections':
+          comp = Connections
           break
         case 'Conversation':
           break

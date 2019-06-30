@@ -3,13 +3,13 @@
     <FlexRow alignItems="center">
       <Avatar :avatar="user.avatar" small/>
       <Split vertical/>
-      <FlexCol >
-        <Label v-if="fullname" :text="fullname" fontSize="19"/>
+      <FlexCol>
+        <Label v-if="fullname" :text="fullname" fontSize="15"/>
         <Split small/>
         <slot/>
       </FlexCol>
       <Split vertical/>
-      <FlexRow justifyContent="flex-end">
+      <FlexRow justifyContent="flex-end" flexGrow="1">
         <slot name="actions"/>
       </FlexRow>
     </FlexRow>

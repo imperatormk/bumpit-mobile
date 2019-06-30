@@ -1,6 +1,6 @@
 <template>
   <ViewContainer :loading="!loaded" :paddingConfig="{scr: '20 10'}">
-    <FlexCol v-if="likes.length !== 0" height="100%" slot="scrollable">
+    <FlexCol v-if="likes.length > 0" height="100%" slot="scrollable">
       <FlexCol alignItems="center">
         <ProductLike v-for="like in likes" :key="like.id" :productLike="like"/>
       </FlexCol>

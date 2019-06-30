@@ -117,7 +117,8 @@ const like = {
 const user = {
   getConnections(userId, config) {
     const data = config || {}
-    return http.post(`/accounts/${userId}/connections`, data)
+    return getAuthHeaders()
+      .then(options => http.post(`/accounts/${userId}/connections`, data, options))
       .then(resp => resp.data)
   },
   getUser(userId) {
