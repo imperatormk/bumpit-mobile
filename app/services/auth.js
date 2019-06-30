@@ -43,6 +43,7 @@ export default {
     return http.post('/auth/login', { username, password })
       .then(resp => resp.data)
       .then(jwtObject => storeJwt(jwtObject))
+      .then(() => getJwt(true))
   },
   logout() {
     appSettings.remove('jwtToken')

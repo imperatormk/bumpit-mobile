@@ -14,7 +14,8 @@ export default {
   actions: {
     login({ commit }, { username, password }) {
       return auth.login(username, password)
-        .then((userObj) => {
+        .then((jwt) => {
+          const userObj = decodeJwt(jwt)
           commit('loginSuccess', userObj)
           return userObj
         })
