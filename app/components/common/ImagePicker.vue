@@ -6,13 +6,25 @@
       </FlexRow>
     </StackLayout>
 
-    <ScrollView orientation="horizontal" :scrollBarIndicatorVisible="false">
-      <FlexRow>
-        <StackLayout padding="5" v-for="(image, idx) in imageAssets" :key="idx">
-          <Image width="80" height="80" :src="image" stretch="aspectFill"/>
-        </StackLayout>
-      </FlexRow>
-    </ScrollView>
+    <FlexCol v-if="imageAssets.length > 0">
+      <Split/>
+      <ScrollView orientation="horizontal" :scrollBarIndicatorVisible="false">
+        <FlexRow>
+          <GridLayout v-for="(image, idx) in imageAssets" :key="idx" columns="*" rows="*">
+            <StackLayout col="0" row="0" padding="5">
+              <Image width="80" height="80" :src="image" stretch="aspectFill"/>
+            </StackLayout>
+            <StackLayout col="0" row="0">
+              <FlexRow justifyContent="flex-end">
+                <StackLayout @tap="removeImage(idx)" width="20" height="20" backgroundColor="white" borderRadius="50%" horizontalAlignment="center" verticalAlignment="center">
+                  <Label fontSize="19" class="fas" color="black" :text="'\uf057'"/>
+                </StackLayout>
+              </FlexRow>
+            </StackLayout>
+          </GridLayout>
+        </FlexRow>
+      </ScrollView>
+    </FlexCol>
   </StackLayout>
 </template>
 
@@ -44,6 +56,12 @@ export default {
           this.imageAssets.push(...selection)
           this.$emit('imagesChanged', this.imageAssets)
         })
+    },
+    removeImage(index) {
+      if (this.imageAssets[index]) {
+        this.imageAssets.splice(index, 1)
+        this.$emit('imagesChanged', this.imageAssets)
+      }
     }
   }
 }

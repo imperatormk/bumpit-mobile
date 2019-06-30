@@ -18,13 +18,13 @@
       <Label text="Brand" fontSize="20"/>
       <Split/>
 
-      <ItemSelector :items="brands" @selected="selectBrand" padding="50"/>
+      <ItemSelector :items="brands" @selected="selectBrand" padding="5 10"/>
       <Split/>
 
       <Label text="Category" fontSize="20"/>
       <Split/>
 
-      <ItemSelector :items="categories" @selected="selectCategory" padding="50"/>
+      <ItemSelector :items="categories" @selected="selectCategory" padding="5 10"/>
       <Split/>
 
       <Label text="Size" fontSize="20"/>
@@ -34,16 +34,18 @@
       <Split/>
 
       <Label text="Price" fontSize="20"/>
-      <FlexRow alignItems="center">
-        <StackLayout>
-          <ListPicker :items="currencies"
-            selectedIndex="1"
-            @selectedIndexChange="selectCurrency"/>
-        </StackLayout>
-        <StackLayout flexGrow="1">
-          <Textbox keyboardType="number" v-model.number="product.price"/>
-        </StackLayout>
-      </FlexRow>
+      <StackLayout>
+        <FlexRow alignItems="center">
+          <StackLayout>
+            <ListPicker :items="currencies"
+              selectedIndex="1"
+              @selectedIndexChange="selectCurrency"/>
+          </StackLayout>
+          <StackLayout flexGrow="1">
+            <Textbox keyboardType="number" v-model.number="product.price"/>
+          </StackLayout>
+        </FlexRow>
+      </StackLayout>
 
       <StateButton @onTap="postItem" :disabled="saving" :inactive="saving" block text="Post item"/>
     </FlexCol>
@@ -55,6 +57,7 @@ import ItemSelector from '@/components/common/ItemSelector'
 import ImagePicker from '@/components/common/ImagePicker'
 import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
+import { Alert } from '@/services/ui-utils'
 import uploadImage from '@/services/upload-image'
 
 export default {
@@ -109,25 +112,36 @@ export default {
       if (!validateItem(productObj)) return
 
       this.saving = true
-      Api.postProduct(productObj)
-        .then((result) => {
-          const productId = result.id
 
-          // move this to helpers
-          const prepareImages = this.productImages.map((productImage, idx) => {
-            const filename = `product_${productId}_${idx}.jpg`
-            return uploadImage.saveTempImage(productImage, filename)
+      // move this to helpers
+      const prepareImages = this.productImages.map((productImage, idx) => {
+        const filename = `product_${idx}${Date.now()}.jpg`
+        return uploadImage.saveTempImage(productImage, filename)
+          .then((path) => {
+            return uploadImage.verifyFileSize(path, 2 * 1024 * 1024)
+              .then(() => path)
           })
+      })
 
-          return Promise.all(prepareImages)
-            .then((productImageNames) => {
+      return Promise.all(prepareImages)
+        .then((productImageNames) => {
+          return Api.postProduct(productObj)
+            .then((result) => {
+              const productId = result.id
+
               return Api.postProductImages(productId, productImageNames)
                 .then((promises) => Promise.all(promises))
-                .then(() => productId)
+                .then(() => {
+                  EventBus.$emit('navigateTo', 'ProductDetails', { productId })
+                })
             })
         })
-        .then((productId) => {
-          EventBus.$emit('navigateTo', 'ProductDetails', { productId })
+        .catch((err) => {
+          Alert.showAlert({
+            title: 'Error',
+            message: err.msg || 'Unknown error has occured',
+            type: 'error'
+          })
         })
         .finally(() => {
           this.saving = false

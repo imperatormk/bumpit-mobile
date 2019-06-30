@@ -64,7 +64,19 @@ const saveTempImage = (avatar, filename = 'image', ext = 'jpg') => {
   })
 }
 
+const verifyFileSize = (path, maxSize) => {
+  return new Promise((resolve, reject) => {
+    const size = fs.File.fromPath(path).size
+    if (size < maxSize) {
+      resolve()
+    } else {
+      reject({ msg: 'fileExceedsMaxSize', details: { bytes: size - maxSize + 1 } })
+    }
+  })
+}
+
 export default {
   startUpload,
-  saveTempImage
+  saveTempImage,
+  verifyFileSize
 }

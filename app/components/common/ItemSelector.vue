@@ -2,8 +2,8 @@
   <StackLayout>
     <ScrollView orientation="horizontal" :scrollBarIndicatorVisible="false">
       <FlexRow>
-        <StackLayout v-for="(item, idx) in items" :key="idx" @tap="selectItem(item, idx)" :backgroundColor="selectedIndex === idx ? 'black' : 'white'" :padding="padding">
-          <Label :text="getText(item)" :color="selectedIndex === idx ? 'white' : 'black'"/>
+        <StackLayout v-for="(item, idx) in items" :key="idx" @tap="selectItem(item, idx)" :backgroundColor="selectedIndex === idx ? 'black' : 'white'">
+          <Label :margin="padding" :text="getText(item)" :color="selectedIndex === idx ? 'white' : 'black'"/>
         </StackLayout>
       </FlexRow>
     </ScrollView>

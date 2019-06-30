@@ -101,6 +101,10 @@ export default {
           if (avatar) {
             const filename = `avatar_${this.user.username}_${Date.now()}`
             saveLocalAvatarPromise = uploadImage.saveTempImage(avatar, filename)
+              .then((path) => {
+                return uploadImage.verifyFileSize(path, 2 * 1024 * 1024)
+                  .then(() => path)
+              })
               .then(path => Api.updateAvatar(path))
           }
 
@@ -108,6 +112,13 @@ export default {
             .then(() => {
               this.gotoEditProfile()
             })
+        })
+        .catch((err) => {
+          Alert.showAlert({
+            title: 'Error',
+            message: err.msg || 'Unknown error has occured',
+            type: 'error'
+          })
         })
         .finally(() => {
           this.registering = false
