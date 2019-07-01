@@ -6,7 +6,7 @@
         <Label marginTop="3" fontSize="12" v-if="followsMe" text="Follows you"/>
       </FlexCol>
       <FlexCol slot="actions" justifyContent="space-around">
-        <StackLayout v-if="isLoggedIn">
+        <StackLayout v-if="isLoggedIn && !isMe">
           <StateButton @onTap="executeNextAction" :text="getNextAction" />
         </StackLayout>
       </FlexCol>
@@ -17,6 +17,7 @@
 
 <script>
 import UserBasics from '@/components/blocks/user/UserBasics'
+import Api from '@/services/api'
 import EventBus from '@/services/event-bus'
 
 export default {
@@ -36,6 +37,9 @@ export default {
     user() {
       return this.connectionObj.user
     },
+    isMe() {
+      return this.isLoggedIn && (this.user.id === this.loggedInUser.id)
+    },
     followsMe() {
       return this.connectionObj.type === 'followee' && this.connectionObj.followsMe
     },
@@ -50,8 +54,10 @@ export default {
   methods: {
     executeNextAction() {
       const nextAction = this.getNextAction
-      console.log(nextAction)
-      // TODO: implement this!
+      return Api.toggleFollow(this.connectionObj.user.id, { action: nextAction })
+        .then(() => {
+          this.$emit('connectionChanged')
+        })
     }
   },
   components: {

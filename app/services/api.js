@@ -115,12 +115,6 @@ const like = {
 }
 
 const user = {
-  getConnections(userId, config) {
-    const data = config || {}
-    return getAuthHeaders()
-      .then(options => http.post(`/accounts/${userId}/connections`, data, options))
-      .then(resp => resp.data)
-  },
   getUser(userId) {
     return http.get(`/accounts/${userId}`)
       .then(resp => resp.data)
@@ -148,6 +142,20 @@ const user = {
   }
 }
 
+const social = {
+  getConnections(userId, config) {
+    const data = config || {}
+    return getAuthHeaders()
+      .then(options => http.post(`/accounts/${userId}/connections`, data, options))
+      .then(resp => resp.data)
+  },
+  toggleFollow(userId, data) {
+    return getAuthHeaders()
+      .then(options => http.put(`/accounts/${userId}/social`, data, options))
+      .then(resp => resp.data)
+  },
+}
+
 const conversation = {
   getConversation(productId) {
     return getAuthHeaders()
@@ -169,5 +177,6 @@ export default {
   ...shippingInfo,
   ...like,
   ...user,
+  ...social,
   ...conversation,
 }

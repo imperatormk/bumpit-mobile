@@ -137,7 +137,7 @@ export default {
       return this.totalProducts > this.products.length
     },
     isMe() {
-      return this.user.id === this.loggedInUser.id
+      return this.isLoggedIn && (this.user.id === this.loggedInUser.id)
     }
   },
   methods: {

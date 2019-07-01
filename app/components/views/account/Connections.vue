@@ -4,14 +4,14 @@
       <TabViewItem :title="followers.length + ' followers'">
         <StackLayout padding="10">
           <ScrollView orientation="vertical">
-            <UserConnection padding="5" v-for="follower in followers" :key="follower.user.id" :connection="follower"/>
+            <UserConnection @connectionChanged="onConnectionChanged" padding="5" v-for="follower in followers" :key="follower.user.id" :connection="follower"/>
           </ScrollView>
         </StackLayout>
       </TabViewItem>
       <TabViewItem :title="followees.length + ' following'">
         <StackLayout padding="10">
           <ScrollView orientation="vertical">
-            <UserConnection padding="5" v-for="followee in followees" :key="followee.user.id" :connection="followee"/>
+            <UserConnection @connectionChanged="onConnectionChanged" padding="5" v-for="followee in followees" :key="followee.user.id" :connection="followee"/>
           </ScrollView>
         </StackLayout>
       </TabViewItem>
@@ -44,13 +44,21 @@ export default {
     fetchData() {
       return Api.getConnections(this.userId)
         .then((connections) => {
-          const followers = connections.filter(connection => connection.type === 'follower')
-          const followees = connections.filter(connection => connection.type === 'followee')
+          this.followers = []
+          this.followees = []
 
-          this.followers = followers
-          this.followees = followees
-          this.loaded = true
+          this.$nextTick(() => {
+            const followers = connections.filter(connection => connection.type === 'follower')
+            const followees = connections.filter(connection => connection.type === 'followee')
+
+            this.followers = followers
+            this.followees = followees
+            this.loaded = true
+          })
         })
+    },
+    onConnectionChanged() {
+      this.fetchData()
     }
   },
   components: {
