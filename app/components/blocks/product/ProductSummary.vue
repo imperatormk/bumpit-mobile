@@ -1,12 +1,21 @@
 <template>
   <StackLayout @tap="$emit('selected', product)">
-    <FlexCol padding="5">
-      <Image :class="classes" :src="firstImage"/>
-      <StackLayout v-if="!simple" padding="4" backgroundColor="#dee1e7" class="rounded-bot" width="100%">
-        <Label :text="product.title" fontSize="12"/>
-        <Label :text="getPrice" fontSize="12"/>
+    <GridLayout columns="*" rows="* auto" padding="5">
+      <StackLayout col="0" row="0">
+        <Image :class="classes" :src="firstImage"/>
       </StackLayout>
-    </FlexCol>
+
+      <StackLayout v-if="product.status === 'SOLD'" col="0" row="0" paddingRight="10" paddingBottom="10">
+        <FlexRow justifyContent="flex-end" alignItems="flex-end" height="100%">
+          <Label borderRadius="20" backgroundColor="#dee1e7" fontSize="13" padding="5 10" color="black" text="SOLD"/>
+        </FlexRow>
+      </StackLayout>
+
+      <StackLayout col="0" row="1" v-if="!simple" padding="4" backgroundColor="#dee1e7" class="rounded-bot" width="100%">
+        <Label :text="product.title" fontSize="12"/>
+        <Label v-if="product.status === 'AVAILABLE'" :text="getPrice" fontSize="12"/>
+      </StackLayout>
+    </GridLayout>
   </StackLayout>
 </template>
 
@@ -41,11 +50,11 @@ export default {
 
 <style lang="scss" scoped>
 .rounded-top {
-  border-top-left-radius: 5;
-  border-top-right-radius: 5;
+  border-top-left-radius: 10;
+  border-top-right-radius: 10;
 }
 .rounded-bot {
-  border-bottom-left-radius: 5;
-  border-bottom-right-radius: 5;
+  border-bottom-left-radius: 10;
+  border-bottom-right-radius: 10;
 }
 </style>

@@ -57,7 +57,7 @@
     <FlexCol slot="scrollable">
       <FlexRow flexWrap="wrap">
         <StackLayout v-for="product in products" :key="product.id" width="50%">
-          <ProductSummary @selected="gotoProductDetails(product)" :product="product"/>
+          <ProductSummary @selected="gotoProductDetails(product)" :product="product" simple/>
         </StackLayout>
       </FlexRow>
       <StackLayout v-if="hasMore">
