@@ -62,7 +62,8 @@ const product = {
 
 const order = {
   getOrder(orderId) {
-    return http.get(`/orders/${orderId}`)
+    return getAuthHeaders()
+      .then(options => http.get(`/orders/${orderId}`, options))
       .then(resp => resp.data)
   },
   prepareOrder(order) {

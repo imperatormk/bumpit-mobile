@@ -38,19 +38,19 @@
         <DataGrid :data="chargeItems"/>
       </FlexCol>
 
-      <FlexCol class="seller" width="100%">
+      <FlexCol width="100%">
         <Split big/>
         <FlexRow justifyContent="space-between" alignItems="center">
-          <Label fontWeight="bold" fontSize="18" text="Seller"/>
-          <LabelButton text="Message seller"/>
+          <Label fontWeight="bold" fontSize="18" :text="(isBuyer ? 'Seller' : 'Buyer')"/>
+          <LabelButton @onTap="gotoConversation" :text="'Message ' + (isBuyer ? 'seller' : 'buyer')"/>
         </FlexRow>
         <Split small/>
-        <Label :text="'Purchase on ' + createdAt + ' from ' + order.buyer.username"/>
+        <Label :text="(isBuyer ? 'Sold' : 'Purchased') + ' on ' + createdAt + ' ' + (isBuyer ? 'to' : 'from') + ' @' + (oppositeUser.username)"/>
       </FlexCol>
 
       <Split big/>
-      <UserBasics :user="order.product.seller" fontSize="18">
-        <LabelButton :text="`@${order.product.seller.username}`"/>
+      <UserBasics :user="oppositeUser" fontSize="18">
+        <LabelButton :text="`@${oppositeUser.username}`"/>
       </UserBasics>
 
       <Split big/>
@@ -93,6 +93,22 @@ export default {
     },
     createdAt() {
       return helpers.formatDate(this.order.createdAt)
+    },
+    userSide() {
+      return this.order.userRoleInOrder
+    },
+    isBuyer() { // assumes seller otherwise
+      return this.userSide === 'buyer'
+    },
+    oppositeUser() { // assumes seller otherwise
+      if (this.isBuyer) return this.order.product.seller
+      return this.order.buyer
+    }
+  },
+  methods: {
+    gotoConversation() {
+      const userId = this.oppositeUser.id
+      //  TODO: finish this when conversations are done
     }
   },
   components: {
