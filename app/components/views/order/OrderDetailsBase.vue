@@ -45,7 +45,7 @@
           <LabelButton text="Message seller"/>
         </FlexRow>
         <Split small/>
-        <Label :text="'Purchase on ' + order.createdAt + ' from ' + order.buyer.username"/>
+        <Label :text="'Purchase on ' + createdAt + ' from ' + order.buyer.username"/>
       </FlexCol>
 
       <Split big/>
@@ -63,6 +63,7 @@
 import ProductBasics from '@/components/blocks/product/ProductBasics'
 import UserBasics from '@/components/blocks/user/UserBasics'
 import Api from '@/services/api'
+import helpers from '@/helpers'
 
 export default {
   props: {
@@ -72,8 +73,7 @@ export default {
     }
   },
   created() {
-    const orderId = this.orderId
-    Api.getOrder(orderId)
+    Api.getOrder(this.orderId)
       .then((order) => {
         this.order = order
         this.loaded = true
@@ -90,6 +90,9 @@ export default {
         { label: 'Shipping price', value: 'Free' },
         { label: 'Total', value: '$2.00' }
       ]
+    },
+    createdAt() {
+      return helpers.formatDate(this.order.createdAt)
     }
   },
   components: {

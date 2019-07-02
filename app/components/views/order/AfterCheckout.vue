@@ -1,6 +1,6 @@
 <template>
   <ViewContainer>
-    <FlexCol>
+    <FlexCol slot="scrollable">
       <FlexCol alignItems="center">
         <Label :text="'Your payment is being processed, ' + order.buyer.name" fontSize="22" color="black" textWrap="true" textAlignment="center"/>
         <Split big/>
@@ -13,7 +13,7 @@
       <Split big/>
       <DataGrid :data="chargeItems"/>
       <Split/>
-      <StateButton @onTap="gotoOrder" block text="See details"/>
+      <StateButton @onTap="gotoOrderDetails" block text="See details"/>
     </FlexCol>
   </ViewContainer>
 </template>
@@ -55,8 +55,8 @@ export default {
     }
   },
   methods: {
-    gotoOrder() {
-      EventBus.$emit('navigateTo', 'OrderDetailsBase', { orderId: this.order.id }) // should be orderProp?
+    gotoOrderDetails() {
+      EventBus.$emit('navigateTo', 'OrderDetailsBase', { orderId: this.order.id })
     }
   },
   components: {

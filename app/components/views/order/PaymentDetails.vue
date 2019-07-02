@@ -57,7 +57,7 @@ export default {
 
       const card = this.pageRef.getViewById('card').card
       this.updating = true
-      stripe.createToken(cc, (error, tokenObj) => {
+      stripe.createToken(card, (error, tokenObj) => {
         this.updating = false
         if (error) return
         const paymentDetails = {
