@@ -1,6 +1,6 @@
 <template>
   <ViewContainer>
-    <FlexCol height="100%">
+    <FlexCol slot="scrollable">
       <FlexRow justifyContent="space-between" alignItems="center">
         <Label text="Login" fontSize="26" color="black" class="bold" fontWeight="bold"/>
         <Label @tap="gotoRegister" text="Sign Up" fontSize="18" class="bold" fontWeight="bold"/>
@@ -33,7 +33,7 @@
           style="placeholder-color:#9da0aa;padding:0px;margin:0px;border-width:1px;border-color:white"
           class="input input-border"></TextField>
       </FlexCol>
-      <Split fill/>
+      <Split/>
       <StateButton @onTap="login" text="Login" :disabled="loggingIn" :inactive="loggingIn"/>
     </FlexCol>
   </ViewContainer>
@@ -46,7 +46,8 @@ import EventBus from '@/services/event-bus'
 export default {
   props: {
     username: String,
-    password: String
+    password: String,
+    canGoBack: Boolean
   },
   created() {
     if (this.username) this.user.username = this.username
@@ -68,7 +69,7 @@ export default {
       this.loggingIn = true
       return this.$store.dispatch('authentication/login', { username, password })
         .then(() => {
-          EventBus.$emit('auth:loggedIn')
+          EventBus.$emit('auth:loggedIn', this.canGoBack)
         })
         .finally(() => {
           this.loggingIn = false

@@ -1,6 +1,6 @@
 <template>
   <ViewContainer :loading="!loaded">
-    <FlexCol height="100%">
+    <FlexCol slot="scrollable">
       <ProductBasics :product="product"/>
       <Split big/>
       <FlexCol justifyContent="space-between" @tap="gotoPaymentDetails">
@@ -23,7 +23,7 @@
       <Split big/>
       <Split big/>
       <DataGrid :data="chargeItems"/>
-      <Split fill/>
+      <Split/>
       <StateButton @onTap="placeOrder" :disabled="ordering" :inactive="ordering" block text="Place order"/>
     </FlexCol>
   </ViewContainer>

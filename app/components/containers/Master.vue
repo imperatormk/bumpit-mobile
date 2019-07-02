@@ -48,10 +48,14 @@ export default {
       this.navigateTo(comp)
     })
     EventBus.$on('auth:noUser', () => {
-      this.navigateTo('Login')
+      this.navigateTo('Login', { canGoBack: true })
     })
-    EventBus.$on('auth:loggedIn', () => {
-      this.navigateTo('EditProfile')
+    EventBus.$on('auth:loggedIn', (canGoBack) => {
+      if (canGoBack) {
+        this.$navigateBack()
+      } else {
+        this.navigateTo('EditProfile')
+      }
     })
     EventBus.$on('navigateTo', this.navigateTo)
   },

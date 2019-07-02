@@ -1,8 +1,8 @@
 <template>
   <ViewContainer :loading="!loaded">
-    <FlexCol height="100%">
+    <FlexCol slot="scrollable">
       <MyDetails v-model="shippingDetails"/>
-      <Split fill/>
+      <Split/>
       <StateButton @onTap="updateDetails" :disabled="updating" :inactive="updating" block text="Update shipping details"/>
     </FlexCol>
   </ViewContainer>

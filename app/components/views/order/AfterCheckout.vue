@@ -1,6 +1,6 @@
 <template>
   <ViewContainer>
-    <FlexCol height="100%">
+    <FlexCol>
       <FlexCol alignItems="center">
         <Label :text="'Your payment is being processed, ' + order.buyer.name" fontSize="22" color="black" textWrap="true" textAlignment="center"/>
         <Split big/>
@@ -12,7 +12,7 @@
       <ProductBasics :product="order.product"/>
       <Split big/>
       <DataGrid :data="chargeItems"/>
-      <Split fill/>
+      <Split/>
       <StateButton @onTap="gotoOrder" block text="See details"/>
     </FlexCol>
   </ViewContainer>

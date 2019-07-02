@@ -1,9 +1,9 @@
 <template>
   <ViewContainer :loading="!loaded">
-    <FlexCol height="100%">
+    <FlexCol slot="scrollable">
       <CreditCardView id="card"/>
       <MyDetails v-model="details"/>
-      <Split fill/>
+      <Split/>
       <StateButton @onTap="updateDetails" :disabled="updating" :inactive="updating" block text="Add payment details"/>
     </FlexCol>
   </ViewContainer>

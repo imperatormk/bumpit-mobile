@@ -1,6 +1,6 @@
 <template>
   <ViewContainer>
-    <FlexCol height="100%" slot="scrollable">
+    <FlexCol slot="scrollable">
       <FlexRow justifyContent="space-between" alignItems="center">
         <Label text="Sign Up" fontSize="26" color="black" fontWeight="bold"/>
         <Label @tap="gotoLogin" text="Login" fontSize="18" fontWeight="bold"/>
@@ -46,7 +46,7 @@
       <Label text="Repeat Password" fontSize="20" color="black"/>
       <Textbox type="password" v-model="user.confirmPassword" hint="Repeat your password"/>
 
-      <Split fill/>
+      <Split/>
       <StateButton :inactive="registering" :disabled="registering" @onTap="register" text="Sign Up"/>
     </FlexCol>
   </ViewContainer>

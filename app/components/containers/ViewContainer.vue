@@ -1,5 +1,8 @@
 <template>
-  <Page :verticalAlignment="loading ? 'center' : 'top'" actionBarHidden="true" ref="pageRef" :style="getStyle" height="100%">
+  <Page :verticalAlignment="loading ? 'center' : 'top'" ref="pageRef" :style="getStyle" height="100%">
+    <ActionBar title="Laced">
+      <NavigationButton text="Back" android.systemIcon="ic_menu_back" @tap="goBack"/>
+    </ActionBar>
     <StackLayout v-if="loading" verticalAlignment="center">
       <LoadingIndicator :full="true">
         <Label v-if="loadingText" :text="loadingText" textAlignment="center" fontSize="22" color="#8c8c8c" padding="10"/>
@@ -68,6 +71,11 @@ export default {
         if (this.paddingConfig.scr) scr = this.paddingConfig.scr
       }
       return { def, scr }
+    }
+  },
+  methods: {
+    goBack() {
+      this.$navigateBack()
     }
   },
   components: {
