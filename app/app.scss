@@ -13,3 +13,12 @@
     padding: 0 10;
     height: 100%;
 }
+
+.rounded-top {
+  border-top-left-radius: 10;
+  border-top-right-radius: 10;
+}
+.rounded-bot {
+  border-bottom-left-radius: 10;
+  border-bottom-right-radius: 10;
+}

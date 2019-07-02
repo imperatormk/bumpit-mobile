@@ -1,7 +1,7 @@
 <template>
   <StackLayout @tap="gotoOrderDetails">
     <FlexRow alignItems="center" width="100%">
-      <Image :src="firstImage" width="20%"/>
+      <Image :src="firstImage" width="20%" class="rounded-top rounded-bot"/>
       <FlexRow justifyContent="space-around" alignItems="center" flexGrow="1">
         <FlexCol justifyContent="center">
           <Label :text="product.title" fontWeight="bold" color="black" fontSize="18" padding="3"/>

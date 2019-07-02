@@ -51,14 +51,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.rounded-top {
-  border-top-left-radius: 10;
-  border-top-right-radius: 10;
-}
-.rounded-bot {
-  border-bottom-left-radius: 10;
-  border-bottom-right-radius: 10;
-}
-</style>

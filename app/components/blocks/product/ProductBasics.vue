@@ -1,13 +1,13 @@
 <template>
   <FlexRow alignItems="center" width="100%" v-if="!vertical">
-    <Image :src="firstImage" width="20%"/>
+    <Image :src="firstImage" width="20%" class="rounded-top rounded-bot"/>
     <FlexCol justifyContent="center" marginLeft="15">
       <Label :text="product.title" fontWeight="bold" color="black" fontSize="18" padding="3"/>
       <Label v-if="product.category" :text="product.category.name" fontSize="16" padding="3"/>
     </FlexCol>
   </FlexRow>
   <FlexCol alignItems="center" width="100%" v-else>
-    <Image :src="firstImage" width="30%"/>
+    <Image :src="firstImage" width="30%" class="rounded-top rounded-bot"/>
     <Split size="2"/>
     <Label :text="product.title" fontWeight="bold" color="black" fontSize="20" padding="3"/>
   </FlexCol>
