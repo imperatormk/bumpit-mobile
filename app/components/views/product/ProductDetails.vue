@@ -11,7 +11,7 @@
         </Carousel>
       </StackLayout>
 
-      <StackLayout @tap="toggleLike" col="0" row="0" paddingRight="20" paddingBottom="10" v-if="isLoggedIn">
+      <StackLayout @tap="toggleLike" col="0" row="0" paddingRight="20" paddingBottom="10" v-if="isLoggedIn && !isMine">
         <FlexRow justifyContent="flex-end" alignItems="flex-end" height="100%">
           <FlexRow width="50" height="50" backgroundColor="#0076ff" borderRadius="50%" alignItems="center" justifyContent="center">
             <Label fontSize="24" :class="product.likedByMe ? 'fas' : 'far'" color="white" :text="'\uf004'"/>
@@ -94,6 +94,9 @@ export default {
     isAvailable() {
       return this.product.status === 'AVAILABLE'
     },
+    isMine() {
+      return this.isLoggedIn && this.loggedInUser.id === this.product.seller.id
+    }
   },
   methods: {
     toggleLike() {

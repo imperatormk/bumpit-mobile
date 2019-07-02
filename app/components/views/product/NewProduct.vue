@@ -62,15 +62,20 @@
 import ItemSelector from '@/components/common/ItemSelector'
 import ImagePicker from '@/components/common/ImagePicker'
 import Api from '@/services/api'
+import Auth from '@/services/auth'
 import EventBus from '@/services/event-bus'
 import { Alert } from '@/services/ui-utils'
 import uploadImage from '@/services/upload-image'
 
 export default {
   mounted() {
-    this.fetchData()
+    this.getAuthUser()
+      .then(() => this.fetchData())
   },
   methods: {
+    getAuthUser() {
+      return Auth.getAuthUser()
+    },
     fetchData() {
       this.loaded = true
       const brands = Api.getBrands()
