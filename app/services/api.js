@@ -75,6 +75,21 @@ const order = {
       .then(options => http.post('/orders/create', order, options))
       .then(resp => resp.data)
   },
+  performOrder(order) {
+    return getAuthHeaders()
+      .then(options => http.post('/orders/create', order, options))
+      .then(resp => resp.data)
+  },
+  getBoughtOrders() {
+    return getAuthHeaders()
+      .then(options => http.get('/user/orders/bought', options))
+      .then(resp => resp.data)
+  },
+  getSoldOrders() {
+    return getAuthHeaders()
+      .then(options => http.get('/user/orders/sold', options))
+      .then(resp => resp.data)
+  },
 }
 
 const shippingInfo = {

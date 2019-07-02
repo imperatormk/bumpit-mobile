@@ -19,6 +19,7 @@ import Connections from '@/components/views/account/Connections'
 
 import Checkout from '@/components/views/order/Checkout'
 import AfterCheckout from '@/components/views/order/AfterCheckout'
+import OrderList from '@/components/views/order/OrderList'
 import OrderDetailsBase from '@/components/views/order/OrderDetailsBase'
 
 import Login from '@/components/views/account/Login'
@@ -40,6 +41,9 @@ export default {
           break
         case 1:
           comp = 'Likes'
+          break
+        case 2:
+          comp = 'OrderList'
           break
         case 4:
           comp = 'Profile'
@@ -96,6 +100,9 @@ export default {
           break
         case 'AfterCheckout':
           comp = AfterCheckout
+          break
+        case 'OrderList':
+          comp = OrderList
           break
         case 'OrderDetailsBase':
           comp = OrderDetailsBase
