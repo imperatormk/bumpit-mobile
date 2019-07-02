@@ -8,8 +8,8 @@
           <Label :text="createdAt" fontSize="16" padding="3"/>
           <Label :text="order.status" fontSize="16" padding="3"/>
         </FlexCol>
-        <FlexRow>
-          <Label :text="getPrice" fontSize="16" padding="3"/>
+        <FlexRow alignSelf="flex-start">
+          <Label :text="getPrice" borderRadius="20" backgroundColor="#dee1e7" fontSize="13" padding="5 10" color="black"/>
         </FlexRow>
       </FlexRow>
     </FlexRow>

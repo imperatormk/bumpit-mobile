@@ -7,7 +7,7 @@
 
       <StackLayout v-if="product.status === 'SOLD'" col="0" row="0" paddingRight="10" marginBottom="10">
         <FlexRow justifyContent="flex-end" alignItems="flex-end" height="100%">
-          <Label borderRadius="20" backgroundColor="#dee1e7" fontSize="13" padding="5 10" color="black" text="SOLD"/>
+          <Label text="SOLD" borderRadius="20" backgroundColor="#dee1e7" fontSize="13" padding="5 10" color="black"/>
         </FlexRow>
       </StackLayout>
 

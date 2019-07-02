@@ -56,7 +56,7 @@ export default {
     })
     EventBus.$on('auth:loggedIn', (canGoBack) => {
       if (canGoBack) {
-        this.$navigateBack()
+        this.navigateTo('EditProfile') // proper would be $navigateBack()
       } else {
         this.navigateTo('EditProfile')
       }
