@@ -1,17 +1,17 @@
 <template>
   <StackLayout @tap="$emit('selected', product)">
-    <GridLayout columns="*" rows="* auto" padding="5">
+    <GridLayout columns="*" :rows="rows" padding="5">
       <StackLayout col="0" row="0">
         <Image :class="classes" :src="firstImage"/>
       </StackLayout>
 
-      <StackLayout v-if="product.status === 'SOLD'" col="0" row="0" paddingRight="10" paddingBottom="10">
+      <StackLayout v-if="product.status === 'SOLD'" col="0" row="0" paddingRight="10" marginBottom="10">
         <FlexRow justifyContent="flex-end" alignItems="flex-end" height="100%">
           <Label borderRadius="20" backgroundColor="#dee1e7" fontSize="13" padding="5 10" color="black" text="SOLD"/>
         </FlexRow>
       </StackLayout>
 
-      <StackLayout col="0" row="1" v-if="!simple" padding="4" backgroundColor="#dee1e7" class="rounded-bot" width="100%">
+      <StackLayout col="0" row="1" v-if="!simple" padding="5" backgroundColor="#dee1e7" class="rounded-bot" width="100%">
         <Label :text="product.title" fontSize="12"/>
         <Label v-if="product.status === 'AVAILABLE'" :text="getPrice" fontSize="12"/>
       </StackLayout>
@@ -43,6 +43,10 @@ export default {
         'rounded-top': true,
         'rounded-bot': this.simple
       }
+    },
+    rows() {
+      if (this.simple) return '*'
+      return '* auto'
     }
   }
 }
