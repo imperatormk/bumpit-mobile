@@ -89,7 +89,7 @@ export default {
   }),
   computed: {
     getPrice() { // move to helpers
-      return `${this.product.price} ${this.product.currency}`
+      return `${this.product.price}`
     },
     isAvailable() {
       return this.product.status === 'AVAILABLE'

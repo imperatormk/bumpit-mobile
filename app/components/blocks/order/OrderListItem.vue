@@ -33,7 +33,7 @@ export default {
       return this.order.product
     },
     getPrice() { // move to helpers
-      return `${this.product.price} ${this.product.currency}`
+      return `${this.product.price}`
     },
     firstImage() {
       if (!this.product.images.length) return ''

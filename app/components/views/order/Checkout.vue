@@ -79,7 +79,7 @@ export default {
         chargeObj.value = ''
         if (percentage) chargeObj.value += `${percentage}%`
         if (chargeObj.value) chargeObj.value += ' + '
-        if (flat) chargeObj.value += `${flat.currency}${flat.amount/100}`
+        if (flat) chargeObj.value += `${flat.amount/100}`
         return chargeObj
       })
       charges.push({ label: 'total', value: this.order.total/100 })

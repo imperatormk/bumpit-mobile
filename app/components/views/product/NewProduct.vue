@@ -36,16 +36,22 @@
       <Label text="Price" fontSize="20"/>
       <StackLayout>
         <FlexRow alignItems="center">
-          <StackLayout>
-            <ListPicker :items="currencies"
-              selectedIndex="1"
-              @selectedIndexChange="selectCurrency"/>
-          </StackLayout>
           <StackLayout flexGrow="1">
-            <Textbox keyboardType="number" v-model.number="product.price"/>
+            <Textbox keyboardType="number" v-model.number="product.price" min="1"/>
           </StackLayout>
         </FlexRow>
       </StackLayout>
+      <Split/>
+
+      <Label text="Shipping cost" fontSize="20"/>
+      <StackLayout>
+        <FlexRow alignItems="center">
+          <StackLayout flexGrow="1">
+            <Textbox keyboardType="number" v-model.number="product.shippingCost" min="0"/>
+          </StackLayout>
+        </FlexRow>
+      </StackLayout>
+      <Split/>
 
       <StateButton @onTap="postItem" :disabled="saving" :inactive="saving" block text="Post item"/>
     </FlexCol>
@@ -89,21 +95,15 @@ export default {
     selectSize(size) {
       this.product.size = size
     },
-    selectCurrency(e) {
-      this.product.currency = e.value
-    },
     postItem() {
-      const currency = !isNaN(this.product.currency) ? this.currencies[this.product.currency] : this.product.currency
       const productObj = {
-        ...this.product,
-        currency
+        ...this.product
       }
 
       const validateItem = (item) => {
         return true &&
           item.title.trim() &&
           item.condition != null &&
-          item.currency != null &&
           item.brandId != null &&
           item.size != null &&
           item.price > 1 &&
@@ -153,15 +153,14 @@ export default {
       title: '',
       details: '', // pending
       condition: 1, // pending
-      currency: 1,
       brandId: null,
       size: 14,
-      price: 0.0,
+      price: 1.0,
+      shippingCost: 0.0,
     },
     productImages: [],
     brands: [],
     categories: [],
-    currencies: ['USD', 'AUD', 'CAD', 'EUR'], // get these from consts/server?
     sizes: [11.5, 12, 13, 14, 15],
     saving: false,
     loaded: false
